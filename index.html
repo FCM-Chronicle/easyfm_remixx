@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스쿼드 관리 게임</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>스쿼드 관리 게임</h1>
+        
+        <!-- 팀 선택 섹션 -->
+        <div id="team-selection">
+            <h2>팀 선택</h2>
+            <select id="team-dropdown">
+                <option value="">팀을 선택하세요</option>
+                <option value="tottenham">토트넘</option>
+                <option value="liverpool">리버풀</option>
+                <option value="manCity">맨체스터 시티</option>
+                <option value="arsenal">아스널</option>
+                <option value="manUnited">맨체스터 유나이티드</option>
+                <option value="realMadrid">레알 마드리드</option>
+                <option value="barcelona">바르셀로나</option>
+                <option value="acMilan">AC 밀란</option>
+                <option value="inter">인터 밀란</option>
+                <option value="bayern">바이에른 뮌헨</option>
+                <option value="psg">파리 생제르맹</option>
+                <option value="leverkusen">바이어 레버쿠젠</option>
+                <option value="dortmund">도르트문트</option>
+                <option value="newCastle">뉴캐슬</option>
+                <option value="asRoma">AS 로마</option>
+                <option value="chelsea">첼시</option>
+                <option value="atMadrid">아틀레티코 마드리드</option>
+                <option value="napoli">나폴리</option>
+            </select>
+            <button onclick="selectTeam()">팀 선택</button>
+        </div>
+
+        <!-- 로비 섹션 -->
+        <div id="lobby" style="display:none;">
+            <h2>로비</h2>
+            <button onclick="goTo('best11.html')">베스트 11</button>
+            <button onclick="goTo('simulate.html')">경기 시뮬레이션</button>
+            <button onclick="goTo('transfer.html')">이적 시장</button>
+            <button onclick="goTo('stats.html')">경기 통계</button>
+            <button onclick="goTo('settings.html')">설정</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
