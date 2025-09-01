@@ -14,7 +14,6 @@ body {
     transition: background 0.8s ease;
 }
 
-
 /* 화면 전환 */
 .screen {
     display: none;
@@ -54,6 +53,18 @@ body.team-dortmund .glass {
     text-align: center;
     font-size: 3rem;
     margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.league-section {
+    margin-bottom: 50px;
+}
+
+.league-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #ffd700;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
