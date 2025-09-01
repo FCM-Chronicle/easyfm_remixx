@@ -2614,6 +2614,8 @@ function applyTeamTheme(teamKey) {
     document.body.classList.add(`team-${teamKey}`);
 }
 
+// 아니진짜왜안되지
+
 // 외부에서 호출할 수 있는 함수들
 window.gameData = gameData;
 window.allTeams = allTeams; // 추가
