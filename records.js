@@ -122,20 +122,18 @@ class RecordsSystem {
         return assisters;
     }
 
-    // AI 팀 간 경기 시뮬레이션 및 기록
-    simulateAIMatchesWithRecords() {
-        const aiTeams = Object.keys(teams).filter(team => 
-            team !== gameData.selectedTeam && team !== gameData.currentOpponent
-        );
-        
+    // 기존 simulateOtherMatches 함수에 개인기록을 추가하는 함수
+    enhanceExistingSimulation(otherTeams) {
         console.log('=== AI 팀들 간 경기 결과 ===');
         
-        // 짝수개의 팀들을 랜덤하게 매칭
-        for (let i = 0; i < aiTeams.length - 1; i += 2) {
-            const team1 = aiTeams[i];
-            const team2 = aiTeams[i + 1];
+        // 짝수개의 팀들을 랜덤하게 매칭 (기존 로직과 동일)
+        for (let i = 0; i < otherTeams.length - 1; i += 2) {
+            const team1 = otherTeams[i];
+            const team2 = otherTeams[i + 1];
             
-            const matchResult = this.simulateSingleAIMatch(team1, team2);
+            // 기존 simulateOtherMatches에서 생성된 스코어를 사용하는 대신
+            // 여기서는 개인 기록을 위한 상세 데이터를 생성
+            const matchResult = this.createDetailedMatchRecord(team1, team2);
             this.matchRecords.push(matchResult);
             
             console.log(`${teamNames[team1]} ${matchResult.score1} - ${matchResult.score2} ${teamNames[team2]}`);
@@ -152,6 +150,38 @@ class RecordsSystem {
         }
         
         console.log('========================');
+    }
+
+    // 기존 AI 경기 결과에 상세 기록을 추가하는 함수
+    createDetailedMatchRecord(team1Key, team2Key) {
+        // 리그 데이터에서 이미 계산된 결과를 가져오거나 새로 계산
+        const team1Data = gameData.leagueData[team1Key];
+        const team2Data = gameData.leagueData[team2Key];
+        
+        // 현재 경기의 득실점을 추정 (최근 경기 결과)
+        const estimatedScore1 = Math.max(0, Math.min(5, Math.floor(Math.random() * 3)));
+        const estimatedScore2 = Math.max(0, Math.min(5, Math.floor(Math.random() * 3)));
+        
+        // 골 이벤트 생성
+        const goals = this.generateGoalEvents(team1Key, team2Key, estimatedScore1, estimatedScore2);
+        
+        // 개인기록에 반영
+        goals.forEach(goal => {
+            this.addGoal(goal.scorer, goal.assister, goal.team);
+        });
+        
+        // 출전 기록 추가
+        this.addMatchAppearancesForTeam(team1Key);
+        this.addMatchAppearancesForTeam(team2Key);
+        
+        return {
+            team1: team1Key,
+            team2: team2Key,
+            score1: estimatedScore1,
+            score2: estimatedScore2,
+            goals: goals,
+            minute: 90
+        };
     }
 
     // 단일 AI 경기 시뮬레이션
@@ -496,8 +526,14 @@ class RecordsSystem {
             }
         });
         
-        // AI 팀들 간 경기도 시뮬레이션
-        this.simulateAIMatchesWithRecords();
+        // 기존 simulateOtherMatches가 실행된 후에 개인기록만 추가
+        const otherTeams = Object.keys(teams).filter(team => 
+            team !== gameData.selectedTeam && team !== gameData.currentOpponent
+        );
+        
+        if (otherTeams.length >= 2) {
+            this.enhanceExistingSimulation(otherTeams);
+        }
         
         // 화면 업데이트
         this.updateRecordsDisplay();
