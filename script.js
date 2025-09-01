@@ -723,6 +723,11 @@ function selectTeam(teamKey) {
     
     // 상대팀 설정
     setNextOpponent();
+
+    // 개인기록 시스템 초기화
+    if (typeof recordsSystem !== 'undefined') {
+    recordsSystem.initialize();
+    }
     
     // 로비로 이동
     showScreen('lobby');
