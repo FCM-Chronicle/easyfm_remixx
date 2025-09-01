@@ -1086,6 +1086,11 @@ function endMatch(matchData) {
             processPostMatchGrowth();
         }, 2000);
     }
+
+    // 개인기록 업데이트
+    if (typeof updateRecordsAfterMatch === 'function') {
+    updateRecordsAfterMatch(matchData);
+    }
     
     // AI 팀들 경기 시뮬레이션
     simulateOtherMatches();
