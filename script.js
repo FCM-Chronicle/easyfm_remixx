@@ -806,6 +806,11 @@ function showTab(tabName) {
         case 'sponsor':
             displaySponsors();
             break;
+            case 'records':
+            if (typeof updateRecordsTab === 'function') {
+            updateRecordsTab();
+            }
+            break;
     }
 }
 
