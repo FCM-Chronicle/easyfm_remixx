@@ -1,74 +1,3 @@
-// 게임 데이터
-let gameData = {
-    selectedTeam: null,
-    currentLeague: 1, // 현재 소속 리그 (1, 2, 3부리그) - 추가
-    teamMoney: 1000, // 억원
-    teamMorale: 80,
-    currentSponsor: null,
-    matchesPlayed: 0,
-    currentOpponent: null,
-    currentTactic: 'gegenpress',
-    squad: {
-        gk: null,
-        df: [null, null, null, null],
-        mf: [null, null, null],
-        fw: [null, null, null]
-    },
-    // 리그별 데이터로 분리 - 수정
-    leagueData: {
-        division1: {},
-        division2: {},
-        division3: {}
-    },
-    playerGrowthData: {},
-    transferSystemData: {}
-};
-
-
-    const teamNames = {
-    "바르셀로나": "바르셀로나",
-    "레알 마드리드": "레알 마드리드", 
-    "맨체스터 시티": "맨체스터 시티",
-    "리버풀": "리버풀",
-    "토트넘 홋스퍼": "토트넘 홋스퍼",
-    "파리 생제르맹": "파리 생제르맹",
-    "AC 밀란": "AC 밀란",
-    "인터 밀란": "인터 밀란",
-    "아스널": "아스널",
-    "나폴리": "나폴리",
-    "첼시": "첼시",
-    "바이에른 뮌헨": "바이에른 뮌헨",
-    "아틀레티코 마드리드": "아틀레티코 마드리드",
-    "도르트문트": "도르트문트",
-    "유벤투스": "유벤투스",
-    "뉴캐슬 유나이티드": "뉴캐슬 유나이티드",
-    "아스톤 빌라": "아스톤 빌라",
-    "라이프치히": "라이프치히",
-    "세비야": "세비야",
-    "아약스": "아약스",
-    "AS 로마": "AS 로마",
-    "레버쿠젠": "레버쿠젠",
-    "스포르팅 CP": "스포르팅 CP",
-    "벤피카": "벤피카",
-    "셀틱": "셀틱",
-    "페예노르트": "페예노르트",
-    "맨체스터 유나이티드": "맨체스터 유나이티드",
-    "올랭피크 드 마르세유": "올랭피크 드 마르세유",
-    "FC 서울": "FC 서울",
-    "갈라타사라이": "갈라타사라이",
-    "알 힐랄": "알 힐랄",
-    "알 이티하드": "알 이티하드",
-    "알 나스르": "알 나스르",
-    "아르헨티나 연합": "아르헨티나 연합",
-    "미국 연합": "미국 연합",
-    "멕시코 연합": "멕시코 연합",
-    "브라질 연합": "브라질 연합",
-    "전북 현대": "전북 현대",
-    "울산 현대": "울산 현대",
-    "포항 스틸러스": "포항 스틸러스",
-    "광주 FC": "광주 FC",
-    "리옹": "리옹"
-};
 
 const allteams = {
     // 1부 리그
@@ -1517,6 +1446,90 @@ const allteams = {
     }
     }
 
+// 기존 코드 호환용 변환
+const teams = (() => {
+    const convertedTeams = {};
+    Object.keys(allTeams).forEach(teamName => {
+        convertedTeams[teamName] = allTeams[teamName].players;
+    });
+    return convertedTeams;
+})();
+
+
+// 게임 데이터
+let gameData = {
+    selectedTeam: null,
+    currentLeague: 1, // 현재 소속 리그 (1, 2, 3부리그) - 추가
+    teamMoney: 1000, // 억원
+    teamMorale: 80,
+    currentSponsor: null,
+    matchesPlayed: 0,
+    currentOpponent: null,
+    currentTactic: 'gegenpress',
+    squad: {
+        gk: null,
+        df: [null, null, null, null],
+        mf: [null, null, null],
+        fw: [null, null, null]
+    },
+    // 리그별 데이터로 분리 - 수정
+    leagueData: {
+        division1: {},
+        division2: {},
+        division3: {}
+    },
+    playerGrowthData: {},
+    transferSystemData: {}
+};
+
+
+    const teamNames = {
+    "바르셀로나": "바르셀로나",
+    "레알 마드리드": "레알 마드리드", 
+    "맨체스터 시티": "맨체스터 시티",
+    "리버풀": "리버풀",
+    "토트넘 홋스퍼": "토트넘 홋스퍼",
+    "파리 생제르맹": "파리 생제르맹",
+    "AC 밀란": "AC 밀란",
+    "인터 밀란": "인터 밀란",
+    "아스널": "아스널",
+    "나폴리": "나폴리",
+    "첼시": "첼시",
+    "바이에른 뮌헨": "바이에른 뮌헨",
+    "아틀레티코 마드리드": "아틀레티코 마드리드",
+    "도르트문트": "도르트문트",
+    "유벤투스": "유벤투스",
+    "뉴캐슬 유나이티드": "뉴캐슬 유나이티드",
+    "아스톤 빌라": "아스톤 빌라",
+    "라이프치히": "라이프치히",
+    "세비야": "세비야",
+    "아약스": "아약스",
+    "AS 로마": "AS 로마",
+    "레버쿠젠": "레버쿠젠",
+    "스포르팅 CP": "스포르팅 CP",
+    "벤피카": "벤피카",
+    "셀틱": "셀틱",
+    "페예노르트": "페예노르트",
+    "맨체스터 유나이티드": "맨체스터 유나이티드",
+    "올랭피크 드 마르세유": "올랭피크 드 마르세유",
+    "FC 서울": "FC 서울",
+    "갈라타사라이": "갈라타사라이",
+    "알 힐랄": "알 힐랄",
+    "알 이티하드": "알 이티하드",
+    "알 나스르": "알 나스르",
+    "아르헨티나 연합": "아르헨티나 연합",
+    "미국 연합": "미국 연합",
+    "멕시코 연합": "멕시코 연합",
+    "브라질 연합": "브라질 연합",
+    "전북 현대": "전북 현대",
+    "울산 현대": "울산 현대",
+    "포항 스틸러스": "포항 스틸러스",
+    "광주 FC": "광주 FC",
+    "리옹": "리옹"
+};
+
+
+
 
 // 스폰서 데이터
 const sponsors = [
@@ -2601,9 +2614,9 @@ function applyTeamTheme(teamKey) {
 }
 
 // 외부에서 호출할 수 있는 함수들
-window.gameData = gameData;
 window.allTeams = allTeams; // 추가
 window.teams = teams;
+window.gameData = gameData;
 // window.teamNames = teamNames; // 삭제 또는 수정
 window.updateDisplay = updateDisplay;
 window.setNextOpponent = setNextOpponent;
