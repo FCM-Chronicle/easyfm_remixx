@@ -2147,22 +2147,24 @@ function setNextOpponent() {
 }
 
 function initializeLeagueData() {
-    ['division1', 'division2', 'division3'].forEach(divisionKey => {
-        gameData.leagueData[divisionKey] = {};
-        // 각 리그의 팀들에 대해 초기화
-        Object.keys(allTeams).forEach(teamKey => {
-            if (allTeams[teamKey].league === parseInt(divisionKey.slice(-1))) {
-                gameData.leagueData[divisionKey][teamKey] = {
-                    matches: 0,
-                    wins: 0,
-                    draws: 0,
-                    losses: 0,
-                    points: 0,
-                    goalsFor: 0,
-                    goalsAgainst: 0
-                };
-            }
-        });
+    // 각 리그별로 초기화
+    Object.keys(allTeams).forEach(teamKey => {
+        const league = allTeams[teamKey].league;
+        const divisionKey = `division${league}`;
+        
+        if (!gameData.leagueData[divisionKey]) {
+            gameData.leagueData[divisionKey] = {};
+        }
+        
+        gameData.leagueData[divisionKey][teamKey] = {
+            matches: 0,
+            wins: 0,
+            draws: 0,
+            losses: 0,
+            points: 0,
+            goalsFor: 0,
+            goalsAgainst: 0
+        };
     });
 }
 
