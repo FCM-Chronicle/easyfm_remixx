@@ -29,7 +29,7 @@ const allTeams = {
         description: "꿈과 열정이 살아 숨쉬는 카탈루냐의 자존심"
     },
 
-    "레알 마드리드": {
+    "레알_마드리드": {
         league: 1,
         players: [
             { name: "티보 쿠르투아", position: "GK", country: "벨기에", age: 33, rating: 85 },
@@ -94,7 +94,7 @@ const allTeams = {
         description: "천상의 축구를 구현하는 맨체스터의 블루 문"
     },
 
-    "맨체스터 유나이티드": {
+    "맨체스터_유나이티드": {
         league: 2,
         players: [
             { name: "알타이 바이은드르", position: "GK", country: "튀르키예", age: 27, rating: 69 },
@@ -156,7 +156,7 @@ const allTeams = {
         description: "You'll Never Walk Alone - 리버풀의 불굴의 정신"
     },
 
-    "토트넘 홋스퍼": {
+    "토트넘_홋스퍼": {
         league: 1,
         players: [
             { name: "굴리엘모 비카리오", position: "GK", country: "이탈리아", age: 28, rating: 84 },
@@ -194,7 +194,7 @@ const allTeams = {
         description: "To Dare Is To Do - 스퍼스의 도전 정신"
     },
 
-    "파리 생제르맹": {
+    "파리_생제르맹": {
         league: 1,
         players: [
             { name: "잔루이지 돈나룸마", position: "GK", country: "이탈리아", age: 26, rating: 87 },
@@ -222,7 +222,7 @@ const allTeams = {
         description: "파리의 별들이 빛나는 세계 최고의 무대"
     },
 
-    "AC 밀란": {
+    "AC_밀란": {
         league: 1,
         players: [
             { name: "피에트로 테라치아노", position: "GK", country: "이탈리아", age: 21, rating: 67 },
@@ -248,7 +248,7 @@ const allTeams = {
         description: "로소네리의 전통과 명예를 이어가는 밀라노의 자존심"
     },
 
-    "인터 밀란": {
+    "인터_밀란": {
         league: 1,
         players: [
             { name: "얀 조머", position: "GK", country: "스위스", age: 36, rating: 83 },
@@ -377,7 +377,7 @@ const allTeams = {
         description: "블루스의 강력한 투지와 승부근성"
     },
 
-    "바이에른 뮌헨": {
+    "바이에른_뮌헨": {
         league: 1,
         players: [
             { name: "마누엘 노이어", position: "GK", country: "독일", age: 39, rating: 83 },
@@ -406,7 +406,7 @@ const allTeams = {
         description: "독일 축구의 자존심이자 바바리아의 왕자들"
     },
 
-    "아틀레티코 마드리드": {
+    "아틀레티코_마드리드": {
         league: 1,
         players: [
             { name: "후안 무소", position: "GK", country: "아르헨티나", age: 31, rating: 70 },
@@ -500,7 +500,7 @@ const allTeams = {
         description: "비앙코네리의 전통과 명예를 되찾기 위한 도전"
     },
 
-    "뉴캐슬 유나이티드": {
+    "뉴캐슬_유나이티드": {
         league: 2,
         players: [
             { name: "마르틴 두브라프카", position: "GK", country: "슬로바키아", age: 36, rating: 71 },
@@ -533,7 +533,7 @@ const allTeams = {
         description: "마그파이스의 재기를 꿈꾸는 타인 사이드의 열정"
     },
 
-    "아스톤 빌라": {
+    "아스톤_빌라": {
         league: 2,
         players: [
             { name: "매티 캐시", position: "DF", country: "폴란드", age: 27, rating: 83 },
@@ -667,7 +667,7 @@ const allTeams = {
         description: "암스테르담의 자존심을 되찾기 위한 토털 풋볼의 부활"
     },
 
-    "AS 로마": {
+    "AS_로마": {
         league: 2,
         players: [
             { name: "데빈 렌스", position: "DF", country: "네덜란드", age: 22, rating: 75 },
@@ -731,7 +731,7 @@ const allTeams = {
         description: "바이엘 레버쿠젠의 무패 신화를 이어가려는 의지"
     },
 
-    "스포르팅 CP": {
+    "스포르팅_CP": {
         league: 2,
         players: [
             { name: "프랑코 이스라엘", position: "GK", country: "우루과이", age: 25, rating: 72 },
@@ -898,7 +898,7 @@ const allTeams = {
     //     description: "아인트호벤의 빨간 군단이 되살리는 PSV의 전통"
     // },
 
-    "올랭피크 드 마르세유": {
+    "올랭피크_드_마르세유": {
         league: 2,
         players: [
             { name: "헤로니모 룰리", position: "GK", country: "아르헨티나", age: 33, rating: 78 },
@@ -935,7 +935,7 @@ const allTeams = {
     },
 
     // 3부 리그 시작
-    "FC 서울": {
+    "FC_서울": {
         league: 3,
         players: [
             { name: "이상민", position: "DF", country: "대한민국", age: 27, rating: 75 },
@@ -1019,7 +1019,7 @@ const allTeams = {
         description: "이스탄불의 사자들이 보여주는 터키 축구의 자존심"
     },
 
-    "알 힐랄": {
+    "알_힐랄": {
         league: 3,
         players: [
             { name: "야신 부누", position: "GK", country: "모로코", age: 34, rating: 79 },
@@ -1083,7 +1083,7 @@ const allTeams = {
         description: "벤제마가 이끄는 알 이티하드의 새로운 도전"
     },
 
-    "알 나스르": {
+    "알_나스르": {
         league: 3,
         players: [
             { name: "크리스티아누 호날두", position: "FW", country: "포르투갈", age: 40, rating: 86 },
@@ -1115,7 +1115,7 @@ const allTeams = {
         description: "크리스티아누 호날두가 새로운 도전을 펼치는 무대"
     },
 
-    "아르헨티나 연합": {
+    "아르헨티나_연합": {
         league: 3,
         players: [
             { name: "프랑코 아르마니", position: "GK", country: "아르헨티나", age: 38, rating: 74 },
@@ -1147,7 +1147,7 @@ const allTeams = {
         description: "아르헨티나 축구의 열정과 전통을 대표하는 팀"
     },
 
-    "미국 연합": {
+    "미국_연합": {
         league: 3,
         players: [
             { name: "리오넬 메시", position: "FW", country: "아르헨티나", age: 38, rating: 88 },
@@ -1179,7 +1179,7 @@ const allTeams = {
         description: "메시의 마법이 펼쳐지는 MLS의 화려한 무대"
     },
 
-    "멕시코 연합": {
+    "멕시코_연합": {
         league: 3,
         players: [
             { name: "세르히오 라모스", position: "DF", country: "스페인", age: 39, rating: 78 },
@@ -1208,7 +1208,7 @@ const allTeams = {
         { name: "니콜라스 이바녜스", position: "FW", country: "아르헨티나", age: 30, rating: 74 }
         ],
         },
-            "브라질 연합": {
+            "브라질_연합": {
         league: 3,
         players: [
             { name: "베베르통", position: "GK", country: "브라질", age: 37, rating: 74 },
@@ -1240,7 +1240,7 @@ const allTeams = {
         description: "브라질 축구의 삼바 리듬과 남미 특급 선수들의 축제"
     },
 
-    "전북 현대": {
+    "전북_현대": {
         league: 3,
         players: [
             { name: "김정훈", position: "GK", country: "대한민국", age: 24, rating: 72 },
@@ -1293,7 +1293,7 @@ const allTeams = {
         description: "한국 축구의 명문, 전북의 자부심과 전통"
     },
 
-    "울산 현대": {
+    "울산_현대": {
         league: 3,
         players: [
             { name: "조현택", position: "DF", country: "대한민국", age: 24, rating: 72 },
@@ -1329,7 +1329,7 @@ const allTeams = {
         description: "공업도시 울산의 자존심, 현대의 힘찬 질주"
     },
 
-    "포항 스틸러스": {
+    "포항_스틸러스": {
         league: 3,
         players: [
             { name: "윤평국", position: "GK", country: "대한민국", age: 33, rating: 74 },
@@ -1374,7 +1374,7 @@ const allTeams = {
         description: "철강도시 포항의 강철 같은 의지와 투혼"
     },
 
-    "광주 FC": {
+    "광주_FC": {
         league: 3,
         players: [
             { name: "김경민", position: "GK", country: "대한민국", age: 33, rating: 73 },
@@ -1485,46 +1485,46 @@ let gameData = {
 
     const teamNames = {
     "바르셀로나": "바르셀로나",
-    "레알 마드리드": "레알 마드리드", 
+    "레알_마드리드": "레알 마드리드", 
     "맨체스터_시티": "맨체스터 시티",
     "리버풀": "리버풀",
-    "토트넘 홋스퍼": "토트넘 홋스퍼",
-    "파리 생제르맹": "파리 생제르맹",
-    "AC 밀란": "AC 밀란",
-    "인터 밀란": "인터 밀란",
+    "토트넘_홋스퍼": "토트넘 홋스퍼",
+    "파리_생제르맹": "파리 생제르맹",
+    "AC_밀란": "AC 밀란",
+    "인터_밀란": "인터 밀란",
     "아스널": "아스널",
     "나폴리": "나폴리",
     "첼시": "첼시",
-    "바이에른 뮌헨": "바이에른 뮌헨",
-    "아틀레티코 마드리드": "아틀레티코 마드리드",
+    "바이에른_뮌헨": "바이에른 뮌헨",
+    "아틀레티코_마드리드": "아틀레티코 마드리드",
     "도르트문트": "도르트문트",
     "유벤투스": "유벤투스",
-    "뉴캐슬 유나이티드": "뉴캐슬 유나이티드",
-    "아스톤 빌라": "아스톤 빌라",
+    "뉴캐슬_유나이티드": "뉴캐슬 유나이티드",
+    "아스톤_빌라": "아스톤 빌라",
     "라이프치히": "라이프치히",
     "세비야": "세비야",
     "아약스": "아약스",
-    "AS 로마": "AS 로마",
+    "AS_로마": "AS 로마",
     "레버쿠젠": "레버쿠젠",
-    "스포르팅 CP": "스포르팅 CP",
+    "스포르팅_CP": "스포르팅 CP",
     "벤피카": "벤피카",
     "셀틱": "셀틱",
     "페예노르트": "페예노르트",
-    "맨체스터 유나이티드": "맨체스터 유나이티드",
-    "올랭피크 드 마르세유": "올랭피크 드 마르세유",
-    "FC 서울": "FC 서울",
+    "맨체스터_유나이티드": "맨체스터 유나이티드",
+    "올랭피크_드_마르세유": "올랭피크 드 마르세유",
+    "FC_서울": "FC 서울",
     "갈라타사라이": "갈라타사라이",
-    "알 힐랄": "알 힐랄",
-    "알 이티하드": "알 이티하드",
-    "알 나스르": "알 나스르",
-    "아르헨티나 연합": "아르헨티나 연합",
-    "미국 연합": "미국 연합",
-    "멕시코 연합": "멕시코 연합",
-    "브라질 연합": "브라질 연합",
-    "전북 현대": "전북 현대",
-    "울산 현대": "울산 현대",
-    "포항 스틸러스": "포항 스틸러스",
-    "광주 FC": "광주 FC",
+    "알_힐랄": "알 힐랄",
+    "알_이티하드": "알 이티하드",
+    "알_나스르": "알 나스르",
+    "아르헨티나_연합": "아르헨티나 연합",
+    "미국_연합": "미국 연합",
+    "멕시코_연합": "멕시코 연합",
+    "브라질_연합": "브라질 연합",
+    "전북_현대": "전북 현대",
+    "울산_현대": "울산 HD",
+    "포항_스틸러스": "포항 스틸러스",
+    "광주_FC": "광주 FC",
     "리옹": "리옹"
 };
 
