@@ -1649,7 +1649,7 @@ function setupEventListeners() {
             selectTeam(validTeamKey); 
         });
     });
-}
+
 
     // 탭 전환
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1701,7 +1701,7 @@ function setupEventListeners() {
             handleInterview(option);
         });
     });
-
+}
 
 function selectTeam(teamKey) {
     gameData.selectedTeam = teamKey;
