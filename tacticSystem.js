@@ -1098,12 +1098,17 @@ function endMatch(matchData) {
 
 function updateLeagueData(matchData, points) {
     // 사용자 팀 데이터 업데이트
-    const userData = gameData.leagueData[gameData.selectedTeam];
-    userData.matches++;
-    userData.goalsFor += matchData.homeScore;
-    userData.goalsAgainst += matchData.awayScore;
-    userData.points += points;
     
+     // 현재 리그 확인
+    const currentLeague = gameData.currentLeague;
+    const divisionKey = `division${currentLeague}`;
+    
+    // 사용자 팀 데이터 업데이트
+    const userData = gameData.leagueData[divisionKey][gameData.selectedTeam];
+    if (!userData) {
+        console.error('User team data not found:', gameData.selectedTeam);
+        return;
+    }
     if (points === 3) {
         userData.wins++;
     } else if (points === 1) {
