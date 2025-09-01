@@ -23,6 +23,7 @@ const allTeams = {
             { name: "엑토르 포트", position: "DF", country: "스페인", age: 19, rating: 72 },
             { name: "마르크 베르날", position: "MF", country: "스페인", age: 18, rating: 71 },
             { name: "제라르 마르틴", position: "DF", country: "스페인", age: 23, rating: 67 },
+            { name: "파우 쿠바르시", position: "DF", country: "스페인", age: 18, rating: 84 },
             { name: "루니 바르다그지", position: "FW", country: "덴마크", age: 19, rating: 69 }
         ],
         description: "꿈과 열정이 살아 숨쉬는 카탈루냐의 자존심"
@@ -58,7 +59,7 @@ const allTeams = {
         description: "왕실의 위엄을 지닌 세계 최고의 클럽"
     },
 
-    "맨체스터 시티": {
+    "맨체스터_시티": {
         league: 1,
         players: [
             { name: "제임스 트래포드", position: "GK", country: "잉글랜드", age: 22, rating: 81 },
@@ -1485,7 +1486,7 @@ let gameData = {
     const teamNames = {
     "바르셀로나": "바르셀로나",
     "레알 마드리드": "레알 마드리드", 
-    "맨체스터 시티": "맨체스터 시티",
+    "맨체스터_시티": "맨체스터 시티",
     "리버풀": "리버풀",
     "토트넘 홋스퍼": "토트넘 홋스퍼",
     "파리 생제르맹": "파리 생제르맹",
