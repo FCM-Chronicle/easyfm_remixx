@@ -1701,7 +1701,7 @@ function setupEventListeners() {
             handleInterview(option);
         });
     });
-}
+
 
 function selectTeam(teamKey) {
     gameData.selectedTeam = teamKey;
