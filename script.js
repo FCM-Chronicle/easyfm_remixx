@@ -1,5 +1,5 @@
 
-const allteams = {
+const allTeams = {
     // 1부 리그
     "바르셀로나": {
         league: 1,
