@@ -1637,12 +1637,19 @@ function initializeGame() {
 
 function setupEventListeners() {
     // 팀 선택
-document.querySelectorAll('.team-card').forEach(card => {
-    card.addEventListener('click', function() {
-        const teamKey = this.dataset.team; // 이제 한국어 팀명
-        selectTeam(teamKey);
+    document.querySelectorAll('.team-card').forEach(card => {
+        card.addEventListener('click', function() {
+            // 1. data-team 속성에서 값 가져오기
+            const originalTeamKey = this.dataset.team; 
+
+            // 2. 공백을 언더스코어로 변환하여 유효한 키 생성
+            const validTeamKey = originalTeamKey.replace(/\s/g, '_'); 
+            
+            // 3. 변환된 유효한 키를 selectTeam 함수에 전달
+            selectTeam(validTeamKey); 
+        });
     });
-});
+}
 
     // 탭 전환
     document.querySelectorAll('.tab-btn').forEach(btn => {
