@@ -2616,9 +2616,9 @@ function applyTeamTheme(teamKey) {
 }
 
 // 외부에서 호출할 수 있는 함수들
+window.gameData = gameData;
 window.allTeams = allTeams; // 추가
 window.teams = teams;
-window.gameData = gameData;
 // window.teamNames = teamNames; // 삭제 또는 수정
 window.updateDisplay = updateDisplay;
 window.setNextOpponent = setNextOpponent;
