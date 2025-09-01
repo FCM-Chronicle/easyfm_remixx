@@ -1624,12 +1624,12 @@ function initializeGame() {
 
 function setupEventListeners() {
     // 팀 선택
-    document.querySelectorAll('.team-card').forEach(card => {
-        card.addEventListener('click', function() {
-            const teamKey = this.dataset.team;
-            selectTeam(teamKey);
-        });
+document.querySelectorAll('.team-card').forEach(card => {
+    card.addEventListener('click', function() {
+        const teamKey = this.dataset.team; // 이제 한국어 팀명
+        selectTeam(teamKey);
     });
+});
 
     // 탭 전환
     document.querySelectorAll('.tab-btn').forEach(btn => {
