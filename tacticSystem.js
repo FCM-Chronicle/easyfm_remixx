@@ -1458,17 +1458,13 @@ function handleInterview(option) {
     alert(`인터뷰 완료! 팀 사기가 ${moraleChange > 0 ? '+' : ''}${moraleChange} 변했습니다.\n현재 사기: ${gameData.teamMorale}`);
 }
 
-function checkSeasonEnd() {
-    // 어느 한 팀이라도 36경기를 했는지 확인 (기존: 모든 팀이 36경기)
-    const anyTeamCompleted = Object.values(gameData.leagueData).some(team => team.matches >= 36);
-    
-    if (anyTeamCompleted) {
-        endSeason();
-    }
-}
 
+// 승강제 시스템 구현
+
+// 시즌 종료 및 승강제 처리 (기존 함수 확장)
 function endSeason() {
-    // 최종 순위 계산
+    // === 기존 로직 유지 (호환성) ===
+    // 최종 순위 계산 (기존 방식)
     const standings = Object.keys(gameData.leagueData).map(teamKey => ({
         team: teamKey,
         ...gameData.leagueData[teamKey],
@@ -1499,19 +1495,540 @@ function endSeason() {
     
     gameData.teamMoney += reward;
     
-    // 선수 나이 증가
-    if (typeof advancePlayerAges === 'function') {
-        advancePlayerAges();
+    // === 새로운 승강제 로직 추가 ===
+    // 3부리그 시스템이 활성화된 경우에만 승강제 적용
+    if (typeof allTeams !== 'undefined' && Object.keys(allTeams).length > 19) {
+        // 리그별 상세 순위 계산
+        const detailedStandings = calculateDetailedStandings();
+        
+        // 승강제 변동사항 계산
+        const promotionRelegationData = calculatePromotionRelegationNew(detailedStandings);
+        
+        // 사용자 팀 승강제 결과 확인
+        const userPromotionStatus = checkUserPromotionStatus(promotionRelegationData);
+        
+        // 승강제 적용
+        applyPromotionRelegationNew(promotionRelegationData);
+        
+        // 추가 상금 계산 (리그별 차등)
+        const additionalPrize = calculateAdditionalSeasonPrize(gameData.currentLeague, userPosition);
+        if (additionalPrize > 0) {
+            gameData.teamMoney += additionalPrize;
+            reward += additionalPrize;
+        }
+        
+        // 승강제 결과를 기존 메시지에 추가
+        let promotionMessage = '';
+        if (userPromotionStatus.status === 'promotion') {
+            promotionMessage = `\n\n🎉 축하합니다! ${userPromotionStatus.newLeague}부리그 승격!`;
+            gameData.currentLeague = userPromotionStatus.newLeague;
+        } else if (userPromotionStatus.status === 'relegation') {
+            promotionMessage = `\n\n😔 아쉽게도 ${userPromotionStatus.newLeague}부리그 강등...`;
+            gameData.currentLeague = userPromotionStatus.newLeague;
+        }
+        
+        // 선수 나이 증가 (기존 로직 유지)
+        if (typeof advancePlayerAges === 'function') {
+            advancePlayerAges();
+        }
+        
+        // 시즌 리셋 (기존 로직 유지)
+        initializeLeagueData();
+        gameData.matchesPlayed = 0;
+        
+        // 기존 메시지 + 승강제 정보
+        alert(`시즌 종료!\n최종 순위: ${userPosition}위 (${achievement})\n보상: ${reward}억원${promotionMessage}`);
+        
+        // 다른 팀들의 승강제 현황 표시
+        if (promotionRelegationData.promotions.length > 0 || promotionRelegationData.relegations.length > 0) {
+            showOtherTeamsPromotionStatus(promotionRelegationData);
+        }
+    } else {
+        // 기존 1부리그 시스템 (승강제 없음)
+        // 선수 나이 증가
+        if (typeof advancePlayerAges === 'function') {
+            advancePlayerAges();
+        }
+        
+        // 시즌 리셋
+        initializeLeagueData();
+        gameData.matchesPlayed = 0;
+        
+        // 기존 메시지
+        alert(`시즌 종료!\n최종 순위: ${userPosition}위 (${achievement})\n보상: ${reward}억원`);
+    }
+}
+
+// === 새로운 승강제 헬퍼 함수들 ===
+
+// 리그별 상세 순위 계산
+function calculateDetailedStandings() {
+    const standings = {};
+    
+    for (let i = 1; i <= 3; i++) {
+        const divisionKey = `division${i}`;
+        if (gameData.leagueData[divisionKey]) {
+            standings[divisionKey] = Object.keys(gameData.leagueData[divisionKey])
+                .map(teamKey => ({
+                    team: teamKey,
+                    ...gameData.leagueData[divisionKey][teamKey],
+                    goalDiff: gameData.leagueData[divisionKey][teamKey].goalsFor - 
+                              gameData.leagueData[divisionKey][teamKey].goalsAgainst
+                }))
+                .sort((a, b) => {
+                    if (b.points !== a.points) return b.points - a.points;
+                    if (b.goalDiff !== a.goalDiff) return b.goalDiff - a.goalDiff;
+                    return b.goalsFor - a.goalsFor;
+                });
+        }
     }
     
-    // 시즌 리셋
-    initializeLeagueData();
-    gameData.matchesPlayed = 0;
+    return standings;
+}
+
+// 승강제 변동사항 계산 (새 버전)
+function calculatePromotionRelegationNew(standings) {
+    const changes = {
+        promotions: [],
+        relegations: [],
+        champions: []
+    };
     
-    alert(`시즌 종료!\n최종 순위: ${userPosition}위 (${achievement})\n보상: ${reward}억원`);
+    // 각 리그 우승팀
+    for (let i = 1; i <= 3; i++) {
+        const divisionKey = `division${i}`;
+        if (standings[divisionKey] && standings[divisionKey].length > 0) {
+            changes.champions.push({
+                team: standings[divisionKey][0].team,
+                league: i,
+                title: `${i}부리그 우승`
+            });
+        }
+    }
+    
+    // 1부리그 → 2부리그 강등 (하위 2팀)
+    if (standings.division1 && standings.division1.length >= 2) {
+        const relegated = standings.division1.slice(-2);
+        relegated.forEach(team => {
+            changes.relegations.push({
+                team: team.team,
+                from: 1,
+                to: 2,
+                reason: "1부리그 강등"
+            });
+        });
+    }
+    
+    // 2부리그 → 1부리그 승격 (상위 2팀)
+    if (standings.division2 && standings.division2.length >= 2) {
+        const promoted = standings.division2.slice(0, 2);
+        promoted.forEach(team => {
+            changes.promotions.push({
+                team: team.team,
+                from: 2,
+                to: 1,
+                reason: "1부리그 승격"
+            });
+        });
+    }
+    
+    // 2부리그 → 3부리그 강등 (하위 2팀)
+    if (standings.division2 && standings.division2.length >= 2) {
+        const relegated = standings.division2.slice(-2);
+        relegated.forEach(team => {
+            changes.relegations.push({
+                team: team.team,
+                from: 2,
+                to: 3,
+                reason: "3부리그 강등"
+            });
+        });
+    }
+    
+    // 3부리그 → 2부리그 승격 (상위 2팀)
+    if (standings.division3 && standings.division3.length >= 2) {
+        const promoted = standings.division3.slice(0, 2);
+        promoted.forEach(team => {
+            changes.promotions.push({
+                team: team.team,
+                from: 3,
+                to: 2,
+                reason: "2부리그 승격"
+            });
+        });
+    }
+    
+    return changes;
+}
+
+// 사용자 팀 승강제 상태 확인
+function checkUserPromotionStatus(promotionRelegationData) {
+    // 승격 확인
+    const promotion = promotionRelegationData.promotions.find(p => p.team === gameData.selectedTeam);
+    if (promotion) {
+        return {
+            status: 'promotion',
+            newLeague: promotion.to,
+            message: promotion.reason
+        };
+    }
+    
+    // 강등 확인
+    const relegation = promotionRelegationData.relegations.find(r => r.team === gameData.selectedTeam);
+    if (relegation) {
+        return {
+            status: 'relegation',
+            newLeague: relegation.to,
+            message: relegation.reason
+        };
+    }
+    
+    return { status: 'stay' };
+}
+
+// 승강제 적용 (새 버전)
+function applyPromotionRelegationNew(promotionRelegationData) {
+    // 승격 적용
+    promotionRelegationData.promotions.forEach(promotion => {
+        if (allTeams[promotion.team]) {
+            allTeams[promotion.team].league = promotion.to;
+        }
+    });
+    
+    // 강등 적용
+    promotionRelegationData.relegations.forEach(relegation => {
+        if (allTeams[relegation.team]) {
+            allTeams[relegation.team].league = relegation.to;
+        }
+    });
+}
+
+// 추가 상금 계산 (리그별 차등)
+function calculateAdditionalSeasonPrize(league, position) {
+    const additionalPrizeTable = {
+        1: {
+            1: 500,  // 1부리그 우승 추가 상금
+            2: 300,  // 준우승
+            default: 0
+        },
+        2: {
+            1: 300,  // 2부리그 우승 + 승격 보너스
+            2: 200,  // 준우승 + 승격 보너스
+            default: 0
+        },
+        3: {
+            1: 200,  // 3부리그 우승 + 승격 보너스
+            2: 100,  // 준우승 + 승격 보너스
+            default: 0
+        }
+    };
+    
+    const leaguePrizes = additionalPrizeTable[league] || additionalPrizeTable[3];
+    return leaguePrizes[position] || leaguePrizes.default;
+}
+
+// 다른 팀들의 승강제 현황 표시
+function showOtherTeamsPromotionStatus(promotionRelegationData) {
+    let message = '=== 승강제 현황 ===\n\n';
+    
+    if (promotionRelegationData.promotions.length > 0) {
+        message += '📈 승격 팀들:\n';
+        promotionRelegationData.promotions.forEach(promo => {
+            if (promo.team !== gameData.selectedTeam) {
+                message += `- ${promo.team}: ${promo.reason}\n`;
+            }
+        });
+        message += '\n';
+    }
+    
+    if (promotionRelegationData.relegations.length > 0) {
+        message += '📉 강등 팀들:\n';
+        promotionRelegationData.relegations.forEach(rel => {
+            if (rel.team !== gameData.selectedTeam) {
+                message += `- ${rel.team}: ${rel.reason}\n`;
+            }
+        });
+        message += '\n';
+    }
+    
+    if (promotionRelegationData.champions.length > 0) {
+        message += '🏆 각 리그 우승팀:\n';
+        promotionRelegationData.champions.forEach(champ => {
+            message += `- ${champ.team}: ${champ.title}\n`;
+        });
+    }
+    
+    setTimeout(() => {
+        alert(message);
+    }, 2000); // 2초 후에 표시
+}
+
+// 승강제 변동사항 계산
+function calculatePromotionRelegation(standings) {
+    const changes = {
+        promotions: [],
+        relegations: [],
+        champions: []
+    };
+    
+    // 1부리그 우승팀
+    if (standings.division1.length > 0) {
+        changes.champions.push({
+            team: standings.division1[0].team,
+            league: 1,
+            title: "1부리그 우승"
+        });
+    }
+    
+    // 2부리그 우승팀
+    if (standings.division2.length > 0) {
+        changes.champions.push({
+            team: standings.division2[0].team,
+            league: 2,
+            title: "2부리그 우승"
+        });
+    }
+    
+    // 3부리그 우승팀
+    if (standings.division3.length > 0) {
+        changes.champions.push({
+            team: standings.division3[0].team,
+            league: 3,
+            title: "3부리그 우승"
+        });
+    }
+    
+    // 1부리그 → 2부리그 강등 (하위 2팀)
+    if (standings.division1.length >= 2) {
+        const relegated = standings.division1.slice(-2);
+        relegated.forEach(team => {
+            changes.relegations.push({
+                team: team.team,
+                from: 1,
+                to: 2,
+                reason: "1부리그 강등"
+            });
+        });
+    }
+    
+    // 2부리그 → 1부리그 승격 (상위 2팀)
+    if (standings.division2.length >= 2) {
+        const promoted = standings.division2.slice(0, 2);
+        promoted.forEach(team => {
+            changes.promotions.push({
+                team: team.team,
+                from: 2,
+                to: 1,
+                reason: "1부리그 승격"
+            });
+        });
+    }
+    
+    // 2부리그 → 3부리그 강등 (하위 2팀)
+    if (standings.division2.length >= 2) {
+        const relegated = standings.division2.slice(-2);
+        relegated.forEach(team => {
+            changes.relegations.push({
+                team: team.team,
+                from: 2,
+                to: 3,
+                reason: "3부리그 강등"
+            });
+        });
+    }
+    
+    // 3부리그 → 2부리그 승격 (상위 2팀)
+    if (standings.division3.length >= 2) {
+        const promoted = standings.division3.slice(0, 2);
+        promoted.forEach(team => {
+            changes.promotions.push({
+                team: team.team,
+                from: 3,
+                to: 2,
+                reason: "2부리그 승격"
+            });
+        });
+    }
+    
+    return changes;
+}
+
+// 사용자 시즌 결과 생성
+function generateUserSeasonResult(userPosition, promotionRelegationData) {
+    if (!userPosition) return null;
+    
+    const result = {
+        league: userPosition.league,
+        position: userPosition.position,
+        points: userPosition.points,
+        goalDiff: userPosition.goalDiff,
+        status: "유지" // 기본값
+    };
+    
+    // 승격 확인
+    const promotion = promotionRelegationData.promotions.find(p => p.team === gameData.selectedTeam);
+    if (promotion) {
+        result.status = "승격";
+        result.newLeague = promotion.to;
+        result.message = promotion.reason;
+    }
+    
+    // 강등 확인
+    const relegation = promotionRelegationData.relegations.find(r => r.team === gameData.selectedTeam);
+    if (relegation) {
+        result.status = "강등";
+        result.newLeague = relegation.to;
+        result.message = relegation.reason;
+    }
+    
+    // 우승 확인
+    const championship = promotionRelegationData.champions.find(c => c.team === gameData.selectedTeam);
+    if (championship) {
+        result.championship = championship.title;
+    }
+    
+    return result;
+}
+
+// 승강제 적용
+function applyPromotionRelegation(promotionRelegationData) {
+    // 승격 적용
+    promotionRelegationData.promotions.forEach(promotion => {
+        if (allTeams[promotion.team]) {
+            allTeams[promotion.team].league = promotion.to;
+            console.log(`${promotion.team}: ${promotion.from}부리그 → ${promotion.to}부리그 승격`);
+        }
+    });
+    
+    // 강등 적용
+    promotionRelegationData.relegations.forEach(relegation => {
+        if (allTeams[relegation.team]) {
+            allTeams[relegation.team].league = relegation.to;
+            console.log(`${relegation.team}: ${relegation.from}부리그 → ${relegation.to}부리그 강등`);
+        }
+    });
+    
+    // 사용자 팀의 현재 리그 업데이트
+    if (allTeams[gameData.selectedTeam]) {
+        gameData.currentLeague = allTeams[gameData.selectedTeam].league;
+    }
+}
+
+// 시즌 상금 계산
+function calculateSeasonPrize(league, position) {
+    const prizeTable = {
+        1: {
+            1: 2000,    // 우승
+            2: 1500,    // 준우승
+            3: 1200,    // 3위
+            4: 1000,    // 4위
+            default: position <= 8 ? 500 : (position >= 13 ? 200 : 300)
+        },
+        2: {
+            1: 1200,    // 우승 + 승격
+            2: 1000,    // 준우승 + 승격
+            3: 600,     // 3위
+            4: 500,     // 4위
+            default: position <= 8 ? 300 : (position >= 13 ? 150 : 200)
+        },
+        3: {
+            1: 800,     // 우승 + 승격
+            2: 600,     // 준우승 + 승격
+            3: 400,     // 3위
+            4: 300,     // 4위
+            default: position <= 8 ? 200 : 100
+        }
+    };
+    
+    const leaguePrizes = prizeTable[league] || prizeTable[3];
+    return leaguePrizes[position] || leaguePrizes.default;
+}
+
+// 시즌 결과 표시
+function showSeasonResults(userResult, promotionRelegationData, prize) {
+    let message = `=== 시즌 종료 ===\n\n`;
+    
+    if (userResult) {
+        // 사용자 팀 결과
+        message += `${gameData.selectedTeam} 시즌 결과:\n`;
+        message += `${userResult.league}부리그 ${userResult.position}위\n`;
+        message += `승점: ${userResult.points}점, 득실차: ${userResult.goalDiff > 0 ? '+' : ''}${userResult.goalDiff}\n\n`;
+        
+        // 우승 여부
+        if (userResult.championship) {
+            message += `🏆 ${userResult.championship}! 축하합니다!\n\n`;
+        }
+        
+        // 승강제 결과
+        if (userResult.status === "승격") {
+            message += `🎉 축하합니다! ${userResult.message}!\n`;
+            message += `다음 시즌부터 ${userResult.newLeague}부리그에서 뛰게 됩니다.\n\n`;
+        } else if (userResult.status === "강등") {
+            message += `😔 아쉽게도 ${userResult.message}...\n`;
+            message += `다음 시즌은 ${userResult.newLeague}부리그에서 재기를 노려보세요.\n\n`;
+        } else {
+            message += `${userResult.league}부리그 잔류 확정!\n\n`;
+        }
+        
+        // 상금 지급
+        message += `시즌 상금: ${prize}억원\n\n`;
+    }
+    
+    // 다른 팀들의 승강제 현황
+    if (promotionRelegationData.promotions.length > 0) {
+        message += `📈 승격 팀들:\n`;
+        promotionRelegationData.promotions.forEach(promo => {
+            if (promo.team !== gameData.selectedTeam) {
+                message += `- ${promo.team}: ${promo.reason}\n`;
+            }
+        });
+        message += `\n`;
+    }
+    
+    if (promotionRelegationData.relegations.length > 0) {
+        message += `📉 강등 팀들:\n`;
+        promotionRelegationData.relegations.forEach(rel => {
+            if (rel.team !== gameData.selectedTeam) {
+                message += `- ${rel.team}: ${rel.reason}\n`;
+            }
+        });
+        message += `\n`;
+    }
+    
+    // 우승팀들
+    if (promotionRelegationData.champions.length > 0) {
+        message += `🏆 각 리그 우승팀:\n`;
+        promotionRelegationData.champions.forEach(champ => {
+            message += `- ${champ.team}: ${champ.title}\n`;
+        });
+    }
+    
+    alert(message);
+}
+
+// 시즌 종료 조건 체크
+function checkSeasonEnd() {
+    // 현재 리그의 모든 팀이 26경기를 완료했는지 확인 (14팀 리그에서 홈&어웨이)
+    const currentLeagueTeams = Object.keys(allTeams).filter(team => 
+        allTeams[team].league === gameData.currentLeague
+    );
+    
+    const allTeamsFinished = currentLeagueTeams.every(teamKey => {
+        const divisionKey = `division${gameData.currentLeague}`;
+        const teamData = gameData.leagueData[divisionKey][teamKey];
+        return teamData && teamData.matches >= 26;
+    });
+    
+    if (allTeamsFinished) {
+        endSeason();
+    }
 }
 
 // 전역으로 함수들 노출
 window.TacticSystem = TacticSystem;
 window.startMatch = startMatch;
 window.handleInterview = handleInterview;
+window.endSeason = endSeason;
+window.checkSeasonEnd = checkSeasonEnd;
+window.calculatePromotionRelegation = calculatePromotionRelegation;
+window.applyPromotionRelegation = applyPromotionRelegation; = applyPromotionRelegation;
