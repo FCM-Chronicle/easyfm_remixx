@@ -904,4 +904,4 @@ class LeagueBasedRecordsSystem extends RecordsSystem {
         this.displayTopScorersWithLeague(topScorers, userLeague);
         this.displayTopAssistersWithLeague(topAssisters, userLeague);
         
-        //
+        }
