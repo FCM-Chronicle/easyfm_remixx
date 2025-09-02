@@ -216,7 +216,7 @@ window.updateRecordsTab = updateRecordsTab; //모든 팀의 선수들 초기화
         
         this.initialized = true;
         console.log('개인기록 시스템이 초기화되었습니다.');
-    }
+    
 
     // 선수 초기화
     initializePlayer(playerName, teamKey, position) {
