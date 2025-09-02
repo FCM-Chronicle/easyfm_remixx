@@ -2526,25 +2526,30 @@ function showTacticsInfo() {
 // 팀별 전술 정보 표시 함수
 function showTeamTacticsInfo() {
     const teamTactics = {
-        manCity: "tikitaka",
-        liverpool: "gegenpress",
-        manUnited: "possession",
-        arsenal: "twoLine",
-        chelsea: "longBall",
-        tottenham: "gegenpress",
-        realMadrid: "possession",
-        barcelona: "totalFootball",
-        acMilan: "gegenpress",
-        inter: "totalFootball",
-        bayern: "tikitaka",
-        psg: "possession",
-        leverkusen: "longBall",
-        dortmund: "gegenpress",
-        newCastle: "lavolpiana",
-        asRoma: "longBall",
-        atMadrid: "catenaccio",
-        napoli: "parkBus",
-        seryun: "longBall"
+        맨체스터_시티: "tikitaka",
+        리버풀: "gegenpress",
+        맨체스터_유나이티드: "possession",
+        아스널: "twoLine",
+        첼시: "longBall",
+        토트넘_홋스퍼: "gegenpress",
+        레알_마드리드: "possession",
+        바르셀로나: "totalFootball",
+        AC_밀란: "gegenpress",
+        인테르: "totalFootball",
+        바이에른_뮌헨: "tikitaka",
+        파리_생제르맹: "possession",
+        레버쿠젠: "longBall",
+        도르트문트: "gegenpress",
+        뉴캐슬_유나이티드: "lavolpiana",
+        AS_로마: "longBall",
+        아틀레티코_마드리드: "catenaccio",
+        나폴리: "parkBus",
+        유벤투스: "possession",
+        아스톤_빌라: "longBall",
+        라이프치히: "totalFootball",
+        세비야: "gegenpress",
+        스포르팅_CP: "lavolpiana"
+        
     };
 
     const tacticNames = {
