@@ -1495,4 +1495,4 @@ window.handleInterview = handleInterview;
 window.endSeason = endSeason;
 window.checkSeasonEnd = checkSeasonEnd;
 window.calculatePromotionRelegation = calculatePromotionRelegation;
-window.applyPromotionRelegation = applyPromotionRelegation; = applyPromotionRelegation;
+window.applyPromotionRelegation = applyPromotionRelegation;
