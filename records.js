@@ -207,7 +207,7 @@ window.recordsSystem = leagueBasedRecordsSystem;
 window.leagueBasedRecordsSystem = leagueBasedRecordsSystem;
 window.initializeRecordsSystem = initializeRecordsSystem;
 window.updateRecordsAfterMatch = updateRecordsAfterMatch;
-window.updateRecordsTab = updateRecordsTab;모든 팀의 선수들 초기화
+window.updateRecordsTab = updateRecordsTab; //모든 팀의 선수들 초기화
         Object.keys(teams).forEach(teamKey => {
             teams[teamKey].forEach(player => {
                 this.initializePlayer(player.name, teamKey, player.position);
