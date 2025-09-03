@@ -2465,10 +2465,10 @@ function showTacticsInfo() {
             description: "공을 오래 소유하며 천천히 공격 기회를 만드는 전술"
         },
         parkBus: {
-            name: "침대 축구",
+            name: "윙 플레이",
             effective: ["catenaccio", "twoLine"],
             ineffective: ["gegenpress", "totalFootball"],
-            description: "극도로 수비적인 전술로 역습을 노림"
+            description: "강력한 윙을 이용하여 측면을 파괴하는 전"
         },
         catenaccio: {
             name: "카테나치오",
