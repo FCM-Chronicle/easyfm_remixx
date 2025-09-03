@@ -1573,3 +1573,744 @@ body.team-dortmund .glass {
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
+
+/* 팀별 상징색 적용 */
+
+/* 바르셀로나 - 블라우그라나 (블루&레드) */
+body.team-바르셀로나 {
+    --primary-color: rgba(0, 79, 159, 0.1);
+    --primary-border: rgba(0, 79, 159, 0.3);
+    --accent-color: #004f9f;
+    --secondary-accent: #dc143c;
+}
+
+body.team-바르셀로나 .glass,
+body.team-바르셀로나 .team-card,
+body.team-바르셀로나 .btn,
+body.team-바르셀로나 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+body.team-바르셀로나 .league-title,
+body.team-바르셀로나 .team-rating,
+body.team-바르셀로나 .records-header h3,
+body.team-바르셀로나 .event-time {
+    color: var(--accent-color);
+}
+
+/* 레알 마드리드 - 화이트&골드 */
+body.team-레알_마드리드 {
+    --primary-color: rgba(255, 215, 0, 0.1);
+    --primary-border: rgba(255, 215, 0, 0.3);
+    --accent-color: #ffd700;
+    --secondary-accent: #ffffff;
+}
+
+body.team-레알_마드리드 .glass,
+body.team-레알_마드리드 .team-card,
+body.team-레알_마드리드 .btn,
+body.team-레알_마드리드 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 맨체스터 시티 - 스카이 블루 */
+body.team-맨체스터_시티 {
+    --primary-color: rgba(107, 205, 255, 0.1);
+    --primary-border: rgba(107, 205, 255, 0.3);
+    --accent-color: #6bcdff;
+    --secondary-accent: #ffffff;
+}
+
+body.team-맨체스터_시티 .glass,
+body.team-맨체스터_시티 .team-card,
+body.team-맨체스터_시티 .btn,
+body.team-맨체스터_시티 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 리버풀 - 레드 */
+body.team-리버풀 {
+    --primary-color: rgba(200, 16, 46, 0.1);
+    --primary-border: rgba(200, 16, 46, 0.3);
+    --accent-color: #c8102e;
+    --secondary-accent: #f6eb61;
+}
+
+body.team-리버풀 .glass,
+body.team-리버풀 .team-card,
+body.team-리버풀 .btn,
+body.team-리버풀 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 첼시 - 블루 */
+body.team-첼시 {
+    --primary-color: rgba(3, 70, 148, 0.1);
+    --primary-border: rgba(3, 70, 148, 0.3);
+    --accent-color: #034694;
+    --secondary-accent: #ffffff;
+}
+
+body.team-첼시 .glass,
+body.team-첼시 .team-card,
+body.team-첼시 .btn,
+body.team-첼시 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 아스널 - 레드&골드 */
+body.team-아스널 {
+    --primary-color: rgba(239, 1, 7, 0.1);
+    --primary-border: rgba(239, 1, 7, 0.3);
+    --accent-color: #ef0107;
+    --secondary-accent: #9c824a;
+}
+
+body.team-아스널 .glass,
+body.team-아스널 .team-card,
+body.team-아스널 .btn,
+body.team-아스널 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 토트넘 - 네이비&화이트 */
+body.team-토트넘_홋스퍼 {
+    --primary-color: rgba(19, 34, 87, 0.1);
+    --primary-border: rgba(19, 34, 87, 0.3);
+    --accent-color: #132257;
+    --secondary-accent: #ffffff;
+}
+
+body.team-토트넘_홋스퍼 .glass,
+body.team-토트넘_홋스퍼 .team-card,
+body.team-토트넘_홋스퍼 .btn,
+body.team-토트넘_홋스퍼 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 맨체스터 유나이티드 - 레드 */
+body.team-맨체스터_유나이티드 {
+    --primary-color: rgba(218, 41, 28, 0.1);
+    --primary-border: rgba(218, 41, 28, 0.3);
+    --accent-color: #da291c;
+    --secondary-accent: #ffd700;
+}
+
+body.team-맨체스터_유나이티드 .glass,
+body.team-맨체스터_유나이티드 .team-card,
+body.team-맨체스터_유나이티드 .btn,
+body.team-맨체스터_유나이티드 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 파리 생제르맹 - 네이비&레드 */
+body.team-파리_생제르맹 {
+    --primary-color: rgba(22, 22, 102, 0.1);
+    --primary-border: rgba(22, 22, 102, 0.3);
+    --accent-color: #161666;
+    --secondary-accent: #e31837;
+}
+
+body.team-파리_생제르맹 .glass,
+body.team-파리_생제르맹 .team-card,
+body.team-파리_생제르맹 .btn,
+body.team-파리_생제르맹 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* AC 밀란 - 레드&블랙 */
+body.team-AC_밀란 {
+    --primary-color: rgba(251, 25, 25, 0.1);
+    --primary-border: rgba(251, 25, 25, 0.3);
+    --accent-color: #fb1919;
+    --secondary-accent: #000000;
+}
+
+body.team-AC_밀란 .glass,
+body.team-AC_밀란 .team-card,
+body.team-AC_밀란 .btn,
+body.team-AC_밀란 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 인터 밀란 - 블루&블랙 */
+body.team-인터_밀란 {
+    --primary-color: rgba(0, 104, 179, 0.1);
+    --primary-border: rgba(0, 104, 179, 0.3);
+    --accent-color: #0068b3;
+    --secondary-accent: #000000;
+}
+
+body.team-인터_밀란 .glass,
+body.team-인터_밀란 .team-card,
+body.team-인터_밀란 .btn,
+body.team-인터_밀란 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 바이에른 뮌헨 - 레드&화이트 */
+body.team-바이에른_뮌헨 {
+    --primary-color: rgba(220, 36, 31, 0.1);
+    --primary-border: rgba(220, 36, 31, 0.3);
+    --accent-color: #dc241f;
+    --secondary-accent: #ffffff;
+}
+
+body.team-바이에른_뮌헨 .glass,
+body.team-바이에른_뮌헨 .team-card,
+body.team-바이에른_뮌헨 .btn,
+body.team-바이에른_뮌헨 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 아틀레티코 마드리드 - 레드&화이트 */
+body.team-아틀레티코_마드리드 {
+    --primary-color: rgba(206, 17, 65, 0.1);
+    --primary-border: rgba(206, 17, 65, 0.3);
+    --accent-color: #ce1141;
+    --secondary-accent: #ffffff;
+}
+
+body.team-아틀레티코_마드리드 .glass,
+body.team-아틀레티코_마드리드 .team-card,
+body.team-아틀레티코_마드리드 .btn,
+body.team-아틀레티코_마드리드 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 도르트문트 - 옐로우&블랙 */
+body.team-도르트문트 {
+    --primary-color: rgba(254, 225, 22, 0.1);
+    --primary-border: rgba(254, 225, 22, 0.3);
+    --accent-color: #fee116;
+    --secondary-accent: #000000;
+}
+
+body.team-도르트문트 .glass,
+body.team-도르트문트 .team-card,
+body.team-도르트문트 .btn,
+body.team-도르트문트 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 유벤투스 - 블랙&화이트 */
+body.team-유벤투스 {
+    --primary-color: rgba(255, 255, 255, 0.15);
+    --primary-border: rgba(255, 255, 255, 0.3);
+    --accent-color: #ffffff;
+    --secondary-accent: #000000;
+}
+
+body.team-유벤투스 .glass,
+body.team-유벤투스 .team-card,
+body.team-유벤투스 .btn,
+body.team-유벤투스 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 나폴리 - 스카이 블루 */
+body.team-나폴리 {
+    --primary-color: rgba(0, 172, 237, 0.1);
+    --primary-border: rgba(0, 172, 237, 0.3);
+    --accent-color: #00aced;
+    --secondary-accent: #ffffff;
+}
+
+body.team-나폴리 .glass,
+body.team-나폴리 .team-card,
+body.team-나폴리 .btn,
+body.team-나폴리 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 뉴캐슬 유나이티드 - 블랙&화이트 */
+body.team-뉴캐슬_유나이티드 {
+    --primary-color: rgba(45, 41, 38, 0.1);
+    --primary-border: rgba(45, 41, 38, 0.3);
+    --accent-color: #2d2926;
+    --secondary-accent: #ffffff;
+}
+
+body.team-뉴캐슬_유나이티드 .glass,
+body.team-뉴캐슬_유나이티드 .team-card,
+body.team-뉴캐슬_유나이티드 .btn,
+body.team-뉴캐슬_유나이티드 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 아스톤 빌라 - 클라렛&블루 */
+body.team-아스톤_빌라 {
+    --primary-color: rgba(150, 61, 151, 0.1);
+    --primary-border: rgba(150, 61, 151, 0.3);
+    --accent-color: #963d97;
+    --secondary-accent: #95bfe5;
+}
+
+body.team-아스톤_빌라 .glass,
+body.team-아스톤_빌라 .team-card,
+body.team-아스톤_빌라 .btn,
+body.team-아스톤_빌라 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 라이프치히 - 레드&화이트 */
+body.team-라이프치히 {
+    --primary-color: rgba(220, 36, 31, 0.1);
+    --primary-border: rgba(220, 36, 31, 0.3);
+    --accent-color: #dc241f;
+    --secondary-accent: #ffffff;
+}
+
+body.team-라이프치히 .glass,
+body.team-라이프치히 .team-card,
+body.team-라이프치히 .btn,
+body.team-라이프치히 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 세비야 - 화이트&레드 */
+body.team-세비야 {
+    --primary-color: rgba(246, 41, 12, 0.1);
+    --primary-border: rgba(246, 41, 12, 0.3);
+    --accent-color: #f6290c;
+    --secondary-accent: #ffffff;
+}
+
+body.team-세비야 .glass,
+body.team-세비야 .team-card,
+body.team-세비야 .btn,
+body.team-세비야 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 아약스 - 레드&화이트 */
+body.team-아약스 {
+    --primary-color: rgba(211, 9, 0, 0.1);
+    --primary-border: rgba(211, 9, 0, 0.3);
+    --accent-color: #d30900;
+    --secondary-accent: #ffffff;
+}
+
+body.team-아약스 .glass,
+body.team-아약스 .team-card,
+body.team-아약스 .btn,
+body.team-아약스 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* AS 로마 - 레드&골드 */
+body.team-AS_로마 {
+    --primary-color: rgba(134, 0, 56, 0.1);
+    --primary-border: rgba(134, 0, 56, 0.3);
+    --accent-color: #860038;
+    --secondary-accent: #f7b500;
+}
+
+body.team-AS_로마 .glass,
+body.team-AS_로마 .team-card,
+body.team-AS_로마 .btn,
+body.team-AS_로마 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 레버쿠젠 - 레드&블랙 */
+body.team-레버쿠젠 {
+    --primary-color: rgba(230, 24, 35, 0.1);
+    --primary-border: rgba(230, 24, 35, 0.3);
+    --accent-color: #e61823;
+    --secondary-accent: #000000;
+}
+
+body.team-레버쿠젠 .glass,
+body.team-레버쿠젠 .team-card,
+body.team-레버쿠젠 .btn,
+body.team-레버쿠젠 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 스포르팅 CP - 그린&화이트 */
+body.team-스포르팅_CP {
+    --primary-color: rgba(33, 137, 61, 0.1);
+    --primary-border: rgba(33, 137, 61, 0.3);
+    --accent-color: #21893d;
+    --secondary-accent: #ffffff;
+}
+
+body.team-스포르팅_CP .glass,
+body.team-스포르팅_CP .team-card,
+body.team-스포르팅_CP .btn,
+body.team-스포르팅_CP .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 벤피카 - 레드&화이트 */
+body.team-벤피카 {
+    --primary-color: rgba(231, 24, 31, 0.1);
+    --primary-border: rgba(231, 24, 31, 0.3);
+    --accent-color: #e7181f;
+    --secondary-accent: #ffffff;
+}
+
+body.team-벤피카 .glass,
+body.team-벤피카 .team-card,
+body.team-벤피카 .btn,
+body.team-벤피카 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 셀틱 - 그린&화이트 */
+body.team-셀틱 {
+    --primary-color: rgba(0, 140, 54, 0.1);
+    --primary-border: rgba(0, 140, 54, 0.3);
+    --accent-color: #008c36;
+    --secondary-accent: #ffffff;
+}
+
+body.team-셀틱 .glass,
+body.team-셀틱 .team-card,
+body.team-셀틱 .btn,
+body.team-셀틱 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 페예노르트 - 레드&화이트 */
+body.team-페예노르트 {
+    --primary-color: rgba(255, 0, 0, 0.1);
+    --primary-border: rgba(255, 0, 0, 0.3);
+    --accent-color: #ff0000;
+    --secondary-accent: #ffffff;
+}
+
+body.team-페예노르트 .glass,
+body.team-페예노르트 .team-card,
+body.team-페예노르트 .btn,
+body.team-페예노르트 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 올랭피크 드 마르세유 - 스카이 블루&화이트 */
+body.team-올랭피크_드_마르세유 {
+    --primary-color: rgba(39, 161, 226, 0.1);
+    --primary-border: rgba(39, 161, 226, 0.3);
+    --accent-color: #27a1e2;
+    --secondary-accent: #ffffff;
+}
+
+body.team-올랭피크_드_마르세유 .glass,
+body.team-올랭피크_드_마르세유 .team-card,
+body.team-올랭피크_드_마르세유 .btn,
+body.team-올랭피크_드_마르세유 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 리옹 - 블루&화이트&레드 */
+body.team-리옹 {
+    --primary-color: rgba(12, 25, 129, 0.1);
+    --primary-border: rgba(12, 25, 129, 0.3);
+    --accent-color: #0c1981;
+    --secondary-accent: #ffffff;
+}
+
+body.team-리옹 .glass,
+body.team-리옹 .team-card,
+body.team-리옹 .btn,
+body.team-리옹 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* FC 서울 - 레드 */
+body.team-FC_서울 {
+    --primary-color: rgba(227, 24, 55, 0.1);
+    --primary-border: rgba(227, 24, 55, 0.3);
+    --accent-color: #e31837;
+    --secondary-accent: #ffffff;
+}
+
+body.team-FC_서울 .glass,
+body.team-FC_서울 .team-card,
+body.team-FC_서울 .btn,
+body.team-FC_서울 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 전북 현대 - 그린 */
+body.team-전북_현대 {
+    --primary-color: rgba(0, 128, 55, 0.1);
+    --primary-border: rgba(0, 128, 55, 0.3);
+    --accent-color: #008037;
+    --secondary-accent: #ffffff;
+}
+
+body.team-전북_현대 .glass,
+body.team-전북_현대 .team-card,
+body.team-전북_현대 .btn,
+body.team-전북_현대 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 울산 현대 - 블루 */
+body.team-울산_현대 {
+    --primary-color: rgba(0, 82, 155, 0.1);
+    --primary-border: rgba(0, 82, 155, 0.3);
+    --accent-color: #00529b;
+    --secondary-accent: #ffffff;
+}
+
+body.team-울산_현대 .glass,
+body.team-울산_현대 .team-card,
+body.team-울산_현대 .btn,
+body.team-울산_현대 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 포항 스틸러스 - 레드&블루 */
+body.team-포항_스틸러스 {
+    --primary-color: rgba(227, 24, 55, 0.1);
+    --primary-border: rgba(227, 24, 55, 0.3);
+    --accent-color: #e31837;
+    --secondary-accent: #003da5;
+}
+
+body.team-포항_스틸러스 .glass,
+body.team-포항_스틸러스 .team-card,
+body.team-포항_스틸러스 .btn,
+body.team-포항_스틸러스 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 광주 FC - 옐로우 */
+body.team-광주_FC {
+    --primary-color: rgba(255, 215, 0, 0.1);
+    --primary-border: rgba(255, 215, 0, 0.3);
+    --accent-color: #ffd700;
+    --secondary-accent: #000000;
+}
+
+body.team-광주_FC .glass,
+body.team-광주_FC .team-card,
+body.team-광주_FC .btn,
+body.team-광주_FC .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 갈라타사라이 - 옐로우&레드 */
+body.team-갈라타사라이 {
+    --primary-color: rgba(255, 205, 0, 0.1);
+    --primary-border: rgba(255, 205, 0, 0.3);
+    --accent-color: #ffcd00;
+    --secondary-accent: #c41e3a;
+}
+
+body.team-갈라타사라이 .glass,
+body.team-갈라타사라이 .team-card,
+body.team-갈라타사라이 .btn,
+body.team-갈라타사라이 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 알 힐랄 - 블루&화이트 */
+body.team-알_힐랄 {
+    --primary-color: rgba(0, 123, 191, 0.1);
+    --primary-border: rgba(0, 123, 191, 0.3);
+    --accent-color: #007bbf;
+    --secondary-accent: #ffffff;
+}
+
+body.team-알_힐랄 .glass,
+body.team-알_힐랄 .team-card,
+body.team-알_힐랄 .btn,
+body.team-알_힐랄 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 알 이티하드 - 옐로우&블랙 */
+body.team-알_이티하드 {
+    --primary-color: rgba(253, 185, 39, 0.1);
+    --primary-border: rgba(253, 185, 39, 0.3);
+    --accent-color: #fdb927;
+    --secondary-accent: #000000;
+}
+
+body.team-알_이티하드 .glass,
+body.team-알_이티하드 .team-card,
+body.team-알_이티하드 .btn,
+body.team-알_이티하드 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 알 나스르 - 옐로우&블루 */
+body.team-알_나스르 {
+    --primary-color: rgba(255, 215, 0, 0.1);
+    --primary-border: rgba(255, 215, 0, 0.3);
+    --accent-color: #ffd700;
+    --secondary-accent: #003da5;
+}
+
+body.team-알_나스르 .glass,
+body.team-알_나스르 .team-card,
+body.team-알_나스르 .btn,
+body.team-알_나스르 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 아르헨티나 연합 - 스카이 블루&화이트 */
+body.team-아르헨티나_연합 {
+    --primary-color: rgba(117, 170, 219, 0.1);
+    --primary-border: rgba(117, 170, 219, 0.3);
+    --accent-color: #75aadb;
+    --secondary-accent: #ffffff;
+}
+
+body.team-아르헨티나_연합 .glass,
+body.team-아르헨티나_연합 .team-card,
+body.team-아르헨티나_연합 .btn,
+body.team-아르헨티나_연합 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 미국 연합 - 네이비&레드&화이트 */
+body.team-미국_연합 {
+    --primary-color: rgba(19, 41, 75, 0.1);
+    --primary-border: rgba(19, 41, 75, 0.3);
+    --accent-color: #13294b;
+    --secondary-accent: #bf0a30;
+}
+
+body.team-미국_연합 .glass,
+body.team-미국_연합 .team-card,
+body.team-미국_연합 .btn,
+body.team-미국_연합 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 멕시코 연합 - 그린&화이트&레드 */
+body.team-멕시코_연합 {
+    --primary-color: rgba(0, 104, 71, 0.1);
+    --primary-border: rgba(0, 104, 71, 0.3);
+    --accent-color: #006847;
+    --secondary-accent: #ce1126;
+}
+
+body.team-멕시코_연합 .glass,
+body.team-멕시코_연합 .team-card,
+body.team-멕시코_연합 .btn,
+body.team-멕시코_연합 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 브라질 연합 - 옐로우&그린&블루 */
+body.team-브라질_연합 {
+    --primary-color: rgba(255, 223, 0, 0.1);
+    --primary-border: rgba(255, 223, 0, 0.3);
+    --accent-color: #ffdf00;
+    --secondary-accent: #009b3a;
+}
+
+body.team-브라질_연합 .glass,
+body.team-브라질_연합 .team-card,
+body.team-브라질_연합 .btn,
+body.team-브라질_연합 .tab-btn {
+    background: var(--primary-color);
+    border-color: var(--primary-border);
+}
+
+/* 모든 팀 공통 - 강조 색상 적용 */
+[class*="team-"] .league-title,
+[class*="team-"] .team-rating,
+[class*="team-"] .records-header h3,
+[class*="team-"] .event-time,
+[class*="team-"] .match-info h3,
+[class*="team-"] .tactic-selection h3,
+[class*="team-"] .sponsor-header h3,
+[class*="team-"] .info-label,
+[class*="team-"] .sponsor-card h4,
+[class*="team-"] .sponsor-detail strong,
+[class*="team-"] .tactic-tip,
+[class*="team-"] .position-header,
+[class*="team-"] .player-basic-info h4,
+[class*="team-"] .growth-label,
+[class*="team-"] .stat-value,
+[class*="team-"] .records-section h4,
+[class*="team-"] .player-rank {
+    color: var(--accent-color) !important;
+}
+
+/* 호버 효과 */
+[class*="team-"] .btn:hover,
+[class*="team-"] .tab-btn:hover,
+[class*="team-"] .team-card:hover,
+[class*="team-"] .sponsor-card:hover {
+    box-shadow: 0 5px 15px var(--primary-border) !important;
+}
+
+/* 글래스 효과 강화 */
+[class*="team-"] .tab-btn.active {
+    background: var(--primary-color) !important;
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 5px 15px var(--primary-border) !important;
+}
+
+/* 선택된 요소 강조 */
+[class*="team-"] .player-card:hover::after {
+    color: var(--accent-color) !important;
+}
+
+/* 스크롤바도 팀 색상 적용 */
+[class*="team-"] ::-webkit-scrollbar-track {
+    background: var(--primary-color) !important;
+}
+
+[class*="team-"] ::-webkit-scrollbar-thumb {
+    background: var(--primary-border) !important;
+}
+
+[class*="team-"] ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color) !important;
+}
+
+/* 로딩 애니메이션도 팀 색상 */
+[class*="team-"] .loading {
+    border-color: var(--primary-border) !important;
+    border-top-color: var(--accent-color) !important;
+}
