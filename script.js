@@ -2178,11 +2178,21 @@ function initializeLeagueData() {
 function displayLeagueTable() {
     const leagueTable = document.getElementById('leagueTable');
     
-    // 순위 계산
-    const standings = Object.keys(gameData.leagueData).map(teamKey => ({
+    // 현재 리그 확인
+    const currentLeague = gameData.currentLeague;
+    const divisionKey = `division${currentLeague}`;
+    
+    // 해당 리그 데이터 존재 여부 확인
+    if (!gameData.leagueData || !gameData.leagueData[divisionKey]) {
+        leagueTable.innerHTML = '<p>리그 데이터를 불러올 수 없습니다.</p>';
+        return;
+    }
+    
+    // 현재 리그의 팀들만 가져와서 순위 계산
+    const standings = Object.keys(gameData.leagueData[divisionKey]).map(teamKey => ({
         team: teamKey,
-        ...gameData.leagueData[teamKey],
-        goalDiff: gameData.leagueData[teamKey].goalsFor - gameData.leagueData[teamKey].goalsAgainst
+        ...gameData.leagueData[divisionKey][teamKey],
+        goalDiff: gameData.leagueData[divisionKey][teamKey].goalsFor - gameData.leagueData[divisionKey][teamKey].goalsAgainst
     })).sort((a, b) => {
         if (b.points !== a.points) return b.points - a.points;
         if (b.goalDiff !== a.goalDiff) return b.goalDiff - a.goalDiff;
