@@ -1148,7 +1148,7 @@ function updateLeagueData(matchData, points) {
         userData.losses++;
     }
     
-    // 상대팀 데이터 업데이트
+    // 상대팀 데이터 업데이트 - 같은 리그에 있다고 가정
     const opponentData = gameData.leagueData[divisionKey][gameData.currentOpponent];
     if (!opponentData) {
         console.error('Opponent team data not found:', gameData.currentOpponent);
