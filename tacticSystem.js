@@ -1124,9 +1124,7 @@ function endMatch(matchData) {
 }
 
 function updateLeagueData(matchData, points) {
-    // 사용자 팀 데이터 업데이트
-    
-     // 현재 리그 확인
+    // 현재 리그 확인
     const currentLeague = gameData.currentLeague;
     const divisionKey = `division${currentLeague}`;
     
@@ -1136,6 +1134,12 @@ function updateLeagueData(matchData, points) {
         console.error('User team data not found:', gameData.selectedTeam);
         return;
     }
+    
+    userData.matches++;
+    userData.goalsFor += matchData.homeScore;
+    userData.goalsAgainst += matchData.awayScore;
+    userData.points += points;
+    
     if (points === 3) {
         userData.wins++;
     } else if (points === 1) {
@@ -1145,7 +1149,12 @@ function updateLeagueData(matchData, points) {
     }
     
     // 상대팀 데이터 업데이트
-    const opponentData = gameData.leagueData[gameData.currentOpponent];
+    const opponentData = gameData.leagueData[divisionKey][gameData.currentOpponent];
+    if (!opponentData) {
+        console.error('Opponent team data not found:', gameData.currentOpponent);
+        return;
+    }
+    
     opponentData.matches++;
     opponentData.goalsFor += matchData.awayScore;
     opponentData.goalsAgainst += matchData.homeScore;
