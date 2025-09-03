@@ -2535,7 +2535,7 @@ function showTeamTacticsInfo() {
         레알_마드리드: "possession",
         바르셀로나: "totalFootball",
         AC_밀란: "gegenpress",
-        인테르: "totalFootball",
+        인터_밀란: "totalFootball",
         바이에른_뮌헨: "tikitaka",
         파리_생제르맹: "possession",
         레버쿠젠: "longBall",
@@ -2548,9 +2548,33 @@ function showTeamTacticsInfo() {
         아스톤_빌라: "longBall",
         라이프치히: "totalFootball",
         세비야: "gegenpress",
-        스포르팅_CP: "lavolpiana"
+        스포르팅_CP: "lavolpiana",
         
+        // 추가 팀들
+        아약스: "totalFootball",
+        벤피카: "possession",
+        셀틱: "gegenpress",
+        페예노르트: "longBall",
+        올랭피크_드_마르세유: "gegenpress",
+        리옹: "possession",
+        FC_서울: "twoLine",
+        전북_현대: "gegenpress",
+        울산_현대: "possession",
+        포항_스틸러스: "longBall",
+        광주_FC: "parkBus",
+        갈라타사라이: "gegenpress",
+        알_힐랄: "possession",
+        알_이티하드: "longBall",
+        알_나스르: "possession",
+        아르헨티나_연합: "totalFootball",
+        미국_연합: "longBall",
+        멕시코_연합: "gegenpress",
+        브라질_연합: "tikitaka"
     };
+    
+    // 나머지 함수 로직...
+}
+
 
     const tacticNames = {
         gegenpress: "게겐프레싱",
