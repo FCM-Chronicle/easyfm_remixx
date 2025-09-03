@@ -62,75 +62,53 @@ class TransferSystem {
     }
 
    // 선수 가격 계산 함수 수정 (기존 calculatePlayerPrice 함수를 이것으로 교체)
-// 선수 가격 계산 함수 - 더 넓은 변동 폭 적용
 calculatePlayerPrice(player) {
     let price = this.basePrice;
     
-    // 능력치에 따른 가격 조정 - 더 극단적으로 변경
-    const ratingMultiplier = Math.pow(player.rating / 65, 3.5); // 지수를 2.5 → 3.5로 증가, 기준점을 70 → 65로 낮춤
+    // 능력치에 따른 가격 조정
+    const ratingMultiplier = Math.pow(player.rating / 70, 2.5);
     price *= ratingMultiplier;
     
-    // 나이에 따른 가격 조정 - 더 극단적으로 변경
+    // 나이에 따른 가격 조정
     let ageMultiplier = 1;
-    if (player.age <= 18) {
-        ageMultiplier = 2.5; // 18세 이하는 2.5배 (유망주 프리미엄)
-    } else if (player.age <= 22) {
-        ageMultiplier = 1.8; // 22세 이하는 1.8배 (젊은 선수 프리미엄)
+    if (player.age <= 20) {
+        ageMultiplier = 1.3; // 젊은 선수는 30% 비싸게
     } else if (player.age <= 25) {
-        ageMultiplier = 1.4; // 25세 이하는 1.4배 (전성기 진입)
-    } else if (player.age <= 28) {
-        ageMultiplier = 1.2; // 28세 이하는 1.2배 (전성기)
-    } else if (player.age <= 30) {
-        ageMultiplier = 1.0; // 30세 이하는 기본값 (전성기 후반)
-    } else if (player.age <= 32) {
-        ageMultiplier = 0.7; // 32세 이하는 70% (노화 시작)
-    } else if (player.age <= 35) {
-        ageMultiplier = 0.6; // 35세 이하는 40% (베테랑)
-    } else if (player.age <= 38) {
-        ageMultiplier = 0.6; // 38세 이하는 20% (고령)
-    } else {
-        ageMultiplier = 0.5; // 39세 이상은 10% (고령으로 인한 가치 하락)
+        ageMultiplier = 1.2; // 25세 이하는 20% 비싸게
+    } else if (player.age >= 45) {
+        ageMultiplier = 2.1; // 45세 이상은 3.5배 (레전드 보정)
+    } else if (player.age >= 35) {
+        ageMultiplier = 0.8; // 35세 이상은 60%
+    } else if (player.age >= 30) {
+        ageMultiplier = 0.8; // 30세 이상은 80%
     }
     
     price *= ageMultiplier;
     
-    // 포지션에 따른 가격 조정 - 더 차별화
+    // 포지션에 따른 가격 조정
     const positionMultiplier = {
-        'GK': 0.8,  // 골키퍼는 80% (특수성은 있지만 수요가 적음)
-        'DF': 1.0,  // 수비수는 기본값
-        'MF': 1.1,  // 미드필더는 110% (만능형)
-        'FW': 1.3   // 공격수는 130% (골 넣는 역할로 가장 비쌈)
+        'GK': 1,
+        'DF': 1,
+        'MF': 1,
+        'FW': 1.2
     };
     
     price *= positionMultiplier[player.position] || 1;
     
-    // 능력치별 추가 보정 - 매우 극단적
-    if (player.rating >= 95) {
-        price *= 2.5; // 95 이상은 2.5배 (월드클래스)
-    } else if (player.rating >= 90) {
-        price *= 1.8; // 90 이상은 1.8배 (톱클래스)
-    } else if (player.rating >= 85) {
-        price *= 1.3; // 85 이상은 1.3배 (주전급)
-    } else if (player.rating >= 80) {
-        price *= 1.0; // 80 이상은 기본값 (준주전급)
-    } else if (player.rating >= 75) {
-        price *= 0.6; // 75 이상은 60% (로테이션)
-    } else if (player.rating >= 70) {
-        price *= 0.5; // 70 이상은 30% (벤치)
-    } else {
-        price *= 0.4; // 70 미만은 10% (연습생급)
-    }
-    
-    // 랜덤 요소 추가 - 더 큰 변동 (70% ~ 180%)
-    const randomFactor = 0.7 + Math.random() * 0.9;
+    // 랜덤 요소 추가 (90% ~ 150%)
+    const randomFactor = 0.9 + Math.random() * 0.7;
     price *= randomFactor;
-    
-    // 최소/최대 가격 제한
-    price = Math.max(50, price);   // 최소 50억
-    price = Math.min(10000, price); // 최대 5조
     
     return Math.round(price);
 }
+
+    // 이적 시장 섞기
+    shuffleTransferMarket() {
+        for (let i = this.transferMarket.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [this.transferMarket[i], this.transferMarket[j]] = [this.transferMarket[j], this.transferMarket[i]];
+        }
+    }
 
     // 선수 검색
     searchPlayers(filters) {
