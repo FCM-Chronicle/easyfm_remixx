@@ -1492,7 +1492,3 @@ function handleInterview(option) {
 window.TacticSystem = TacticSystem;
 window.startMatch = startMatch;
 window.handleInterview = handleInterview;
-window.endSeason = endSeason;
-window.checkSeasonEnd = checkSeasonEnd;
-window.calculatePromotionRelegation = calculatePromotionRelegation;
-window.applyPromotionRelegation = applyPromotionRelegation;
