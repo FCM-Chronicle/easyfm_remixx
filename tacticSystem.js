@@ -1171,8 +1171,18 @@ function updateLeagueData(matchData, points) {
 }
 
 function simulateOtherMatches() {
-    // 다른 팀들의 경기를 시뮬레이션 (전력 차이 반영)
-    const otherTeams = Object.keys(teams).filter(team => 
+    // 현재 리그 확인 및 division 키 생성
+    const currentLeague = gameData.currentLeague;
+    const divisionKey = `division${currentLeague}`;
+    
+    // 현재 리그 데이터 존재 여부 확인
+    if (!gameData.leagueData || !gameData.leagueData[divisionKey]) {
+        console.error('League data not found for:', divisionKey);
+        return;
+    }
+    
+    // 같은 리그의 다른 팀들만 필터링 (사용자 팀과 현재 상대팀 제외)
+    const otherTeams = Object.keys(gameData.leagueData[divisionKey]).filter(team => 
         team !== gameData.selectedTeam && team !== gameData.currentOpponent
     );
     
@@ -1319,9 +1329,15 @@ function simulateOtherMatches() {
             }
         }
         
-        // 리그 데이터 업데이트
-        const team1Data = gameData.leagueData[team1];
-        const team2Data = gameData.leagueData[team2];
+        // 리그 데이터 업데이트 (수정된 부분)
+        const team1Data = gameData.leagueData[divisionKey][team1];
+        const team2Data = gameData.leagueData[divisionKey][team2];
+        
+        // 데이터 존재 여부 확인
+        if (!team1Data || !team2Data) {
+            console.error('Team data not found:', team1, team1Data, team2, team2Data);
+            continue; // 이 매치는 스킵하고 다음으로
+        }
         
         team1Data.matches++;
         team1Data.goalsFor += score1;
