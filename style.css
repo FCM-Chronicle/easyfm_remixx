@@ -7,7 +7,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0a1f0f 0%, #1a2f1f 50%, #2a4f2f 100%);
     min-height: 100vh;
     color: white;
     overflow-x: hidden;
@@ -31,11 +31,11 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* 유리 효과 */
+/* 유리 효과 - 민트/에메랄드 톤으로 수정 */
 .glass {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(70, 255, 170, 0.2);
     border-radius: 15px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
@@ -64,7 +64,7 @@ body.team-dortmund .glass {
     text-align: center;
     font-size: 2rem;
     margin-bottom: 30px;
-    color: #ffd700;
+    color: #46ffaa;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -77,9 +77,9 @@ body.team-dortmund .glass {
 }
 
 .team-card {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(70, 255, 170, 0.2);
     border-radius: 15px;
     padding: 20px;
     cursor: pointer;
@@ -89,8 +89,8 @@ body.team-dortmund .glass {
 
 .team-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 40px rgba(70, 255, 170, 0.2);
+    background: rgba(70, 255, 170, 0.15);
 }
 
 .team-card h3 {
@@ -108,18 +108,18 @@ body.team-dortmund .glass {
 
 .team-rating {
     font-size: 1.2rem;
-    color: #ffd700;
+    color: #46ffaa;
 }
 
 /* 로비 화면 */
 .lobby-header {
     text-align: center;
     margin-bottom: 30px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 15px;
     padding: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(70, 255, 170, 0.2);
     transition: all 0.3s ease;
 }
 
@@ -162,8 +162,8 @@ body.team-dortmund .glass {
 }
 
 .tab-btn {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(70, 255, 170, 0.1);
+    border: 1px solid rgba(70, 255, 170, 0.3);
     color: white;
     padding: 12px 24px;
     border-radius: 25px;
@@ -182,7 +182,7 @@ body.team-dortmund .glass {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    background: linear-gradient(45deg, transparent, rgba(70, 255, 170, 0.3), transparent);
     transform: rotate(45deg);
     transition: all 0.6s;
     opacity: 0;
@@ -207,13 +207,13 @@ body.team-dortmund .glass {
 }
 
 .tab-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(70, 255, 170, 0.2);
     transform: translateY(-2px);
 }
 
 .tab-btn.active {
-    background: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    background: rgba(70, 255, 170, 0.3);
+    box-shadow: 0 5px 15px rgba(70, 255, 170, 0.2);
 }
 
 .tab-content {
@@ -232,12 +232,12 @@ body.team-dortmund .glass {
 
 /* 포메이션 필드 */
 .formation-container {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 15px;
     padding: 20px;
     margin-bottom: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(70, 255, 170, 0.2);
     transition: all 0.3s ease;
 }
 
@@ -353,8 +353,8 @@ body.team-dortmund .glass {
 .player-slot {
     width: 120px; /* 80px * 1.5 */
     height: 75px; /* 50px * 1.5 */
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    background: rgba(70, 255, 170, 0.2);
+    border: 2px solid rgba(70, 255, 170, 0.5);
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -368,7 +368,7 @@ body.team-dortmund .glass {
 }
 
 .player-slot:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(70, 255, 170, 0.3);
     transform: scale(1.05);
 }
 
@@ -391,11 +391,11 @@ body.team-dortmund .glass {
 
 /* 선수 목록 */
 .team-players {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 15px;
     padding: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(70, 255, 170, 0.2);
     transition: all 0.3s ease;
 }
 
@@ -411,8 +411,8 @@ body.team-dortmund .glass {
 }
 
 .player-card {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(70, 255, 170, 0.1);
+    border: 1px solid rgba(70, 255, 170, 0.2);
     border-radius: 10px;
     padding: 15px;
     cursor: pointer;
@@ -422,7 +422,7 @@ body.team-dortmund .glass {
 }
 
 .player-card:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(70, 255, 170, 0.2);
     transform: translateY(-3px);
 }
 
@@ -432,7 +432,7 @@ body.team-dortmund .glass {
     top: 5px;
     right: 8px;
     font-size: 0.7rem;
-    color: #ffd700;
+    color: #46ffaa;
     opacity: 0.8;
 }
 
@@ -459,8 +459,8 @@ body.team-dortmund .glass {
 
 /* 버튼 스타일 - 광택 효과 추가 */
 .btn {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(70, 255, 170, 0.2);
+    border: 1px solid rgba(70, 255, 170, 0.3);
     color: white;
     padding: 12px 24px;
     border-radius: 25px;
@@ -479,7 +479,7 @@ body.team-dortmund .glass {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    background: linear-gradient(45deg, transparent, rgba(70, 255, 170, 0.3), transparent);
     transform: rotate(45deg);
     transition: all 0.6s;
     opacity: 0;
@@ -490,9 +490,9 @@ body.team-dortmund .glass {
 }
 
 .btn:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(70, 255, 170, 0.3);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 5px 15px rgba(70, 255, 170, 0.2);
 }
 
 .btn.primary {
@@ -507,12 +507,12 @@ body.team-dortmund .glass {
 /* 경기 화면 */
 .match-header {
     text-align: center;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 15px;
     padding: 20px;
     margin-bottom: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(70, 255, 170, 0.2);
 }
 
 .score {
@@ -527,19 +527,19 @@ body.team-dortmund .glass {
 }
 
 .match-events {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 15px;
     padding: 20px;
     height: 400px;
     overflow-y: auto;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(70, 255, 170, 0.2);
     margin-bottom: 20px;
 }
 
 .event-card {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(70, 255, 170, 0.1);
+    border: 1px solid rgba(70, 255, 170, 0.2);
     border-radius: 10px;
     padding: 15px;
     margin-bottom: 10px;
@@ -576,7 +576,7 @@ body.team-dortmund .glass {
 
 .event-time {
     font-weight: bold;
-    color: #ffd700;
+    color: #46ffaa;
     margin-bottom: 5px;
 }
 
@@ -585,11 +585,11 @@ body.team-dortmund .glass {
     max-width: 600px;
     margin: 50px auto;
     text-align: center;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 15px;
     padding: 40px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(70, 255, 170, 0.2);
 }
 
 .interview-container h2 {
@@ -610,8 +610,8 @@ body.team-dortmund .glass {
 }
 
 .interview-btn {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(70, 255, 170, 0.1);
+    border: 1px solid rgba(70, 255, 170, 0.3);
     color: white;
     padding: 15px 20px;
     border-radius: 10px;
@@ -630,7 +630,7 @@ body.team-dortmund .glass {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    background: linear-gradient(45deg, transparent, rgba(70, 255, 170, 0.3), transparent);
     transform: rotate(45deg);
     transition: all 0.6s;
     opacity: 0;
@@ -641,18 +641,18 @@ body.team-dortmund .glass {
 }
 
 .interview-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(70, 255, 170, 0.2);
     transform: translateX(10px);
 }
 
 /* 개선된 경기 탭 인터페이스 */
 .match-info {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 15px;
     padding: 25px;
     margin-bottom: 25px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(70, 255, 170, 0.2);
     transition: all 0.3s ease;
 }
 
@@ -660,7 +660,7 @@ body.team-dortmund .glass {
     font-size: 1.5rem;
     margin-bottom: 20px;
     text-align: center;
-    color: #ffd700;
+    color: #46ffaa;
 }
 
 .opponent-info {
@@ -669,7 +669,7 @@ body.team-dortmund .glass {
     align-items: center;
     margin-bottom: 20px;
     padding: 15px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(70, 255, 170, 0.05);
     border-radius: 10px;
 }
 
@@ -679,24 +679,24 @@ body.team-dortmund .glass {
 }
 
 .tactic-selection {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 15px;
     padding: 25px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(70, 255, 170, 0.2);
     transition: all 0.3s ease;
 }
 
 .tactic-selection h3 {
     font-size: 1.3rem;
     margin-bottom: 15px;
-    color: #ffd700;
+    color: #46ffaa;
 }
 
 #tacticSelect {
     width: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(70, 255, 170, 0.1);
+    border: 1px solid rgba(70, 255, 170, 0.3);
     color: white;
     padding: 12px;
     border-radius: 8px;
@@ -705,18 +705,18 @@ body.team-dortmund .glass {
 }
 
 #tacticSelect option {
-    background: rgba(50, 50, 50, 0.9);
+    background: rgba(10, 31, 15, 0.9);
     color: white;
 }
 
 /* 개선된 스폰서 인터페이스 */
 .sponsor-header {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 15px;
     padding: 25px;
     margin-bottom: 25px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(70, 255, 170, 0.2);
     text-align: center;
     transition: all 0.3s ease;
 }
@@ -724,7 +724,7 @@ body.team-dortmund .glass {
 .sponsor-header h3 {
     font-size: 1.8rem;
     margin-bottom: 15px;
-    color: #ffd700;
+    color: #46ffaa;
 }
 
 .sponsor-description {
@@ -740,13 +740,13 @@ body.team-dortmund .glass {
     align-items: center;
     gap: 15px;
     padding: 15px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(70, 255, 170, 0.05);
     border-radius: 10px;
 }
 
 .info-label {
     font-weight: bold;
-    color: #ffd700;
+    color: #46ffaa;
 }
 
 .current-sponsor-name {
@@ -761,8 +761,8 @@ body.team-dortmund .glass {
 }
 
 .sponsor-card {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(70, 255, 170, 0.1);
+    border: 1px solid rgba(70, 255, 170, 0.2);
     border-radius: 15px;
     padding: 25px;
     cursor: pointer;
@@ -779,7 +779,7 @@ body.team-dortmund .glass {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #ffd700, #ffed4e);
+    background: linear-gradient(90deg, #46ffaa, #70ffcc);
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -789,15 +789,15 @@ body.team-dortmund .glass {
 }
 
 .sponsor-card:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(70, 255, 170, 0.15);
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(70, 255, 170, 0.1);
 }
 
 .sponsor-card h4 {
     font-size: 1.4rem;
     margin-bottom: 12px;
-    color: #ffd700;
+    color: #46ffaa;
 }
 
 .sponsor-card p {
@@ -814,22 +814,22 @@ body.team-dortmund .glass {
 }
 
 .sponsor-detail {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(70, 255, 170, 0.05);
     padding: 8px 12px;
     border-radius: 6px;
     font-size: 0.9rem;
 }
 
 .sponsor-detail strong {
-    color: #ffd700;
+    color: #46ffaa;
 }
 
 .sponsor-requirements {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     padding: 10px;
     border-radius: 8px;
     margin-top: 10px;
-    border-left: 3px solid #ffd700;
+    border-left: 3px solid #46ffaa;
 }
 
 .sponsor-card.available {
@@ -859,7 +859,7 @@ body.team-dortmund .glass {
 .tactic-info {
     margin-bottom: 15px;
     padding: 10px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(70, 255, 170, 0.05);
     border-radius: 8px;
     font-size: 0.9rem;
     opacity: 0.8;
@@ -868,11 +868,11 @@ body.team-dortmund .glass {
 .tactic-tip {
     margin-top: 15px;
     padding: 12px;
-    background: rgba(255, 215, 0, 0.1);
-    border: 1px solid rgba(255, 215, 0, 0.3);
+    background: rgba(70, 255, 170, 0.1);
+    border: 1px solid rgba(70, 255, 170, 0.3);
     border-radius: 8px;
     font-size: 0.9rem;
-    color: #ffd700;
+    color: #46ffaa;
 }
 
 .opponent-details {
@@ -918,18 +918,18 @@ body.team-dortmund .glass {
 }
 
 .settings-section {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 15px;
     padding: 25px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(70, 255, 170, 0.2);
     transition: all 0.3s ease;
 }
 
 .settings-section h4 {
     font-size: 1.3rem;
     margin-bottom: 20px;
-    color: #ffd700;
+    color: #46ffaa;
     text-align: center;
 }
 
@@ -944,12 +944,12 @@ body.team-dortmund .glass {
 
 /* 이적 시장 */
 .transfer-controls {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 15px;
     padding: 20px;
     margin-bottom: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(70, 255, 170, 0.2);
 }
 
 .search-filters {
@@ -961,8 +961,8 @@ body.team-dortmund .glass {
 
 .search-filters input,
 .search-filters select {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(70, 255, 170, 0.1);
+    border: 1px solid rgba(70, 255, 170, 0.3);
     color: white;
     padding: 10px;
     border-radius: 10px;
@@ -970,8 +970,8 @@ body.team-dortmund .glass {
 }
 
 .search-filters select option {
-    background: rgba(50, 50, 50, 0.9);
-    color: black;
+    background: rgba(10, 31, 15, 0.9);
+    color: white;
 }
 
 .search-filters input::placeholder {
@@ -985,8 +985,8 @@ body.team-dortmund .glass {
 }
 
 .transfer-player {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(70, 255, 170, 0.1);
+    border: 1px solid rgba(70, 255, 170, 0.2);
     border-radius: 15px;
     padding: 20px;
     cursor: pointer;
@@ -995,9 +995,9 @@ body.team-dortmund .glass {
 }
 
 .transfer-player:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(70, 255, 170, 0.2);
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 25px rgba(70, 255, 170, 0.1);
 }
 
 .transfer-player .player-name {
@@ -1019,17 +1019,17 @@ body.team-dortmund .glass {
 .transfer-price {
     font-size: 1.1rem;
     font-weight: bold;
-    color: #ffd700;
+    color: #46ffaa;
     margin-top: 10px;
 }
 
 /* 리그 테이블 */
 #leagueTable {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 15px;
     padding: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(70, 255, 170, 0.2);
     overflow-x: auto;
 }
 
@@ -1042,16 +1042,16 @@ body.team-dortmund .glass {
 .league-table td {
     padding: 12px;
     text-align: left;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(70, 255, 170, 0.2);
 }
 
 .league-table th {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     font-weight: bold;
 }
 
 .league-table tr:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
 }
 
 .league-table .user-team {
@@ -1072,14 +1072,14 @@ body.team-dortmund .glass {
 }
 
 .modal-content {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     backdrop-filter: blur(15px);
     margin: 5% auto;
     padding: 30px;
     border-radius: 15px;
     width: 90%;
     max-width: 600px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(70, 255, 170, 0.2);
     position: relative;
     animation: modalSlideIn 0.3s ease-out;
 }
@@ -1129,7 +1129,7 @@ body.team-dortmund .glass {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 2px solid rgba(70, 255, 170, 0.2);
     padding-bottom: 15px;
 }
 
@@ -1140,7 +1140,7 @@ body.team-dortmund .glass {
 }
 
 .close-btn {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(70, 255, 170, 0.2);
     border: none;
     color: white;
     font-size: 20px;
@@ -1152,28 +1152,28 @@ body.team-dortmund .glass {
 }
 
 .close-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(70, 255, 170, 0.3);
     transform: scale(1.1);
 }
 
 /* 포지션 헤더 */
 .position-header {
-    color: #FFD700;
+    color: #46ffaa;
     margin: 25px 0 15px 0;
     font-size: 18px;
     font-weight: bold;
-    border-left: 4px solid #FFD700;
+    border-left: 4px solid #46ffaa;
     padding-left: 10px;
 }
 
 /* 선수 성장 카드 */
 .player-growth-card {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     border-radius: 12px;
     padding: 20px;
     margin-bottom: 15px;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(70, 255, 170, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -1192,7 +1192,7 @@ body.team-dortmund .glass {
 .player-basic-info h4 {
     margin: 0 0 8px 0;
     font-size: 18px;
-    color: #FFD700;
+    color: #46ffaa;
 }
 
 .player-details {
@@ -1219,7 +1219,7 @@ body.team-dortmund .glass {
 }
 
 .age-badge {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(70, 255, 170, 0.2);
 }
 
 .growth-summary {
@@ -1227,16 +1227,16 @@ body.team-dortmund .glass {
 }
 
 .growth-rate {
-    background: rgba(255, 215, 0, 0.2);
+    background: rgba(70, 255, 170, 0.2);
     padding: 8px 12px;
     border-radius: 8px;
-    border: 1px solid #FFD700;
+    border: 1px solid #46ffaa;
 }
 
 .growth-label {
     display: block;
     font-size: 12px;
-    color: #FFD700;
+    color: #46ffaa;
     margin-bottom: 2px;
 }
 
@@ -1255,7 +1255,7 @@ body.team-dortmund .glass {
 }
 
 .stat-item {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 255, 170, 0.1);
     padding: 8px 12px;
     border-radius: 8px;
     display: flex;
@@ -1270,7 +1270,7 @@ body.team-dortmund .glass {
 
 .stat-value {
     font-weight: bold;
-    color: #FFD700;
+    color: #46ffaa;
 }
 
 /* 성장 잠재력 바 */
@@ -1279,7 +1279,7 @@ body.team-dortmund .glass {
 }
 
 .potential-bar {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(70, 255, 170, 0.2);
     height: 8px;
     border-radius: 4px;
     overflow: hidden;
@@ -1295,6 +1295,144 @@ body.team-dortmund .glass {
 .potential-text {
     font-size: 12px;
     color: rgba(255, 255, 255, 0.8);
+}
+
+/* 개인기록 스타일 - 세로 레이아웃 유지, 리그 탭만 가로로 */
+.records-header {
+    background: rgba(70, 255, 170, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(70, 255, 170, 0.2);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.records-header h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #46ffaa;
+}
+
+.records-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* 리그 선택 탭을 가로로 배치 */
+.league-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.league-tab-btn {
+    background: rgba(70, 255, 170, 0.1);
+    border: 1px solid rgba(70, 255, 170, 0.3);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.league-tab-btn:hover {
+    background: rgba(70, 255, 170, 0.2);
+    transform: translateY(-2px);
+}
+
+.league-tab-btn.active {
+    background: rgba(70, 255, 170, 0.3);
+    box-shadow: 0 5px 15px rgba(70, 255, 170, 0.2);
+}
+
+/* 개인기록 컨텐츠는 세로 레이아웃 유지 */
+.records-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+.records-section {
+    background: rgba(70, 255, 170, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 25px;
+    border: 1px solid rgba(70, 255, 170, 0.2);
+    transition: all 0.3s ease;
+}
+
+.records-section h4 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    color: #46ffaa;
+    text-align: center;
+    border-bottom: 2px solid rgba(70, 255, 170, 0.3);
+    padding-bottom: 10px;
+}
+
+.ranking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ranking-item {
+    background: rgba(70, 255, 170, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(70, 255, 170, 0.2);
+}
+
+.ranking-item:hover {
+    background: rgba(70, 255, 170, 0.15);
+    transform: translateY(-2px);
+}
+
+.ranking-item.user-player {
+    background: rgba(46, 204, 113, 0.3);
+    border-color: rgba(46, 204, 113, 0.5);
+}
+
+.player-rank {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #46ffaa;
+    min-width: 30px;
+}
+
+.player-info {
+    flex: 1;
+    margin-left: 15px;
+}
+
+.player-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.player-team {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    color: #46ffaa;
+}
+
+.player-stats {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
 }
 
 /* 반응형 디자인 */
@@ -1313,31 +1451,36 @@ body.team-dortmund .glass {
         align-items: center;
     }
     
+    .league-tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+    
     .field {
         height: 400px;
     }
     
     .player-slot {
-        width: 70px; /* 90px → 70px로 더 작게 */
-        height: 45px; /* 56px → 45px로 더 작게 */
-        font-size: 0.65rem; /* 0.8rem → 0.65rem로 더 작게 */
+        width: 70px;
+        height: 45px;
+        font-size: 0.65rem;
     }
     
     .player-slot.filled {
-        font-size: 0.6rem; /* 0.75rem → 0.6rem로 더 작게 */
+        font-size: 0.6rem;
     }
     
     /* 모바일에서 선수 포지션 조정 - 세로 간격도 줄임 */
-    .df-1 { bottom: 90px; left: 50%; transform: translateX(-140px); } /* 세로 간격 줄임 120px → 90px */
+    .df-1 { bottom: 90px; left: 50%; transform: translateX(-140px); }
     .df-2 { bottom: 90px; left: 50%; transform: translateX(-50px); }  
     .df-3 { bottom: 90px; left: 50%; transform: translateX(15px); }   
     .df-4 { bottom: 90px; left: 50%; transform: translateX(105px); }  
 
-    .mf-1 { bottom: 180px; left: 50%; transform: translateX(-120px); } /* 세로 간격 줄임 250px → 180px */
+    .mf-1 { bottom: 180px; left: 50%; transform: translateX(-120px); }
     .mf-2 { bottom: 180px; left: 50%; transform: translateX(-45px); }  
     .mf-3 { bottom: 180px; left: 50%; transform: translateX(75px); }   
 
-    .fw-1 { bottom: 270px; left: 50%; transform: translateX(-120px); } /* 세로 간격 줄임 380px → 270px */
+    .fw-1 { bottom: 270px; left: 50%; transform: translateX(-120px); }
     .fw-2 { bottom: 270px; left: 50%; transform: translateX(-45px); }  
     .fw-3 { bottom: 270px; left: 50%; transform: translateX(75px); }
     
@@ -1373,143 +1516,7 @@ body.team-dortmund .glass {
     .player-growth-stats {
         grid-template-columns: 1fr 1fr;
     }
-}
-
-/* 스크롤바 스타일 */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5);
-}
-
-/* 로딩 애니메이션 */
-.loading {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top-color: white;
-    animation: spin 1s ease-in-out infinite;
-}
-
-.records-header {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 25px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    text-align: center;
-    transition: all 0.3s ease;
-}
-
-.records-header h3 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-    color: #ffd700;
-}
-
-.records-description {
-    font-size: 1rem;
-    line-height: 1.6;
-    opacity: 0.9;
-}
-
-.records-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-}
-
-.records-section {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-    padding: 25px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
-}
-
-.records-section h4 {
-    font-size: 1.3rem;
-    margin-bottom: 20px;
-    color: #ffd700;
-    text-align: center;
-    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
-    padding-bottom: 10px;
-}
-
-.ranking-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.ranking-item {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.ranking-item:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
-}
-
-.ranking-item.user-player {
-    background: rgba(46, 204, 113, 0.3);
-    border-color: rgba(46, 204, 113, 0.5);
-}
-
-.player-rank {
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #ffd700;
-    min-width: 30px;
-}
-
-.player-info {
-    flex: 1;
-    margin-left: 15px;
-}
-
-.player-name {
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin-bottom: 3px;
-}
-
-.player-team {
-    font-size: 0.85rem;
-    opacity: 0.8;
-    color: #ffd700;
-}
-
-.player-stats {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #fff;
-}
-
-@media (max-width: 768px) {
+    
     .records-content {
         grid-template-columns: 1fr;
         gap: 20px;
@@ -1532,6 +1539,37 @@ body.team-dortmund .glass {
         font-size: 1.1rem;
     }
 }
+
+/* 스크롤바 스타일 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(70, 255, 170, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(70, 255, 170, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(70, 255, 170, 0.5);
+}
+
+/* 로딩 애니메이션 */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(70, 255, 170, 0.3);
+    border-radius: 50%;
+    border-top-color: #46ffaa;
+    animation: spin 1s ease-in-out infinite;
+}
+
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
