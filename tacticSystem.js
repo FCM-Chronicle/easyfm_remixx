@@ -490,10 +490,12 @@ function startMatchSimulation(matchData, tacticSystem, strengthDiff) {
 function simulateMatch(matchData, tacticSystem) {
     const matchInterval = setInterval(() => {
         if (!matchData.isRunning || matchData.minute >= 90) {
-            if (matchData.minute >= 90) {
+            clearInterval(matchInterval); // ← 먼저 interval 정지
+            
+            if (matchData.minute >= 90 && !matchData.isEnded) { // ← 중복 실행 방지
+                matchData.isEnded = true; // ← 경기 종료 플래그 추가
                 endMatch(matchData);
             }
-            clearInterval(matchInterval);
             return;
         }
 
@@ -505,6 +507,7 @@ function simulateMatch(matchData, tacticSystem) {
             return; // 이벤트가 발생하지 않음
         }
 
+        // 나머지 코드는 동일...
         // 이벤트 발생 확률 계산
         const userModifiers = tacticSystem.getTacticModifiers(gameData.currentTactic);
         const opponentTactic = tacticSystem.getOpponentTactic(gameData.currentOpponent);
@@ -548,7 +551,6 @@ function simulateMatch(matchData, tacticSystem) {
         let userGoalChance = baseGoalChance + userModifiers.goalChance;
         let opponentGoalChance = baseGoalChance + opponentModifiers.goalChance;
         
-      
         // 전력 차이 적용 (강한 팀이 더 많은 골 기회)
         if (strengthDiff.userAdvantage) {
             userGoalChance += Math.abs(strengthFactor);
