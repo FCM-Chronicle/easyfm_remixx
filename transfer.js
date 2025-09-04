@@ -35,10 +35,8 @@ class TransferSystem {
   { "name": "엄지성", "position": "FW", "rating": 72, "age": 22, "team": "외부리그" },
   { "name": "배준호", "position": "FW", "rating": 75, "age": 21, "team": "외부리그" },
   { "name": "아데몰라 루크먼", "position": "FW", "rating": 85, "age": 27, "team": "외부리그" },
-  { "name": "퇸 코프메이너르스", "position": "MF", "rating": 85, "age": 27, "team": "외부리그" },
-  { "name": "엘 빌랄 투레", "position": "FW", "rating": 78, "age": 24, "team": "외부리그" },
   { "name": "오현규", "position": "FW", "rating": 75, "age": 23, "team": "외부리그" },
-  { "name": "포그바", "position": "MF", "rating": 80, "age": 32, "team": "외부리그" },
+  { "name": "폴 포그바", "position": "MF", "rating": 80, "age": 32, "team": "외부리그" },
   { "name": "델레 알리", "position": "MF", "rating": 79, "age": 29, "team": "외부리그" }
 ]
         ];
@@ -80,26 +78,45 @@ class TransferSystem {
         this.shuffleTransferMarket();
     }
 
-   // 선수 가격 계산 함수 수정 (기존 calculatePlayerPrice 함수를 이것으로 교체)
+// 선수 가격 계산 함수 수정 (레이팅 중심)
 calculatePlayerPrice(player) {
     let price = this.basePrice;
     
-    // 능력치에 따른 가격 조정
-    const ratingMultiplier = Math.pow(player.rating / 70, 2.5);
+    // 레이팅에 따른 가격 조정 (핵심)
+    let ratingMultiplier;
+    
+    if (player.rating >= 90) {
+        // 90+ 레이팅: 슈퍼스타급 (매우 비쌈)
+        ratingMultiplier = 3;
+    } else if (player.rating >= 85) {
+        // 85-89 레이팅: 스타급 (비쌈)
+        ratingMultiplier = 2;
+    } else if (player.rating >= 80) {
+        // 80-84 레이팅: 주전급 (기본가)
+        ratingMultiplier = 1.2;
+    } else if (player.rating >= 75) {
+        // 75-79 레이팅: 준주전급 (보통)
+        ratingMultiplier = 1;
+    } else if (player.rating >= 70) {
+        // 70-74 레이팅: 로테이션급 (약간 쌈)
+        ratingMultiplier = 0.7;
+    } else {
+        // 70 미만: 백업/유망주급 (매우 쌈)
+        ratingMultiplier = 0.5;
+    }
+    
     price *= ratingMultiplier;
     
-    // 나이에 따른 가격 조정
+    // 나이에 따른 가격 조정 (간소화)
     let ageMultiplier = 1;
     if (player.age <= 20) {
-        ageMultiplier = 1.3; // 젊은 선수는 30% 비싸게
+        ageMultiplier = 0.7; // 유망주
     } else if (player.age <= 25) {
-        ageMultiplier = 1.2; // 25세 이하는 20% 비싸게
-    } else if (player.age >= 45) {
-        ageMultiplier = 2.1; // 45세 이상은 3.5배 (레전드 보정)
+        ageMultiplier = 1.2; // 황금기
     } else if (player.age >= 35) {
-        ageMultiplier = 0.8; // 35세 이상은 60%
+        ageMultiplier = 0.6; // 베테랑
     } else if (player.age >= 30) {
-        ageMultiplier = 0.8; // 30세 이상은 80%
+        ageMultiplier = 0.8; // 중견
     }
     
     price *= ageMultiplier;
@@ -114,8 +131,8 @@ calculatePlayerPrice(player) {
     
     price *= positionMultiplier[player.position] || 1;
     
-    // 랜덤 요소 추가 (90% ~ 150%)
-    const randomFactor = 0.9 + Math.random() * 0.7;
+    // 랜덤 요소 추가 (90% ~ 120%)
+    const randomFactor = 0.9 + Math.random() * 0.3;
     price *= randomFactor;
     
     return Math.round(price);
@@ -171,9 +188,9 @@ calculatePlayerPrice(player) {
             return { success: false, message: "자금이 부족합니다!" };
         }
         
-        // 팀 인원 제한 확인 (30명 제한)
-        if (teams[gameData.selectedTeam].length >= 30) {
-            return { success: false, message: "팀 인원이 가득 찼습니다! (최대 30명)" };
+        // 팀 인원 제한 확인 (50명 제한)
+        if (teams[gameData.selectedTeam].length >= 50) {
+            return { success: false, message: "팀 인원이 가득 찼습니다! (최대 50명)" };
         }
         
         // 영입 처리
