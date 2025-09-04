@@ -2601,43 +2601,62 @@ function showTeamTacticsInfo() {
     document.getElementById('tacticsModalTitle').textContent = '📋 팀별 기본 전술';
     
 // 전술별로 그룹화
-    const tacticGroups = {};
-    Object.entries(teamTactics).forEach(([teamKey, tacticKey]) => {
-        if (!tacticGroups[tacticKey]) {
-            tacticGroups[tacticKey] = [];
-        }
-        tacticGroups[tacticKey].push(teamNames[teamKey]);
-    });
-    let content = '<div style="max-height: 500px; overflow-y: auto;">';
-    Object.entries(tacticGroups).forEach(([tacticKey, teams]) => {
-        content += 
-            <div style="background: rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 20px; margin-bottom: 15px;">
-                <h4 style="color: #ffd700; font-size: 1.3rem; margin-bottom: 15px; display: flex; align-items: center;">
-                    🎯 ${tacticNames[tacticKey]}
-                </h4>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
-                    ${teams.map(team => 
-                        <div style="background: rgba(255, 255, 255, 0.1); padding: 10px; border-radius: 8px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.2);">
-                            ${team}
-                        </div>
-                    ).join('')}
-                </div>
-            </div>
-        ;
-    });
-    content += 
-        <div style="background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 10px; padding: 15px; margin-top: 20px; text-align: center;">
-            <strong style="color: #ffd700;">💡 경기 전에 상대팀의 전술을 확인하고 대응 전술을 준비하세요!</strong>
-        </div>
-    </div>;
+const tacticGroups = {};
+Object.entries(teamTactics).forEach(([teamKey, tacticKey]) => {
+    if (!tacticGroups[tacticKey]) {
+        tacticGroups[tacticKey] = [];
+    }
+    tacticGroups[tacticKey].push(teamNames[teamKey]);
+});
 
-    document.getElementById('tacticsModalContent').innerHTML = content;
-    document.getElementById('tacticsModal').style.display = 'block';
-}
+let content = '<div style="max-height: 500px; overflow-y: auto;">';
+Object.entries(tacticGroups).forEach(([tacticKey, teams]) => {
+    content += `
+        <div style="background: rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 20px; margin-bottom: 15px;">
+            <h4 style="color: #ffd700; font-size: 1.3rem; margin-bottom: 15px; display: flex; align-items: center;">
+                🎯 ${tacticNames[tacticKey]}
+            </h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                ${teams.map(team => 
+                    '<div style="background: rgba(255, 255, 255, 0.1); padding: 10px; border-radius: 8px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.2);">' +
+                        team +
+                    '</div>'
+                ).join('')}
+            </div>
+        </div>
+    `;
+});
+
+content += `
+    <div style="background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 10px; padding: 15px; margin-top: 20px; text-align: center;">
+        <strong style="color: #ffd700;">💡 경기 전에 상대팀의 전술을 확인하고 대응 전술을 준비하세요!</strong>
+    </div>
+</div>`;
+
+document.getElementById('tacticsModalContent').innerHTML = content;
+document.getElementById('tacticsModal').style.display = 'block';
+
 // 전술 모달 닫기 함수
 function closeTacticsModal() {
     document.getElementById('tacticsModal').style.display = 'none';
 }
+
+// 모달 바깥 클릭 시 닫기
+window.onclick = function(event) {
+    const tacticsModal = document.getElementById('tacticsModal');
+    if (event.target === tacticsModal) {
+        tacticsModal.style.display = 'none';
+    }
+}
+
+document.getElementById('tacticsModalContent').innerHTML = content;
+document.getElementById('tacticsModal').style.display = 'block';
+
+// 전술 모달 닫기 함수
+function closeTacticsModal() {
+    document.getElementById('tacticsModal').style.display = 'none';
+}
+
 // 모달 바깥 클릭 시 닫기
 window.onclick = function(event) {
     const tacticsModal = document.getElementById('tacticsModal');
