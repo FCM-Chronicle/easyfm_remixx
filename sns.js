@@ -8,68 +8,57 @@ class SNSManager {
         this.lastUpdateTime = Date.now();
     }
 
-    // 템플릿 초기화 함수 수정
-initializeTemplates() {
-    return {
-        // 이적 확정 템플릿
-        transferConfirmed: [
-            "[오피셜] {playerName}, {transferFee}에 {newTeam} 이적 확정!",
-            "[오피셜] {playerName}, {transferFee}에 {newTeam} 합류!",
-            "[오피셜] {playerName}, **{newTeam}**과 계약! 새로운 도전 시작!",
-            "[오피셜] {playerName}, {transferFee}로 {newTeam} 이적 '충격'!",
-            "[오피셜] {playerName}, **{newTeam}**과 동행!",
-            "[오피셜] {playerName}, {transferFee}에 {newTeam} 이적!",
-            "[오피셜] {playerName}, **{newTeam}**과 계약!",
-            "[오피셜] {playerName}, {transferFee}에 {newTeam} 이적 '전격'!",
-            "[오피셜] {playerName}, **{newTeam}**으로 '유턴'!",
-            "[오피셜] {playerName}, {newTeam} 이적! '이변'의 주인공!",
-            "HERE WE GO! {playerName}, {newTeam} 이적 확정! by 파브리치오 로마노"
-        ],
-        
-        // 이적 루머 템플릿
-        transferRumor: [
-            "[이적 루머] {playerName}, {newTeam} 이적설 솔솔... {transferFee} 거론",
-            "[이적설] {playerName}, {newTeam}으로 깜짝 이적하나?",
-            "[이적시장] {playerName}, {newTeam} 이적 임박?",
-            "[루머] {playerName}, {newTeam} '러브콜' 받았다!",
-            "[이적 가십] {playerName}, {newTeam} 이적 '가능성' 제기!"
-        ],
+    // 템플릿 초기화 (문서에서 제공된 템플릿 사용)
+    initializeTemplates() {
+        return {
+            // 이적 확정 템플릿
+            transferConfirmed: [
+                "[오피셜] {playerName}, {transferFee}에 {newTeam} 이적 확정!",
+                "[오피셜] {playerName}, {transferFee}에 {newTeam} 합류!",
+                "[오피셜] {playerName}, **{newTeam}**과 계약! 새로운 도전 시작!",
+                "[오피셜] {playerName}, {transferFee}로 {newTeam} 이적 '충격'!",
+                "[오피셜] {playerName}, **{newTeam}**과 동행!",
+                "[오피셜] {playerName}, {transferFee}에 {newTeam} 이적!",
+                "[오피셜] {playerName}, **{newTeam}**과 계약!",
+                "[오피셜] {playerName}, {transferFee}에 {newTeam} 이적 '전격'!",
+                "[오피셜] {playerName}, **{newTeam}**으로 '유턴'!",
+                "[오피셜] {playerName}, {newTeam} 이적! '이변'의 주인공!",
+                "HERE WE GO! {playerName}, {newTeam} 이적 확정! by 파브리치오 로마노"
+            ],
+            
+            // 이적 루머 템플릿
+            transferRumor: [
+                "[이적 루머] {playerName}, {newTeam} 이적설 솔솔... {transferFee} 거론",
+                "[이적설] {playerName}, {newTeam}으로 깜짝 이적하나?",
+                "[이적시장] {playerName}, {newTeam} 이적 임박?",
+                "[루머] {playerName}, {newTeam} '러브콜' 받았다!",
+                "[이적 가십] {playerName}, {newTeam} 이적 '가능성' 제기!"
+            ],
 
-        // 경기 결과 템플릿 - 이변/충격 (약팀이 강팀을 이김)
-        matchResultShocking: [
-            "[경기 결과] 충격! {winTeam}이 {loseTeam}을 {score}로 격파!",
-            "[경기 결과] 이변! {winTeam}, {loseTeam}을 {score}로 잡았다!",
-            "[경기 결과] 믿을 수 없는 패배! {loseTeam}, {winTeam}에 {score} 패!",
-            "[경기 결과] 대이변! {winTeam}, {loseTeam} 격침시키며 {score} 승리!",
-            "[경기 결과] 센세이션! {winTeam}의 {loseTeam} {score} 격파!"
-        ],
-        
-        // 경기 결과 템플릿 - 예상된 결과 (강팀이 약팀을 이김)
-        matchResultExpected: [
-            "[경기 결과] 예상대로! {winTeam}, {loseTeam}을 {score}로 완파!",
-            "[경기 결과] 압도적인 승리! {winTeam}, {loseTeam}에 {score} 승리!",
-            "[경기 결과] 순조로운 출발! {winTeam}, {loseTeam}에 {score} 승!",
-            "[경기 결과] 무난한 승리! {winTeam}, {loseTeam} {score}로 제압!",
-            "[경기 결과] {winTeam}, {loseTeam} 상대로 {score} 완승!"
-        ],
-        
-        // 경기 결과 템플릿 - 일반적인 결과
-        matchResultNormal: [
-            "[경기 결과] {winTeam}, {loseTeam}에 {score} 승리!",
-            "[경기 결과] {homeTeam}와 {awayTeam}, {score} 무승부!",
-            "[경기 결과] {winTeam}, {loseTeam} 꺾고 귀중한 승점 3점 획득!",
-            "[경기 결과] {winTeam}, {loseTeam} 상대로 {score} 승리!",
-            "[경기 결과] {winTeam}이 {loseTeam}을 {score}로 이겼습니다!"
-        ],
+            // 경기 결과 템플릿
+            matchResultShocking: [
+                "[경기 결과] 충격! {winTeam}이 {loseTeam}을 {score}로 격파!",
+                "[경기 결과] 이변! {weakTeam}, {strongTeam}을 {score}로 잡았다!",
+                "[경기 결과] 믿을 수 없는 패배! {strongTeam}, {weakTeam}에 {score} 패!"
+            ],
+            
+            matchResultExpected: [
+                "[경기 결과] 예상대로! {strongTeam}, {weakTeam}을 {score}로 완파!",
+                "[경기 결과] 압도적인 승리! {strongTeam}, {weakTeam}에 {score} 승리!",
+                "[경기 결과] 순조로운 출발! {strongTeam}, {weakTeam}에 {score} 승!"
+            ],
+            
+            matchResultNormal: [
+                "[경기 결과] {homeTeam}, {awayTeam}에 {score} 승리!",
+                "[경기 결과] {teamA}와 {teamB}, {score} 무승부!",
+                "[경기 결과] {winTeam}, {loseTeam} 꺾고 귀중한 승점 3점 획득!"
+            ],
 
-        // 무승부 - 충격적인 결과 (강팀이 약팀과 비김)
-        matchResultDrawShocking: [
-            "[경기 결과] 충격적인 무승부! {strongTeam}, {weakTeam}과 {score} 무승부!",
-            "[경기 결과] 이변! {strongTeam}, {weakTeam}에 발목 잡혀 {score} 무승부!",
-            "[경기 결과] {strongTeam}, {weakTeam} 상대로 {score} 무승부... 충격!"
-        ]
-    };
-}
+            matchResultDrawShocking: [
+                "[경기 결과] 충격적인 무승부! {strongTeam}, {weakTeam}과 {score} 무승부!"
+            ]
+        };
+    }
 
     // SNS 피드 생성 (경기 후 호출)
     generateMatchPost(matchData) {
