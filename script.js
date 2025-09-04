@@ -2492,6 +2492,7 @@ function loadGame(event) {
     };
     reader.readAsText(file);
 }
+
 // 전술 정보 버튼 이벤트 리스너 추가
 document.getElementById('showTacticsBtn').addEventListener('click', showTacticsInfo);
 document.getElementById('showTeamTacticsBtn').addEventListener('click', showTeamTacticsInfo);
