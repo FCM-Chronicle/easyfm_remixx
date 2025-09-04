@@ -71,9 +71,16 @@ class SNSManager {
         };
     }
 
-   // generateMatchPost 함수의 수정된 부분
+   // SNS generateMatchPost 함수에 디버깅 추가
 generateMatchPost(matchData) {
-    if (!matchData || !gameData) return;
+    console.log('=== SNS generateMatchPost 시작 ===');
+    console.log('받은 matchData:', matchData);
+    console.log('gameData:', gameData);
+    
+    if (!matchData || !gameData) {
+        console.log('matchData 또는 gameData가 없음');
+        return;
+    }
 
     const homeTeam = matchData.homeTeam;
     const awayTeam = matchData.awayTeam;
@@ -81,18 +88,32 @@ generateMatchPost(matchData) {
     const awayScore = matchData.awayScore;
     const score = `${homeScore}-${awayScore}`;
 
+    console.log('팀 정보:', {
+        homeTeam,
+        awayTeam,
+        homeScore,
+        awayScore,
+        score
+    });
+
     // 팀 전력 차이 계산
     const homeRating = this.calculateTeamRating(homeTeam);
     const awayRating = this.calculateTeamRating(awayTeam);
     const strengthDiff = Math.abs(homeRating - awayRating);
     
+    console.log('레이팅 정보:', {
+        homeRating,
+        awayRating,
+        strengthDiff
+    });
+
     let template;
     let templateData = {};
 
     if (homeScore === awayScore) {
         // 무승부 처리
+        console.log('무승부 처리');
         if (strengthDiff > 10) {
-            // 전력차가 큰 경우의 무승부는 강팀에게 불리한 결과
             template = this.getRandomTemplate('matchResultDrawShocking');
             templateData = {
                 strongTeam: homeRating > awayRating ? this.getTeamName(homeTeam) : this.getTeamName(awayTeam),
@@ -110,35 +131,47 @@ generateMatchPost(matchData) {
     } else {
         // 승부가 결정된 경우만 winTeam/loseTeam 계산
         const winTeam = homeScore > awayScore ? homeTeam : awayTeam;
-        const loseTeam = homeScore > awayScore ? awayTeam : homeTeam; // 수정: 명확한 로직
+        const loseTeam = homeScore > awayScore ? awayTeam : homeTeam;
         const winnerRating = homeScore > awayScore ? homeRating : awayRating;
         const loserRating = homeScore > awayScore ? awayRating : homeRating;
         
-        console.log('경기 결과:', {
-            homeTeam, awayTeam,
-            homeScore, awayScore,
-            winTeam, loseTeam,
-            homeRating, awayRating,
-            winnerRating, loserRating
+        console.log('승부 결정:', {
+            winTeam,
+            loseTeam,
+            winnerRating,
+            loserRating
+        });
+
+        // 팀 이름 변환 테스트
+        const winTeamName = this.getTeamName(winTeam);
+        const loseTeamName = this.getTeamName(loseTeam);
+        const homeTeamName = this.getTeamName(homeTeam);
+        const awayTeamName = this.getTeamName(awayTeam);
+
+        console.log('팀 이름 변환:', {
+            winTeam: winTeam + ' -> ' + winTeamName,
+            loseTeam: loseTeam + ' -> ' + loseTeamName,
+            homeTeam: homeTeam + ' -> ' + homeTeamName,
+            awayTeam: awayTeam + ' -> ' + awayTeamName
         });
         
         // 기본 템플릿 데이터 (모든 경우에 공통)
         templateData = {
-            winTeam: this.getTeamName(winTeam),
-            loseTeam: this.getTeamName(loseTeam),
-            homeTeam: this.getTeamName(homeTeam),
-            awayTeam: this.getTeamName(awayTeam),
+            winTeam: winTeamName,
+            loseTeam: loseTeamName,
+            homeTeam: homeTeamName,
+            awayTeam: awayTeamName,
             score: score
         };
+
+        console.log('templateData 생성:', templateData);
 
         // 이변 여부 판단: 약한 팀이 강한 팀을 이겼는가?
         const isUpset = winnerRating < loserRating;
         
         console.log('이변 판단:', {
             isUpset,
-            strengthDiff,
-            winnerRating,
-            loserRating
+            strengthDiff
         });
 
         if (isUpset && strengthDiff > 10) {
@@ -156,6 +189,13 @@ generateMatchPost(matchData) {
         }
     }
 
+    console.log('선택된 템플릿:', template);
+    console.log('템플릿 데이터:', templateData);
+
+    // 템플릿 채우기 테스트
+    const filledTemplate = this.fillTemplate(template, templateData);
+    console.log('채워진 템플릿:', filledTemplate);
+
     // 득점자 정보 추가
     const goalScorers = this.extractGoalScorers(matchData.events);
     let goalInfo = '';
@@ -169,7 +209,7 @@ generateMatchPost(matchData) {
     const post = {
         id: this.postIdCounter++,
         type: 'match_result',
-        content: this.fillTemplate(template, templateData) + goalInfo,
+        content: filledTemplate + goalInfo,
         hashtags: hashtags,
         timestamp: Date.now(),
         likes: Math.floor(Math.random() * 1000) + 100,
@@ -177,7 +217,9 @@ generateMatchPost(matchData) {
         shares: Math.floor(Math.random() * 50) + 5
     };
 
-    console.log('생성된 포스트:', post);
+    console.log('생성된 최종 포스트:', post);
+    console.log('=== SNS generateMatchPost 완료 ===');
+
     this.posts.unshift(post);
     return post;
 }
