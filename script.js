@@ -2199,24 +2199,24 @@ function displayLeagueTable() {
         return b.goalsFor - a.goalsFor;
     });
     
-    let tableHTML = `
-        <table class="league-table">
-            <thead>
-                <tr>
-                    <th>순위</th>
-                    <th>팀</th>
-                    <th>경기</th>
-                    <th>승</th>
-                    <th>무</th>
-                    <th>패</th>
-                    <th>득점</th>
-                    <th>실점</th>
-                    <th>득실차</th>
-                    <th>승점</th>
-                </tr>
-            </thead>
-            <tbody>
-    `;
+   let tableHTML = `
+    <table class='league-table'>
+        <thead>
+            <tr>
+                <th>순위</th>
+                <th>팀</th>
+                <th>경기</th>
+                <th>승</th>
+                <th>무</th>
+                <th>패</th>
+                <th>득점</th>
+                <th>실점</th>
+                <th>득실차</th>
+                <th>승점</th>
+            </tr>
+        </thead>
+        <tbody>
+`;
     
     standings.forEach((team, index) => {
         const isUserTeam = team.team === gameData.selectedTeam;
