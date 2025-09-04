@@ -1813,6 +1813,9 @@ function showTab(tabName) {
             updateRecordsTab();
             }
             break;
+            case 'sns':
+    showSNSTab();
+    break;
     }
 }
 
