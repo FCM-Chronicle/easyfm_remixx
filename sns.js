@@ -488,7 +488,6 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         initializeSNSSystem();
         extendSaveSystem();
-        extendShowTab();
     }, 1000);
 });
 
