@@ -71,97 +71,116 @@ class SNSManager {
         };
     }
 
-    // SNS 피드 생성 (경기 후 호출)
-    generateMatchPost(matchData) {
-        if (!matchData || !gameData) return;
+   // generateMatchPost 함수의 수정된 부분
+generateMatchPost(matchData) {
+    if (!matchData || !gameData) return;
 
-        const homeTeam = matchData.homeTeam;
-        const awayTeam = matchData.awayTeam;
-        const homeScore = matchData.homeScore;
-        const awayScore = matchData.awayScore;
-        const score = `${homeScore}-${awayScore}`;
+    const homeTeam = matchData.homeTeam;
+    const awayTeam = matchData.awayTeam;
+    const homeScore = matchData.homeScore;
+    const awayScore = matchData.awayScore;
+    const score = `${homeScore}-${awayScore}`;
 
-        // 팀 전력 차이 계산
-        const homeRating = this.calculateTeamRating(homeTeam);
-        const awayRating = this.calculateTeamRating(awayTeam);
-        const strengthDiff = Math.abs(homeRating - awayRating);
-        
-        let template;
-        let templateData = {};
+    // 팀 전력 차이 계산
+    const homeRating = this.calculateTeamRating(homeTeam);
+    const awayRating = this.calculateTeamRating(awayTeam);
+    const strengthDiff = Math.abs(homeRating - awayRating);
+    
+    let template;
+    let templateData = {};
 
-        if (homeScore === awayScore) {
-            // 무승부 처리
-            if (strengthDiff > 10) {
-                // 전력차가 큰 경우의 무승부는 강팀에게 불리한 결과
-                template = this.getRandomTemplate('matchResultDrawShocking');
-                templateData = {
-                    strongTeam: homeRating > awayRating ? this.getTeamName(homeTeam) : this.getTeamName(awayTeam),
-                    weakTeam: homeRating < awayRating ? this.getTeamName(homeTeam) : this.getTeamName(awayTeam),
-                    score: score
-                };
-            } else {
-                template = this.getRandomTemplate('matchResultNormal');
-                templateData = {
-                    homeTeam: this.getTeamName(homeTeam),
-                    awayTeam: this.getTeamName(awayTeam),
-                    score: score
-                };
-            }
-        } else {
-            // 승부가 결정된 경우
-            const winTeam = homeScore > awayScore ? homeTeam : awayTeam;
-            const loseTeam = homeScore < awayScore ? homeTeam : awayTeam;
-            const winnerRating = homeScore > awayScore ? homeRating : awayRating;
-            const loserRating = homeScore < awayScore ? homeRating : awayRating;
-            
-            // 기본 템플릿 데이터 (모든 경우에 공통)
+    if (homeScore === awayScore) {
+        // 무승부 처리
+        if (strengthDiff > 10) {
+            // 전력차가 큰 경우의 무승부는 강팀에게 불리한 결과
+            template = this.getRandomTemplate('matchResultDrawShocking');
             templateData = {
-                winTeam: this.getTeamName(winTeam),
-                loseTeam: this.getTeamName(loseTeam),
+                strongTeam: homeRating > awayRating ? this.getTeamName(homeTeam) : this.getTeamName(awayTeam),
+                weakTeam: homeRating < awayRating ? this.getTeamName(homeTeam) : this.getTeamName(awayTeam),
+                score: score
+            };
+        } else {
+            template = this.getRandomTemplate('matchResultNormal');
+            templateData = {
                 homeTeam: this.getTeamName(homeTeam),
                 awayTeam: this.getTeamName(awayTeam),
                 score: score
             };
-
-            // 이변 여부 판단: 약한 팀이 강한 팀을 이겼는가?
-            const isUpset = winnerRating < loserRating;
-
-            if (isUpset && strengthDiff > 10) {
-                // 이변! 약팀이 강팀을 이김
-                template = this.getRandomTemplate('matchResultShocking');
-            } else if (!isUpset && strengthDiff > 15) {
-                // 예상된 결과: 강팀이 약팀을 큰 차이로 이김
-                template = this.getRandomTemplate('matchResultExpected');
-            } else {
-                // 일반적인 결과
-                template = this.getRandomTemplate('matchResultNormal');
-            }
         }
-
-        // 득점자 정보 추가
-        const goalScorers = this.extractGoalScorers(matchData.events);
-        let goalInfo = '';
-        if (goalScorers.length > 0) {
-            goalInfo = `\n득점: ${goalScorers.join(', ')}`;
-        }
-
-        // 해시태그 생성
-        const hashtags = this.generateHashtags(homeTeam, awayTeam, matchData);
-
-        const post = {
-            id: this.postIdCounter++,
-            type: 'match_result',
-            content: this.fillTemplate(template, templateData) + goalInfo,
-            hashtags: hashtags,
-            timestamp: Date.now(),
-            likes: Math.floor(Math.random() * 1000) + 100,
-            comments: Math.floor(Math.random() * 200) + 10,
-            shares: Math.floor(Math.random() * 50) + 5
+    } else {
+        // 승부가 결정된 경우만 winTeam/loseTeam 계산
+        const winTeam = homeScore > awayScore ? homeTeam : awayTeam;
+        const loseTeam = homeScore > awayScore ? awayTeam : homeTeam; // 수정: 명확한 로직
+        const winnerRating = homeScore > awayScore ? homeRating : awayRating;
+        const loserRating = homeScore > awayScore ? awayRating : homeRating;
+        
+        console.log('경기 결과:', {
+            homeTeam, awayTeam,
+            homeScore, awayScore,
+            winTeam, loseTeam,
+            homeRating, awayRating,
+            winnerRating, loserRating
+        });
+        
+        // 기본 템플릿 데이터 (모든 경우에 공통)
+        templateData = {
+            winTeam: this.getTeamName(winTeam),
+            loseTeam: this.getTeamName(loseTeam),
+            homeTeam: this.getTeamName(homeTeam),
+            awayTeam: this.getTeamName(awayTeam),
+            score: score
         };
 
-        this.posts.unshift(post);
-        return post;
+        // 이변 여부 판단: 약한 팀이 강한 팀을 이겼는가?
+        const isUpset = winnerRating < loserRating;
+        
+        console.log('이변 판단:', {
+            isUpset,
+            strengthDiff,
+            winnerRating,
+            loserRating
+        });
+
+        if (isUpset && strengthDiff > 10) {
+            // 이변! 약팀이 강팀을 이김
+            template = this.getRandomTemplate('matchResultShocking');
+            console.log('템플릿: 이변');
+        } else if (!isUpset && strengthDiff > 15) {
+            // 예상된 결과: 강팀이 약팀을 큰 차이로 이김
+            template = this.getRandomTemplate('matchResultExpected');
+            console.log('템플릿: 예상된 결과');
+        } else {
+            // 일반적인 결과
+            template = this.getRandomTemplate('matchResultNormal');
+            console.log('템플릿: 일반');
+        }
     }
+
+    // 득점자 정보 추가
+    const goalScorers = this.extractGoalScorers(matchData.events);
+    let goalInfo = '';
+    if (goalScorers.length > 0) {
+        goalInfo = `\n득점: ${goalScorers.join(', ')}`;
+    }
+
+    // 해시태그 생성
+    const hashtags = this.generateHashtags(homeTeam, awayTeam, matchData);
+
+    const post = {
+        id: this.postIdCounter++,
+        type: 'match_result',
+        content: this.fillTemplate(template, templateData) + goalInfo,
+        hashtags: hashtags,
+        timestamp: Date.now(),
+        likes: Math.floor(Math.random() * 1000) + 100,
+        comments: Math.floor(Math.random() * 200) + 10,
+        shares: Math.floor(Math.random() * 50) + 5
+    };
+
+    console.log('생성된 포스트:', post);
+    this.posts.unshift(post);
+    return post;
+}
 
     // 이적 포스트 생성
     generateTransferPost(playerName, fromTeam, toTeam, transferFee, isRumor = false) {
