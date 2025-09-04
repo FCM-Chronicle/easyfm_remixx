@@ -212,34 +212,53 @@ generateMatchPost(matchData) {
         }
     }
 
-    // AI 경기 미리보기 생성
-    generateAIMatchPreview() {
-        // AI 팀들의 가상 경기 미리보기
-        const teams = Object.keys(allTeams).filter(t => t !== gameData.selectedTeam);
-        if (teams.length >= 2) {
-            const team1 = teams[Math.floor(Math.random() * teams.length)];
-            const team2 = teams.filter(t => t !== team1)[Math.floor(Math.random() * (teams.length - 1))];
-            
-            const previews = [
-                `🔥 주목할 만한 경기! ${this.getTeamName(team1)} vs ${this.getTeamName(team2)} 오늘 밤 대격돌!`,
-                `⚡ 빅 매치 예고! ${this.getTeamName(team1)}과 ${this.getTeamName(team2)}의 운명적 대결`,
-                `🎯 클래시코! ${this.getTeamName(team1)} 대 ${this.getTeamName(team2)}, 승자는?`
-            ];
+    // AI 경기 미리보기 생성 (같은 디비전끼리만)
+generateAIMatchPreview() {
+    // 현재 선택된 팀의 디비전 확인
+    const currentDivision = gameData.currentLeague;
+    
+    // 같은 디비전의 다른 팀들만 필터링
+    const sameLeagueTeams = Object.keys(allTeams).filter(teamKey => {
+        // 현재 선택된 팀 제외
+        if (teamKey === gameData.selectedTeam) return false;
+        
+        // 같은 리그(디비전)인지 확인
+        const teamLeague = allTeams[teamKey].league || 1; // 기본값 1
+        return teamLeague === currentDivision;
+    });
+    
+    console.log(`현재 디비전: ${currentDivision}`);
+    console.log('같은 디비전 팀들:', sameLeagueTeams);
+    
+    if (sameLeagueTeams.length >= 2) {
+        const team1 = sameLeagueTeams[Math.floor(Math.random() * sameLeagueTeams.length)];
+        const team2 = sameLeagueTeams.filter(t => t !== team1)[Math.floor(Math.random() * (sameLeagueTeams.length - 1))];
+        
+        const previews = [
+            `🔥 주목할 만한 경기! ${this.getTeamName(team1)} vs ${this.getTeamName(team2)} 오늘 밤 대격돌!`,
+            `⚡ 빅 매치 예고! ${this.getTeamName(team1)}과 ${this.getTeamName(team2)}의 운명적 대결`,
+            `🎯 클래시코! ${this.getTeamName(team1)} 대 ${this.getTeamName(team2)}, 승자는?`,
+            `⚽ 리그 주요 경기! ${this.getTeamName(team1)} vs ${this.getTeamName(team2)} 예상!`,
+            `🏆 ${currentDivision}부 리그 경기! ${this.getTeamName(team1)} 대 ${this.getTeamName(team2)}`
+        ];
 
-            const post = {
-                id: this.postIdCounter++,
-                type: 'match_preview',
-                content: previews[Math.floor(Math.random() * previews.length)],
-                hashtags: [`#${this.sanitizeHashtag(team1)}`, `#${this.sanitizeHashtag(team2)}`, '#preview'],
-                timestamp: Date.now(),
-                likes: Math.floor(Math.random() * 300) + 30,
-                comments: Math.floor(Math.random() * 80) + 5,
-                shares: Math.floor(Math.random() * 20) + 1
-            };
+        const post = {
+            id: this.postIdCounter++,
+            type: 'match_preview',
+            content: previews[Math.floor(Math.random() * previews.length)],
+            hashtags: [`#${this.sanitizeHashtag(team1)}`, `#${this.sanitizeHashtag(team2)}`, '#preview', `#${currentDivision}부리그`],
+            timestamp: Date.now(),
+            likes: Math.floor(Math.random() * 300) + 30,
+            comments: Math.floor(Math.random() * 80) + 5,
+            shares: Math.floor(Math.random() * 20) + 1
+        };
 
-            this.posts.unshift(post);
-        }
+        this.posts.unshift(post);
+        console.log('같은 디비전 경기 미리보기 생성:', post.content);
+    } else {
+        console.log('같은 디비전에 충분한 팀이 없어 경기 미리보기를 생성하지 않음');
     }
+}
 
     // 유틸리티 함수들
     getRandomTemplate(templateType) {
