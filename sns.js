@@ -8,79 +8,79 @@ class SNSManager {
         this.lastUpdateTime = Date.now();
     }
 
-    // 템플릿 초기화 (수정된 템플릿 사용)
-    initializeTemplates() {
-        return {
-            // 이적 확정 템플릿
-            transferConfirmed: [
-                "[오피셜] {playerName}, {transferFee}에 {newTeam} 이적 확정!",
-                "[오피셜] {playerName}, {transferFee}에 {newTeam} 합류!",
-                "[오피셜] {playerName}, **{newTeam}**과 계약! 새로운 도전 시작!",
-                "[오피셜] {playerName}, {transferFee}로 {newTeam} 이적 '충격'!",
-                "[오피셜] {playerName}, **{newTeam}**과 동행!",
-                "[오피셜] {playerName}, {transferFee}에 {newTeam} 이적!",
-                "[오피셜] {playerName}, **{newTeam}**과 계약!",
-                "[오피셜] {playerName}, {transferFee}에 {newTeam} 이적 '전격'!",
-                "[오피셜] {playerName}, **{newTeam}**으로 '유턴'!",
-                "[오피셜] {playerName}, {newTeam} 이적! '이변'의 주인공!",
-                "HERE WE GO! {playerName}, {newTeam} 이적 확정! by 파브리치오 로마노"
-            ],
-            
-            // 이적 루머 템플릿
-            transferRumor: [
-                "[이적 루머] {playerName}, {newTeam} 이적설 솔솔... {transferFee} 거론",
-                "[이적설] {playerName}, {newTeam}으로 깜짝 이적하나?",
-                "[이적시장] {playerName}, {newTeam} 이적 임박?",
-                "[루머] {playerName}, {newTeam} '러브콜' 받았다!",
-                "[이적 가십] {playerName}, {newTeam} 이적 '가능성' 제기!"
-            ],
+  // initializeTemplates 함수에서 템플릿 수정
+initializeTemplates() {
+    return {
+        // 이적 확정 템플릿
+        transferConfirmed: [
+            "[오피셜] {playerName}, {transferFee}에 {newTeam} 이적 확정!",
+            "[오피셜] {playerName}, {transferFee}에 {newTeam} 합류!",
+            "[오피셜] {playerName}, **{newTeam}**과 계약! 새로운 도전 시작!",
+            "[오피셜] {playerName}, {transferFee}로 {newTeam} 이적 '충격'!",
+            "[오피셜] {playerName}, **{newTeam}**과 동행!",
+            "[오피셜] {playerName}, {transferFee}에 {newTeam} 이적!",
+            "[오피셜] {playerName}, **{newTeam}**과 계약!",
+            "[오피셜] {playerName}, {transferFee}에 {newTeam} 이적 '전격'!",
+            "[오피셜] {playerName}, **{newTeam}**으로 '유턴'!",
+            "[오피셜] {playerName}, {newTeam} 이적! '이변'의 주인공!",
+            "HERE WE GO! {playerName}, {newTeam} 이적 확정! by 파브리치오 로마노"
+        ],
+        
+        // 이적 루머 템플릿
+        transferRumor: [
+            "[이적 루머] {playerName}, {newTeam} 이적설 솔솔... {transferFee} 거론",
+            "[이적설] {playerName}, {newTeam}으로 깜짝 이적하나?",
+            "[이적시장] {playerName}, {newTeam} 이적 임박?",
+            "[루머] {playerName}, {newTeam} '러브콜' 받았다!",
+            "[이적 가십] {playerName}, {newTeam} 이적 '가능성' 제기!"
+        ],
 
-            // 경기 결과 템플릿 - 이변/충격 (약팀이 강팀을 이김)
-            matchResultShocking: [
-                "[경기 결과] 충격! {winTeam}이 {loseTeam}을 {score}로 격파!",
-                "[경기 결과] 이변! {winTeam}, {loseTeam}을 {score}로 잡았다!",
-                "[경기 결과] 믿을 수 없는 패배! {loseTeam}, {winTeam}에 {score} 패!",
-                "[경기 결과] 대이변! {winTeam}, {loseTeam} 격침시키며 {score} 승리!",
-                "[경기 결과] 센세이션! {winTeam}의 {loseTeam} {score} 격파!"
-            ],
-            
-            // 경기 결과 템플릿 - 예상된 결과 (강팀이 약팀을 이김)
-            matchResultExpected: [
-                "[경기 결과] 예상대로! {winTeam}, {loseTeam}을 {score}로 완파!",
-                "[경기 결과] 압도적인 승리! {winTeam}, {loseTeam}에 {score} 승리!",
-                "[경기 결과] 순조로운 출발! {winTeam}, {loseTeam}에 {score} 승!",
-                "[경기 결과] 무난한 승리! {winTeam}, {loseTeam} {score}로 제압!",
-                "[경기 결과] {winTeam}, {loseTeam} 상대로 {score} 완승!"
-            ],
-            
-            // 경기 결과 템플릿 - 일반적인 결과
-            matchResultNormal: [
-                "[경기 결과] {winTeam}, {loseTeam}에 {score} 승리!",
-                "[경기 결과] {homeTeam}와 {awayTeam}, {score} 무승부!",
-                "[경기 결과] {winTeam}, {loseTeam} 꺾고 귀중한 승점 3점 획득!",
-                "[경기 결과] {winTeam}, {loseTeam} 상대로 {score} 승리!",
-                "[경기 결과] {winTeam}이 {loseTeam}을 {score}로 이겼습니다!"
-            ],
+        // 경기 결과 템플릿 - 이변/충격 (약팀이 강팀을 이김)
+        matchResultShocking: [
+            "[경기 결과] 충격! {winTeam}이 {loseTeam}을 {score}로 격파!",
+            "[경기 결과] 이변! {winTeam}, {loseTeam}을 {score}로 잡았다!",
+            "[경기 결과] 믿을 수 없는 패배! {loseTeam}, {winTeam}에 {score} 패!",
+            "[경기 결과] 대이변! {winTeam}, {loseTeam} 격침시키며 {score} 승리!",
+            "[경기 결과] 센세이션! {winTeam}의 {loseTeam} {score} 격파!"
+        ],
+        
+        // 경기 결과 템플릿 - 예상된 결과 (강팀이 약팀을 이김)
+        matchResultExpected: [
+            "[경기 결과] 예상대로! {winTeam}, {loseTeam}을 {score}로 완파!",
+            "[경기 결과] 압도적인 승리! {winTeam}, {loseTeam}에 {score} 승리!",
+            "[경기 결과] 순조로운 출발! {winTeam}, {loseTeam}에 {score} 승!",
+            "[경기 결과] 무난한 승리! {winTeam}, {loseTeam} {score}로 제압!",
+            "[경기 결과] {winTeam}, {loseTeam} 상대로 {score} 완승!"
+        ],
+        
+        // 경기 결과 템플릿 - 일반적인 승부 결과 (winTeam/loseTeam 사용)
+        matchResultNormal: [
+            "[경기 결과] {winTeam}, {loseTeam}에 {score} 승리!",
+            "[경기 결과] {winTeam}, {loseTeam} 꺾고 귀중한 승점 3점 획득!",
+            "[경기 결과] {winTeam}, {loseTeam} 상대로 {score} 승리!",
+            "[경기 결과] {winTeam}이 {loseTeam}을 {score}로 이겼습니다!"
+        ],
 
-            // 무승부 - 충격적인 결과 (강팀이 약팀과 비김)
-            matchResultDrawShocking: [
-                "[경기 결과] 충격적인 무승부! {strongTeam}, {weakTeam}과 {score} 무승부!",
-                "[경기 결과] 이변! {strongTeam}, {weakTeam}에 발목 잡혀 {score} 무승부!",
-                "[경기 결과] {strongTeam}, {weakTeam} 상대로 {score} 무승부... 충격!"
-            ]
-        };
-    }
+        // 경기 결과 템플릿 - 일반적인 무승부 (homeTeam/awayTeam 사용)
+        matchResultDraw: [
+            "[경기 결과] {homeTeam}와 {awayTeam}, {score} 무승부!",
+            "[경기 결과] {homeTeam}과 {awayTeam}이 {score}로 비겼습니다!",
+            "[경기 결과] {homeTeam} vs {awayTeam}, {score} 스코어리스 드로우!",
+            "[경기 결과] 박빙의 승부! {homeTeam}과 {awayTeam} {score} 무승부!"
+        ],
 
-   // SNS generateMatchPost 함수에 디버깅 추가
-generateMatchPost(matchData) {
-    console.log('=== SNS generateMatchPost 시작 ===');
-    console.log('받은 matchData:', matchData);
-    console.log('gameData:', gameData);
+        // 무승부 - 충격적인 결과 (강팀이 약팀과 비김)
+        matchResultDrawShocking: [
+            "[경기 결과] 충격적인 무승부! {strongTeam}, {weakTeam}과 {score} 무승부!",
+            "[경기 결과] 이변! {strongTeam}, {weakTeam}에 발목 잡혀 {score} 무승부!",
+            "[경기 결과] {strongTeam}, {weakTeam} 상대로 {score} 무승부... 충격!"
+        ]
+    };
+}
     
-    if (!matchData || !gameData) {
-        console.log('matchData 또는 gameData가 없음');
-        return;
-    }
+  // 수정된 generateMatchPost 함수
+generateMatchPost(matchData) {
+    if (!matchData || !gameData) return;
 
     const homeTeam = matchData.homeTeam;
     const awayTeam = matchData.awayTeam;
@@ -88,32 +88,18 @@ generateMatchPost(matchData) {
     const awayScore = matchData.awayScore;
     const score = `${homeScore}-${awayScore}`;
 
-    console.log('팀 정보:', {
-        homeTeam,
-        awayTeam,
-        homeScore,
-        awayScore,
-        score
-    });
-
     // 팀 전력 차이 계산
     const homeRating = this.calculateTeamRating(homeTeam);
     const awayRating = this.calculateTeamRating(awayTeam);
     const strengthDiff = Math.abs(homeRating - awayRating);
     
-    console.log('레이팅 정보:', {
-        homeRating,
-        awayRating,
-        strengthDiff
-    });
-
     let template;
     let templateData = {};
 
     if (homeScore === awayScore) {
         // 무승부 처리
-        console.log('무승부 처리');
         if (strengthDiff > 10) {
+            // 전력차가 큰 경우의 무승부는 강팀에게 불리한 결과
             template = this.getRandomTemplate('matchResultDrawShocking');
             templateData = {
                 strongTeam: homeRating > awayRating ? this.getTeamName(homeTeam) : this.getTeamName(awayTeam),
@@ -121,7 +107,8 @@ generateMatchPost(matchData) {
                 score: score
             };
         } else {
-            template = this.getRandomTemplate('matchResultNormal');
+            // 일반적인 무승부 - 새로운 템플릿 사용
+            template = this.getRandomTemplate('matchResultDraw');
             templateData = {
                 homeTeam: this.getTeamName(homeTeam),
                 awayTeam: this.getTeamName(awayTeam),
@@ -135,66 +122,29 @@ generateMatchPost(matchData) {
         const winnerRating = homeScore > awayScore ? homeRating : awayRating;
         const loserRating = homeScore > awayScore ? awayRating : homeRating;
         
-        console.log('승부 결정:', {
-            winTeam,
-            loseTeam,
-            winnerRating,
-            loserRating
-        });
-
-        // 팀 이름 변환 테스트
-        const winTeamName = this.getTeamName(winTeam);
-        const loseTeamName = this.getTeamName(loseTeam);
-        const homeTeamName = this.getTeamName(homeTeam);
-        const awayTeamName = this.getTeamName(awayTeam);
-
-        console.log('팀 이름 변환:', {
-            winTeam: winTeam + ' -> ' + winTeamName,
-            loseTeam: loseTeam + ' -> ' + loseTeamName,
-            homeTeam: homeTeam + ' -> ' + homeTeamName,
-            awayTeam: awayTeam + ' -> ' + awayTeamName
-        });
-        
         // 기본 템플릿 데이터 (모든 경우에 공통)
         templateData = {
-            winTeam: winTeamName,
-            loseTeam: loseTeamName,
-            homeTeam: homeTeamName,
-            awayTeam: awayTeamName,
+            winTeam: this.getTeamName(winTeam),
+            loseTeam: this.getTeamName(loseTeam),
+            homeTeam: this.getTeamName(homeTeam),
+            awayTeam: this.getTeamName(awayTeam),
             score: score
         };
 
-        console.log('templateData 생성:', templateData);
-
         // 이변 여부 판단: 약한 팀이 강한 팀을 이겼는가?
         const isUpset = winnerRating < loserRating;
-        
-        console.log('이변 판단:', {
-            isUpset,
-            strengthDiff
-        });
 
         if (isUpset && strengthDiff > 10) {
-            // 이변! 약팀이 강팀을 이김
+            // 이변! 약팀이 강팀을 이kim
             template = this.getRandomTemplate('matchResultShocking');
-            console.log('템플릿: 이변');
         } else if (!isUpset && strengthDiff > 15) {
             // 예상된 결과: 강팀이 약팀을 큰 차이로 이김
             template = this.getRandomTemplate('matchResultExpected');
-            console.log('템플릿: 예상된 결과');
         } else {
             // 일반적인 결과
             template = this.getRandomTemplate('matchResultNormal');
-            console.log('템플릿: 일반');
         }
     }
-
-    console.log('선택된 템플릿:', template);
-    console.log('템플릿 데이터:', templateData);
-
-    // 템플릿 채우기 테스트
-    const filledTemplate = this.fillTemplate(template, templateData);
-    console.log('채워진 템플릿:', filledTemplate);
 
     // 득점자 정보 추가
     const goalScorers = this.extractGoalScorers(matchData.events);
@@ -209,16 +159,13 @@ generateMatchPost(matchData) {
     const post = {
         id: this.postIdCounter++,
         type: 'match_result',
-        content: filledTemplate + goalInfo,
+        content: this.fillTemplate(template, templateData) + goalInfo,
         hashtags: hashtags,
         timestamp: Date.now(),
         likes: Math.floor(Math.random() * 1000) + 100,
         comments: Math.floor(Math.random() * 200) + 10,
         shares: Math.floor(Math.random() * 50) + 5
     };
-
-    console.log('생성된 최종 포스트:', post);
-    console.log('=== SNS generateMatchPost 완료 ===');
 
     this.posts.unshift(post);
     return post;
