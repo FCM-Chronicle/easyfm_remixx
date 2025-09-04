@@ -2429,44 +2429,22 @@ function calculateTeamStrengthDifference() {
     };
 }
 
-// TXT 파일로 게임 저장 (기존 saveGame 함수 수정)
 function saveGame() {
-    // SNS 데이터 포함해서 게임 상태 생성
-    const gameState = {
-        ...gameData,
-        snsData: snsManager.getSaveData(),
-        saveVersion: "1.0",
-        saveDate: new Date().toLocaleString('ko-KR'),
-        timestamp: Date.now()
+    const saveData = {
+        gameData: gameData,
+        teams: teams,
+        timestamp: new Date().toISOString()
     };
     
-    const dataStr = JSON.stringify(gameState, null, 2);
-    const dataBlob = new Blob([dataStr], {type: 'text/plain;charset=utf-8'});
-    
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(dataBlob);
-    
-    // 파일명에 팀명과 날짜 포함
-    const teamName = gameData.selectedTeam || 'MyTeam';
-    const now = new Date();
-    const dateStr = now.toISOString().slice(0,10); // YYYY-MM-DD
-    const timeStr = now.toTimeString().slice(0,5).replace(':', ''); // HHMM
-    
-    link.download = `${teamName}_${dateStr}_${timeStr}.txt`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    // URL 객체 해제
-    URL.revokeObjectURL(link.href);
-    
-    console.log('게임 저장 완료 (TXT 형식)');
-    if (typeof showMessage === 'function') {
-        showMessage('게임이 저장되었습니다!');
-    }
+    const blob = new Blob([JSON.stringify(saveData, null, 2)], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${teamNames[gameData.selectedTeam]}_${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
 }
 
-// TXT 파일에서 게임 불러오기 (기존 구조 참고해서 수정)
 function loadGame(event) {
     const file = event.target.files[0];
     if (!file) return;
@@ -2475,56 +2453,27 @@ function loadGame(event) {
     reader.onload = function(e) {
         try {
             const saveData = JSON.parse(e.target.result);
+            gameData = saveData.gameData;
             
-            // 새로운 형식 (TXT 저장)인지 확인
-            if (saveData.gameData) {
-                // 새로운 TXT 형식
-                gameData = saveData.gameData;
-                
-                // SNS 데이터 복원
-                if (saveData.snsData && typeof snsManager !== 'undefined') {
-                    snsManager.loadSaveData(saveData.snsData);
-                    console.log('SNS 데이터 로드 완료');
-                }
-            } else {
-                // 기존 JSON 형식 (saveData가 gameData 자체)
-                gameData = saveData;
-            }
-            
-            // 팀 데이터 복원 (기존 로직 유지)
+            // 팀 데이터 복원
             if (saveData.teams) {
                 Object.assign(teams, saveData.teams);
             }
             
-            // 화면 업데이트 (기존 로직 유지)
+            // 화면 업데이트
             document.getElementById('teamName').textContent = teamNames[gameData.selectedTeam];
             updateDisplay();
             updateFormationDisplay();
             displayTeamPlayers();
             
-            // SNS 피드 새로고침
-            if (typeof snsManager !== 'undefined' && document.getElementById('snsFeed')) {
-                snsManager.displayFeed('snsFeed', 15);
-            }
-            
             alert('게임을 불러왔습니다!');
-            
         } catch (error) {
-            console.error('파일 로드 에러:', error);
             alert('저장 파일을 불러오는 중 오류가 발생했습니다.');
         }
     };
     reader.readAsText(file);
 }
 
-// HTML input 요소 수정 (accept 속성에 .txt 추가)
-function updateLoadGameInput() {
-    const loadInput = document.getElementById('loadGameInput');
-    if (loadInput) {
-        loadInput.accept = '.txt,.json';
-        loadInput.title = 'TXT 또는 JSON 파일을 선택하세요';
-    }
-}
 // 전술 정보 버튼 이벤트 리스너 추가
 document.getElementById('showTacticsBtn').addEventListener('click', showTacticsInfo);
 document.getElementById('showTeamTacticsBtn').addEventListener('click', showTeamTacticsInfo);
