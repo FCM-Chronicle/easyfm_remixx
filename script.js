@@ -2433,6 +2433,8 @@ function saveGame() {
     const saveData = {
         gameData: gameData,
         teams: teams,
+        snsData: snsManager.getSaveData(), // SNS 데이터 추가
+        growthData: playerGrowthSystem.getSaveData(), // 포텐셜(성장) 데이터 추가
         timestamp: new Date().toISOString()
     };
     
@@ -2460,11 +2462,28 @@ function loadGame(event) {
                 Object.assign(teams, saveData.teams);
             }
             
+            // SNS 데이터 복원
+            if (saveData.snsData && typeof snsManager !== 'undefined') {
+                snsManager.loadSaveData(saveData.snsData);
+                console.log('SNS 데이터 로드 완료');
+            }
+            
+            // 포텐셜(성장) 데이터 복원
+            if (saveData.growthData && typeof playerGrowthSystem !== 'undefined') {
+                playerGrowthSystem.loadSaveData(saveData.growthData);
+                console.log('선수 성장 데이터 로드 완료');
+            }
+            
             // 화면 업데이트
             document.getElementById('teamName').textContent = teamNames[gameData.selectedTeam];
             updateDisplay();
             updateFormationDisplay();
             displayTeamPlayers();
+            
+            // SNS 피드 새로고침
+            if (typeof snsManager !== 'undefined' && document.getElementById('snsFeed')) {
+                snsManager.displayFeed('snsFeed', 15);
+            }
             
             alert('게임을 불러왔습니다!');
         } catch (error) {
@@ -2473,7 +2492,6 @@ function loadGame(event) {
     };
     reader.readAsText(file);
 }
-
 // 전술 정보 버튼 이벤트 리스너 추가
 document.getElementById('showTacticsBtn').addEventListener('click', showTacticsInfo);
 document.getElementById('showTeamTacticsBtn').addEventListener('click', showTeamTacticsInfo);
