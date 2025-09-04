@@ -1784,43 +1784,71 @@ function showTab(tabName) {
         btn.classList.remove('active');
     });
     document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
-
+    
     // 탭 패널 표시
     document.querySelectorAll('.tab-panel').forEach(panel => {
         panel.classList.remove('active');
     });
     document.getElementById(tabName).classList.add('active');
-
+    
     // 탭별 초기화
     switch(tabName) {
         case 'squad':
             displayTeamPlayers();
             updateFormationDisplay();
             break;
+            
         case 'transfer':
             if (typeof displayTransferPlayers === 'function') {
                 displayTransferPlayers();
             }
             break;
+            
         case 'league':
             displayLeagueTable();
             break;
+            
         case 'sponsor':
             displaySponsors();
             break;
+            
         case 'records':
             if (typeof updateRecordsTab === 'function') {
                 updateRecordsTab();
             }
             break;
+            
         case 'sns':
-            // showSNSTab 함수가 존재하는지 확인 후 호출
-            if (typeof showSNSTab === 'function') {
-                showSNSTab();
-            } else if (typeof snsManager !== 'undefined') {
-                // 또는 snsManager를 직접 사용
+            // SNS 매니저가 존재하는지 확인
+            if (typeof snsManager !== 'undefined') {
+                // SNS 피드 표시
                 snsManager.displayFeed('snsFeed', 15);
+            } else {
+                // SNS 시스템이 아직 로드되지 않은 경우
+                console.log('SNS 시스템을 로딩 중입니다...');
+                
+                // SNS 컨테이너가 있다면 로딩 메시지 표시
+                const feedContainer = document.getElementById('snsFeed');
+                if (feedContainer) {
+                    feedContainer.innerHTML = '<div class="sns-empty">SNS 시스템을 초기화하는 중입니다...</div>';
+                }
+                
+                // 잠시 후 다시 시도
+                setTimeout(() => {
+                    if (typeof snsManager !== 'undefined') {
+                        snsManager.displayFeed('snsFeed', 15);
+                    } else {
+                        // 여전히 로드되지 않은 경우 에러 메시지
+                        if (feedContainer) {
+                            feedContainer.innerHTML = '<div class="sns-empty">SNS 시스템을 불러올 수 없습니다. 페이지를 새로고침해 주세요.</div>';
+                        }
+                    }
+                }, 2000);
             }
+            break;
+            
+        default:
+            console.log(`Unknown tab: ${tabName}`);
             break;
     }
 }
