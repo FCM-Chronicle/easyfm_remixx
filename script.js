@@ -1808,14 +1808,20 @@ function showTab(tabName) {
         case 'sponsor':
             displaySponsors();
             break;
-            case 'records':
+        case 'records':
             if (typeof updateRecordsTab === 'function') {
-            updateRecordsTab();
+                updateRecordsTab();
             }
             break;
-            case 'sns':
-    showSNSTab();
-    break;
+        case 'sns':
+            // showSNSTab 함수가 존재하는지 확인 후 호출
+            if (typeof showSNSTab === 'function') {
+                showSNSTab();
+            } else if (typeof snsManager !== 'undefined') {
+                // 또는 snsManager를 직접 사용
+                snsManager.displayFeed('snsFeed', 15);
+            }
+            break;
     }
 }
 
