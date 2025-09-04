@@ -3,7 +3,7 @@ class TransferSystem {
     constructor() {
         this.transferMarket = [];
         this.aiTransferCooldown = 0;
-        this.basePrice = 500; // 기본 가격 500억
+        this.basePrice = 800; // 기본 가격 800억
         
         // 타 리그 선수들
         this.extraPlayers = [
@@ -96,13 +96,13 @@ calculatePlayerPrice(player) {
         ratingMultiplier = 2;
     } else if (player.rating >= 75) {
         // 75-79 레이팅: 준주전급 (보통)
-        ratingMultiplier = 1.5;
+        ratingMultiplier = 0.5;
     } else if (player.rating >= 70) {
         // 70-74 레이팅: 로테이션급 (약간 쌈)
-        ratingMultiplier = 0.7;
+        ratingMultiplier = 0.3;
     } else {
         // 70 미만: 백업/유망주급 (매우 쌈)
-        ratingMultiplier = 0.5;
+        ratingMultiplier = 0.2;
     }
     
     price *= ratingMultiplier;
