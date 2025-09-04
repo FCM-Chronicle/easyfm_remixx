@@ -7,21 +7,40 @@ class TransferSystem {
         
         // 타 리그 선수들
         this.extraPlayers = [
-            { name: "V.죄케레스", position: "FW", rating: 85, age: 25, team: "외부리그" },
-            { name: "주앙 칸셀루", position: "DF", rating: 82, age: 31, team: "외부리그" },
-            { name: "L.토레이라", position: "MF", rating: 85, age: 27, team: "외부리그" },
-            { name: "K.나카무라", position: "MF", rating: 80, age: 23, team: "외부리그" },
-            { name: "R.산체스", position: "GK", rating: 84, age: 29, team: "외부리그" },
-            { name: "C.호날두", position: "FW", rating: 93, age: 40, team: "외부리그" },
-            { name: "사디오 마네", position: "FW", rating: 83, age: 33, team: "외부리그" },
-            { name: "은골로 캉테", position: "MF", rating: 84, age: 34, team: "외부리그" },
-            { name: "리오넬 메시", position: "FW", rating: 93, age: 37, team: "외부리그" },
-            { name: "음뵈모", position: "FW", rating: 87, age: 26, team: "외부리그" },
-            { name: "벤제마", position: "FW", rating: 83, age: 37, team: "외부리그" },
-            { name: "포그바", position: "MF", rating: 80, age: 32, team: "외부리그" },
-            { name: "델레 알리", position: "MF", rating: 79, age: 29, team: "외부리그" },
-            { name: "부츠케츠", position: "MF", rating: 83, age: 36, team: "외부리그" },
-            { name: "라포르트", position: "DF", rating: 83, age: 31, team: "외부리그" }
+           [
+  { "name": "바르트 페르브뤼헌", "position": "GK", "rating": 85, "age": 22, "team": "외부리그" },
+  { "name": "기욤 레스테스", "position": "GK", "rating": 78, "age": 19, "team": "외부리그" },
+  { "name": "토마소 마르티넬리", "position": "GK", "rating": 72, "age": 18, "team": "외부리그" },
+  { "name": "윤도영", "position": "GK", "rating": 68, "age": 20, "team": "외부리그" },
+  { "name": "조르조 스칼비니", "position": "DF", "rating": 85, "age": 21, "team": "외부리그" },
+  { "name": "오스만 디오망데", "position": "DF", "rating": 83, "age": 21, "team": "외부리그" },
+  { "name": "파비오 카발리", "position": "DF", "rating": 73, "age": 19, "team": "외부리그" },
+  { "name": "아론 히키", "position": "DF", "rating": 80, "age": 22, "team": "외부리그" },
+  { "name": "디오고 코스타", "position": "GK", "rating": 86, "age": 25, "team": "외부리그" },
+  { "name": "후고 라르손", "position": "MF", "rating": 81, "age": 20, "team": "외부리그" },
+  { "name": "아담 와튼", "position": "MF", "rating": 80, "age": 20, "team": "외부리그" },
+  { "name": "아산 우에드라오고", "position": "MF", "rating": 78, "age": 18, "team": "외부리그" },
+  { "name": "마틴 바투리나", "position": "MF", "rating": 79, "age": 21, "team": "외부리그" },
+  { "name": "자비 게라", "position": "MF", "rating": 79, "age": 21, "team": "외부리그" },
+  { "name": "옌스 카스트로프", "position": "MF", "rating": 75, "age": 21, "team": "외부리그" },
+  { "name": "플로리안 비르츠", "position": "MF", "rating": 88, "age": 21, "team": "외부리그" },
+  { "name": "히오르히 수다코프", "position": "MF", "rating": 82, "age": 22, "team": "외부리그" },
+  { "name": "켄드리 파에스", "position": "MF", "rating": 76, "age": 17, "team": "외부리그" },
+  { "name": "김민수", "position": "MF", "rating": 69, "age": 18, "team": "외부리그" },
+  { "name": "안토니오 누사", "position": "FW", "rating": 80, "age": 19, "team": "외부리그" },
+  { "name": "윌프리드 그난토", "position": "FW", "rating": 79, "age": 20, "team": "외부리그" },
+  { "name": "엘리에스 벤 세기르", "position": "FW", "rating": 80, "age": 19, "team": "외부리그" },
+  { "name": "에반 퍼거슨", "position": "FW", "rating": 83, "age": 19, "team": "외부리그" },
+  { "name": "카림 코네", "position": "FW", "rating": 77, "age": 20, "team": "외부리그" },
+  { "name": "엄지성", "position": "FW", "rating": 72, "age": 22, "team": "외부리그" },
+  { "name": "배준호", "position": "FW", "rating": 75, "age": 21, "team": "외부리그" },
+  { "name": "아데몰라 루크먼", "position": "FW", "rating": 85, "age": 27, "team": "외부리그" },
+  { "name": "퇸 코프메이너르스", "position": "MF", "rating": 85, "age": 27, "team": "외부리그" },
+  { "name": "엘 빌랄 투레", "position": "FW", "rating": 78, "age": 24, "team": "외부리그" },
+  { "name": "오현규", "position": "FW", "rating": 75, "age": 23, "team": "외부리그" },
+  { "name": "포그바", "position": "MF", "rating": 80, "age": 32, "team": "외부리그" },
+  { "name": "델레 알리", "position": "MF", "rating": 79, "age": 29, "team": "외부리그" }
+]
         ];
     }
 
