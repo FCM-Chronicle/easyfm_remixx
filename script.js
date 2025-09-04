@@ -2478,7 +2478,7 @@ function showTacticsInfo() {
             name: "윙 플레이",
             effective: ["catenaccio", "twoLine"],
             ineffective: ["gegenpress", "totalFootball"],
-            description: "강력한 윙을 이용하여 측면을 파괴하는 전"
+            description: "강력한 윙을 이용하여 측면을 파괴하는 전술술"
         },
         catenaccio: {
             name: "카테나치오",
@@ -2533,56 +2533,89 @@ function showTacticsInfo() {
     document.getElementById('tacticsModal').style.display = 'block';
 }
 
+// 팀별 전술 매핑 (전역 변수)
+const teamTactics = {
+    맨체스터_시티: "tikitaka",
+    리버풀: "gegenpress",
+    맨체스터_유나이티드: "possession",
+    아스널: "twoLine",
+    첼시: "longBall",
+    토트넘_홋스퍼: "gegenpress",
+    레알_마드리드: "possession",
+    바르셀로나: "totalFootball",
+    AC_밀란: "gegenpress",
+    인터_밀란: "totalFootball",
+    바이에른_뮌헨: "tikitaka",
+    파리_생제르맹: "possession",
+    레버쿠젠: "longBall",
+    도르트문트: "gegenpress",
+    뉴캐슬_유나이티드: "lavolpiana",
+    AS_로마: "longBall",
+    아틀레티코_마드리드: "catenaccio",
+    나폴리: "parkBus",
+    유벤투스: "possession",
+    아스톤_빌라: "longBall",
+    라이프치히: "totalFootball",
+    세비야: "gegenpress",
+    스포르팅_CP: "lavolpiana",
+    아약스: "totalFootball",
+    벤피카: "possession",
+    셀틱: "gegenpress",
+    페예노르트: "longBall",
+    올랭피크_드_마르세유: "gegenpress",
+    리옹: "possession",
+    FC_서울: "twoLine",
+    전북_현대: "gegenpress",
+    울산_현대: "possession",
+    포항_스틸러스: "longBall",
+    광주_FC: "parkBus",
+    갈라타사라이: "gegenpress",
+    알_힐랄: "possession",
+    알_이티하드: "longBall",
+    알_나스르: "possession",
+    아르헨티나_연합: "totalFootball",
+    미국_연합: "longBall",
+    멕시코_연합: "gegenpress",
+    브라질_연합: "tikitaka"
+};
+
 // 팀별 전술 정보 표시 함수
 function showTeamTacticsInfo() {
-    const teamTactics = {
-        맨체스터_시티: "tikitaka",
-        리버풀: "gegenpress",
-        맨체스터_유나이티드: "possession",
-        아스널: "twoLine",
-        첼시: "longBall",
-        토트넘_홋스퍼: "gegenpress",
-        레알_마드리드: "possession",
-        바르셀로나: "totalFootball",
-        AC_밀란: "gegenpress",
-        인터_밀란: "totalFootball",
-        바이에른_뮌헨: "tikitaka",
-        파리_생제르맹: "possession",
-        레버쿠젠: "longBall",
-        도르트문트: "gegenpress",
-        뉴캐슬_유나이티드: "lavolpiana",
-        AS_로마: "longBall",
-        아틀레티코_마드리드: "catenaccio",
-        나폴리: "parkBus",
-        유벤투스: "possession",
-        아스톤_빌라: "longBall",
-        라이프치히: "totalFootball",
-        세비야: "gegenpress",
-        스포르팅_CP: "lavolpiana",
-        
-        // 추가 팀들
-        아약스: "totalFootball",
-        벤피카: "possession",
-        셀틱: "gegenpress",
-        페예노르트: "longBall",
-        올랭피크_드_마르세유: "gegenpress",
-        리옹: "possession",
-        FC_서울: "twoLine",
-        전북_현대: "gegenpress",
-        울산_현대: "possession",
-        포항_스틸러스: "longBall",
-        광주_FC: "parkBus",
-        갈라타사라이: "gegenpress",
-        알_힐랄: "possession",
-        알_이티하드: "longBall",
-        알_나스르: "possession",
-        아르헨티나_연합: "totalFootball",
-        미국_연합: "longBall",
-        멕시코_연합: "gegenpress",
-        브라질_연합: "tikitaka"
-    };
+    // 전술별로 그룹화
+    const tacticGroups = {};
+    Object.entries(teamTactics).forEach(([teamKey, tacticKey]) => {
+        if (!tacticGroups[tacticKey]) {
+            tacticGroups[tacticKey] = [];
+        }
+        tacticGroups[tacticKey].push(teamNames[teamKey]);
+    });
     
-    // 나머지 함수 로직...
+    let content = '<div style="max-height: 500px; overflow-y: auto;">';
+    Object.entries(tacticGroups).forEach(([tacticKey, teams]) => {
+        content += `
+            <div style="background: rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 20px; margin-bottom: 15px;">
+                <h4 style="color: #ffd700; font-size: 1.3rem; margin-bottom: 15px; display: flex; align-items: center;">
+                    🎯 ${tacticNames[tacticKey]}
+                </h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                    ${teams.map(team => 
+                        '<div style="background: rgba(255, 255, 255, 0.1); padding: 10px; border-radius: 8px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.2);">' +
+                            team +
+                        '</div>'
+                    ).join('')}
+                </div>
+            </div>
+        `;
+    });
+    
+    content += `
+        <div style="background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 10px; padding: 15px; margin-top: 20px; text-align: center;">
+            <strong style="color: #ffd700;">💡 경기 전에 상대팀의 전술을 확인하고 대응 전술을 준비하세요!</strong>
+        </div>
+    </div>`;
+    
+    document.getElementById('tacticsModalContent').innerHTML = content;
+    document.getElementById('tacticsModal').style.display = 'block';
 }
 
 
