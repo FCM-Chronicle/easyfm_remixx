@@ -11,7 +11,7 @@ class TransferSystem {
   { "name": "바르트 페르브뤼헌", "position": "GK", "rating": 85, "age": 22, "team": "외부리그" },
   { "name": "기욤 레스테스", "position": "GK", "rating": 78, "age": 19, "team": "외부리그" },
   { "name": "토마소 마르티넬리", "position": "GK", "rating": 72, "age": 18, "team": "외부리그" },
-  { "name": "윤도영", "position": "GK", "rating": 68, "age": 20, "team": "외부리그" },
+  { "name": "윤도영", "position": "GK", "rating": 73, "age": 19, "team": "외부리그" },
   { "name": "조르조 스칼비니", "position": "DF", "rating": 85, "age": 21, "team": "외부리그" },
   { "name": "오스만 디오망데", "position": "DF", "rating": 83, "age": 21, "team": "외부리그" },
   { "name": "파비오 카발리", "position": "DF", "rating": 73, "age": 19, "team": "외부리그" },
@@ -26,7 +26,7 @@ class TransferSystem {
   { "name": "플로리안 비르츠", "position": "MF", "rating": 88, "age": 21, "team": "외부리그" },
   { "name": "히오르히 수다코프", "position": "MF", "rating": 82, "age": 22, "team": "외부리그" },
   { "name": "켄드리 파에스", "position": "MF", "rating": 76, "age": 17, "team": "외부리그" },
-  { "name": "김민수", "position": "MF", "rating": 69, "age": 18, "team": "외부리그" },
+  { "name": "김민수", "position": "MF", "rating": 73, "age": 18, "team": "외부리그" },
   { "name": "안토니오 누사", "position": "FW", "rating": 80, "age": 19, "team": "외부리그" },
   { "name": "윌프리드 그난토", "position": "FW", "rating": 79, "age": 20, "team": "외부리그" },
   { "name": "엘리에스 벤 세기르", "position": "FW", "rating": 80, "age": 19, "team": "외부리그" },
@@ -87,16 +87,16 @@ calculatePlayerPrice(player) {
     
     if (player.rating >= 90) {
         // 90+ 레이팅: 슈퍼스타급 (매우 비쌈)
-        ratingMultiplier = 3;
+        ratingMultiplier = 3.5;
     } else if (player.rating >= 85) {
         // 85-89 레이팅: 스타급 (비쌈)
-        ratingMultiplier = 2;
+        ratingMultiplier = 2.5;
     } else if (player.rating >= 80) {
         // 80-84 레이팅: 주전급 (기본가)
-        ratingMultiplier = 1.2;
+        ratingMultiplier = 1.5;
     } else if (player.rating >= 75) {
         // 75-79 레이팅: 준주전급 (보통)
-        ratingMultiplier = 1;
+        ratingMultiplier = 1.2;
     } else if (player.rating >= 70) {
         // 70-74 레이팅: 로테이션급 (약간 쌈)
         ratingMultiplier = 0.7;
