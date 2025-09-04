@@ -2468,10 +2468,16 @@ function loadGame(event) {
                 console.log('SNS 데이터 로드 완료');
             }
             
-            // 포텐셜(성장) 데이터 복원
-            if (saveData.growthData && typeof playerGrowthSystem !== 'undefined') {
-                playerGrowthSystem.loadSaveData(saveData.growthData);
-                console.log('선수 성장 데이터 로드 완료');
+            // 포텐셜(성장) 시스템 재초기화 및 데이터 복원
+            if (typeof playerGrowthSystem !== 'undefined') {
+                // 먼저 현재 선수들 기준으로 성장 시스템 초기화
+                playerGrowthSystem.initializePlayerGrowth();
+                
+                // 그 다음 저장된 성장 데이터로 덮어씌우기
+                if (saveData.growthData) {
+                    playerGrowthSystem.loadSaveData(saveData.growthData);
+                    console.log('선수 성장 데이터 로드 완료');
+                }
             }
             
             // 화면 업데이트
