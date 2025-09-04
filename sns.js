@@ -8,7 +8,7 @@ class SNSManager {
         this.lastUpdateTime = Date.now();
     }
 
-    // 템플릿 초기화 (문서에서 제공된 템플릿 사용)
+    // 템플릿 초기화 (수정된 템플릿 사용)
     initializeTemplates() {
         return {
             // 이적 확정 템플릿
@@ -35,27 +35,38 @@ class SNSManager {
                 "[이적 가십] {playerName}, {newTeam} 이적 '가능성' 제기!"
             ],
 
-            // 경기 결과 템플릿
+            // 경기 결과 템플릿 - 이변/충격 (약팀이 강팀을 이김)
             matchResultShocking: [
                 "[경기 결과] 충격! {winTeam}이 {loseTeam}을 {score}로 격파!",
-                "[경기 결과] 이변! {weakTeam}, {strongTeam}을 {score}로 잡았다!",
-                "[경기 결과] 믿을 수 없는 패배! {strongTeam}, {weakTeam}에 {score} 패!"
+                "[경기 결과] 이변! {winTeam}, {loseTeam}을 {score}로 잡았다!",
+                "[경기 결과] 믿을 수 없는 패배! {loseTeam}, {winTeam}에 {score} 패!",
+                "[경기 결과] 대이변! {winTeam}, {loseTeam} 격침시키며 {score} 승리!",
+                "[경기 결과] 센세이션! {winTeam}의 {loseTeam} {score} 격파!"
             ],
             
+            // 경기 결과 템플릿 - 예상된 결과 (강팀이 약팀을 이김)
             matchResultExpected: [
-                "[경기 결과] 예상대로! {strongTeam}, {weakTeam}을 {score}로 완파!",
-                "[경기 결과] 압도적인 승리! {strongTeam}, {weakTeam}에 {score} 승리!",
-                "[경기 결과] 순조로운 출발! {strongTeam}, {weakTeam}에 {score} 승!"
+                "[경기 결과] 예상대로! {winTeam}, {loseTeam}을 {score}로 완파!",
+                "[경기 결과] 압도적인 승리! {winTeam}, {loseTeam}에 {score} 승리!",
+                "[경기 결과] 순조로운 출발! {winTeam}, {loseTeam}에 {score} 승!",
+                "[경기 결과] 무난한 승리! {winTeam}, {loseTeam} {score}로 제압!",
+                "[경기 결과] {winTeam}, {loseTeam} 상대로 {score} 완승!"
             ],
             
+            // 경기 결과 템플릿 - 일반적인 결과
             matchResultNormal: [
-                "[경기 결과] {homeTeam}, {awayTeam}에 {score} 승리!",
-                "[경기 결과] {teamA}와 {teamB}, {score} 무승부!",
-                "[경기 결과] {winTeam}, {loseTeam} 꺾고 귀중한 승점 3점 획득!"
+                "[경기 결과] {winTeam}, {loseTeam}에 {score} 승리!",
+                "[경기 결과] {homeTeam}와 {awayTeam}, {score} 무승부!",
+                "[경기 결과] {winTeam}, {loseTeam} 꺾고 귀중한 승점 3점 획득!",
+                "[경기 결과] {winTeam}, {loseTeam} 상대로 {score} 승리!",
+                "[경기 결과] {winTeam}이 {loseTeam}을 {score}로 이겼습니다!"
             ],
 
+            // 무승부 - 충격적인 결과 (강팀이 약팀과 비김)
             matchResultDrawShocking: [
-                "[경기 결과] 충격적인 무승부! {strongTeam}, {weakTeam}과 {score} 무승부!"
+                "[경기 결과] 충격적인 무승부! {strongTeam}, {weakTeam}과 {score} 무승부!",
+                "[경기 결과] 이변! {strongTeam}, {weakTeam}에 발목 잡혀 {score} 무승부!",
+                "[경기 결과] {strongTeam}, {weakTeam} 상대로 {score} 무승부... 충격!"
             ]
         };
     }
@@ -74,14 +85,14 @@ class SNSManager {
         const homeRating = this.calculateTeamRating(homeTeam);
         const awayRating = this.calculateTeamRating(awayTeam);
         const strengthDiff = Math.abs(homeRating - awayRating);
-        const isUpset = this.isUpsetResult(homeTeam, awayTeam, homeScore, awayScore, homeRating, awayRating);
-
+        
         let template;
         let templateData = {};
 
         if (homeScore === awayScore) {
-            // 무승부
-            if (isUpset && strengthDiff > 10) {
+            // 무승부 처리
+            if (strengthDiff > 10) {
+                // 전력차가 큰 경우의 무승부는 강팀에게 불리한 결과
                 template = this.getRandomTemplate('matchResultDrawShocking');
                 templateData = {
                     strongTeam: homeRating > awayRating ? this.getTeamName(homeTeam) : this.getTeamName(awayTeam),
@@ -93,44 +104,37 @@ class SNSManager {
                 templateData = {
                     homeTeam: this.getTeamName(homeTeam),
                     awayTeam: this.getTeamName(awayTeam),
-                    teamA: this.getTeamName(homeTeam),
-                    teamB: this.getTeamName(awayTeam),
                     score: score
                 };
             }
         } else {
-            // 승부 결정
+            // 승부가 결정된 경우
             const winTeam = homeScore > awayScore ? homeTeam : awayTeam;
             const loseTeam = homeScore < awayScore ? homeTeam : awayTeam;
+            const winnerRating = homeScore > awayScore ? homeRating : awayRating;
+            const loserRating = homeScore < awayScore ? homeRating : awayRating;
+            
+            // 기본 템플릿 데이터 (모든 경우에 공통)
+            templateData = {
+                winTeam: this.getTeamName(winTeam),
+                loseTeam: this.getTeamName(loseTeam),
+                homeTeam: this.getTeamName(homeTeam),
+                awayTeam: this.getTeamName(awayTeam),
+                score: score
+            };
+
+            // 이변 여부 판단: 약한 팀이 강한 팀을 이겼는가?
+            const isUpset = winnerRating < loserRating;
 
             if (isUpset && strengthDiff > 10) {
-                // 이변 결과
+                // 이변! 약팀이 강팀을 이김
                 template = this.getRandomTemplate('matchResultShocking');
-                templateData = {
-                    winTeam: this.getTeamName(winTeam),
-                    loseTeam: this.getTeamName(loseTeam),
-                    weakTeam: this.getTeamName(winTeam),
-                    strongTeam: this.getTeamName(loseTeam),
-                    score: score
-                };
-            } else if (strengthDiff > 15) {
-                // 예상된 결과 (전력차 큰 경우)
+            } else if (!isUpset && strengthDiff > 15) {
+                // 예상된 결과: 강팀이 약팀을 큰 차이로 이김
                 template = this.getRandomTemplate('matchResultExpected');
-                templateData = {
-                    strongTeam: this.getTeamName(winTeam),
-                    weakTeam: this.getTeamName(loseTeam),
-                    score: score
-                };
             } else {
                 // 일반적인 결과
                 template = this.getRandomTemplate('matchResultNormal');
-                templateData = {
-                    homeTeam: this.getTeamName(homeTeam),
-                    awayTeam: this.getTeamName(awayTeam),
-                    winTeam: this.getTeamName(winTeam),
-                    loseTeam: this.getTeamName(loseTeam),
-                    score: score
-                };
             }
         }
 
@@ -259,16 +263,6 @@ class SNSManager {
             return window.calculateTeamRating ? window.calculateTeamRating() : 75;
         }
         return window.calculateOpponentTeamRating ? window.calculateOpponentTeamRating(teamKey) : 75;
-    }
-
-    isUpsetResult(homeTeam, awayTeam, homeScore, awayScore, homeRating, awayRating) {
-        const winner = homeScore > awayScore ? homeTeam : (awayScore > homeScore ? awayTeam : null);
-        if (!winner) return false; // 무승부는 별도 처리
-        
-        const winnerRating = winner === homeTeam ? homeRating : awayRating;
-        const loserRating = winner === homeTeam ? awayRating : homeRating;
-        
-        return winnerRating < loserRating; // 약한 팀이 이기면 이변
     }
 
     extractGoalScorers(events) {
@@ -413,6 +407,18 @@ class SNSManager {
 // 전역 SNS 매니저 인스턴스
 const snsManager = new SNSManager();
 
+// SNS 탭 표시 함수
+function showSNSTab() {
+    // SNS 피드가 표시될 컨테이너가 있는지 확인
+    const feedContainer = document.getElementById('snsFeed');
+    if (feedContainer && typeof snsManager !== 'undefined') {
+        // 최신 피드 표시 (15개 제한)
+        snsManager.displayFeed('snsFeed', 15);
+    } else {
+        console.log('SNS 시스템이 아직 초기화되지 않았습니다.');
+    }
+}
+
 // 기존 게임과의 연동 함수들
 function initializeSNSSystem() {
     // 기존 경기 종료 함수 확장
@@ -493,4 +499,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // 전역으로 노출
 window.snsManager = snsManager;
+window.showSNSTab = showSNSTab;
 window.initializeSNSSystem = initializeSNSSystem;
