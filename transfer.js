@@ -93,10 +93,10 @@ calculatePlayerPrice(player) {
         ratingMultiplier = 2.5;
     } else if (player.rating >= 80) {
         // 80-84 레이팅: 주전급 (기본가)
-        ratingMultiplier = 1.5;
+        ratingMultiplier = 2;
     } else if (player.rating >= 75) {
         // 75-79 레이팅: 준주전급 (보통)
-        ratingMultiplier = 1.2;
+        ratingMultiplier = 1.5;
     } else if (player.rating >= 70) {
         // 70-74 레이팅: 로테이션급 (약간 쌈)
         ratingMultiplier = 0.7;
@@ -111,12 +111,12 @@ calculatePlayerPrice(player) {
     let ageMultiplier = 1;
     if (player.age <= 20) {
         ageMultiplier = 0.7; // 유망주
-    } else if (player.age <= 25) {
-        ageMultiplier = 1.2; // 황금기
+    } else if (player.age <= 26) {
+        ageMultiplier = 1.5; // 황금기
     } else if (player.age >= 35) {
-        ageMultiplier = 0.6; // 베테랑
+        ageMultiplier = 1; // 베테랑
     } else if (player.age >= 30) {
-        ageMultiplier = 0.8; // 중견
+        ageMultiplier = 1.5; // 중견
     }
     
     price *= ageMultiplier;
