@@ -2448,18 +2448,30 @@ function saveGame() {
 }
 
 function loadGame(event) {
+    console.log('=== loadGame 함수 시작 ===');
+    
     const file = event.target.files[0];
-    if (!file) return;
+    if (!file) {
+        console.log('파일이 선택되지 않음');
+        return;
+    }
+    
+    console.log('선택된 파일:', file.name);
     
     const reader = new FileReader();
     reader.onload = function(e) {
         try {
+            console.log('=== 파일 읽기 시작 ===');
             const saveData = JSON.parse(e.target.result);
+            console.log('저장 데이터 파싱 완료');
+            
             gameData = saveData.gameData;
+            console.log('gameData 복원 완료');
             
             // 팀 데이터 복원
             if (saveData.teams) {
                 Object.assign(teams, saveData.teams);
+                console.log('teams 데이터 복원 완료');
             }
             
             // SNS 데이터 복원
@@ -2470,33 +2482,72 @@ function loadGame(event) {
             
             // 포텐셜(성장) 시스템 재초기화 및 데이터 복원
             if (typeof playerGrowthSystem !== 'undefined') {
-                // 먼저 현재 선수들 기준으로 성장 시스템 초기화
-                playerGrowthSystem.initializePlayerGrowth();
+                console.log('=== 선수 성장 시스템 처리 시작 ===');
                 
-                // 그 다음 저장된 성장 데이터로 덮어씌우기
+                // 기존 성장 데이터 초기화
+                playerGrowthSystem.resetGrowthSystem();
+                console.log('기존 성장 데이터 초기화 완료');
+                
+                // 현재 선수들 기준으로 성장 시스템 초기화
+                playerGrowthSystem.initializePlayerGrowth();
+                console.log('선수 성장 시스템 초기화 완료');
+                
+                // 저장된 성장 데이터로 덮어씌우기
                 if (saveData.growthData) {
                     playerGrowthSystem.loadSaveData(saveData.growthData);
-                    console.log('선수 성장 데이터 로드 완료');
+                    console.log('저장된 성장 데이터 로드 완료');
+                    
+                    // 성장 데이터 확인
+                    const summary = playerGrowthSystem.getTeamGrowthSummary();
+                    console.log('현재 성장 중인 선수 수:', summary.length);
+                    console.log('성장 중인 선수들:', summary);
+                } else {
+                    console.log('저장된 성장 데이터가 없음');
                 }
+                
+                console.log('=== 선수 성장 시스템 처리 완료 ===');
+            } else {
+                console.log('playerGrowthSystem이 정의되지 않음');
             }
             
             // 화면 업데이트
+            console.log('=== 화면 업데이트 시작 ===');
             document.getElementById('teamName').textContent = teamNames[gameData.selectedTeam];
             updateDisplay();
             updateFormationDisplay();
             displayTeamPlayers();
+            console.log('화면 업데이트 완료');
             
             // SNS 피드 새로고침
             if (typeof snsManager !== 'undefined' && document.getElementById('snsFeed')) {
                 snsManager.displayFeed('snsFeed', 15);
+                console.log('SNS 피드 새로고침 완료');
             }
             
+            console.log('=== loadGame 함수 완료 ===');
             alert('게임을 불러왔습니다!');
+            
         } catch (error) {
+            console.error('loadGame 에러:', error);
             alert('저장 파일을 불러오는 중 오류가 발생했습니다.');
         }
     };
     reader.readAsText(file);
+    
+    // input 값 초기화 (중복 실행 방지)
+    event.target.value = '';
+}
+
+// 이벤트 리스너 중복 등록 방지
+function setupLoadGameListener() {
+    const loadInput = document.getElementById('loadGameInput');
+    if (loadInput) {
+        // 기존 이벤트 리스너 제거
+        loadInput.removeEventListener('change', loadGame);
+        // 새 이벤트 리스너 등록
+        loadInput.addEventListener('change', loadGame);
+        console.log('loadGame 이벤트 리스너 설정 완료');
+    }
 }
 
 // 전술 정보 버튼 이벤트 리스너 추가
