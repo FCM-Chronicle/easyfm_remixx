@@ -2430,14 +2430,75 @@ function calculateTeamStrengthDifference() {
 }
 
 function saveGame() {
+    // 저장 전 데이터 진단
+    console.log('=== 저장 데이터 진단 ===');
+    console.log('gameData:', gameData);
+    console.log('teams 객체:', teams);
+    console.log('allTeams 객체:', typeof allTeams !== 'undefined' ? allTeams : 'undefined');
+    
+    // 리그 테이블 데이터 상세 확인
+    console.log('=== 리그 테이블 상세 확인 ===');
+    if (gameData.leagueTable) {
+        console.log('leagueTable 샘플:', gameData.leagueTable.slice(0, 3));
+    }
+    if (gameData.league1Table) {
+        console.log('league1Table 샘플:', gameData.league1Table.slice(0, 3));
+    }
+    if (gameData.league2Table) {
+        console.log('league2Table 샘플:', gameData.league2Table.slice(0, 3));
+    }
+    if (gameData.league3Table) {
+        console.log('league3Table 샘플:', gameData.league3Table.slice(0, 3));
+    }
+    
+    // 전역 리그 테이블 변수 확인
+    if (typeof leagueTable !== 'undefined') {
+        console.log('전역 leagueTable:', leagueTable.slice(0, 3));
+    }
+    if (typeof league1Table !== 'undefined') {
+        console.log('전역 league1Table:', league1Table.slice(0, 3));
+    }
+    if (typeof league2Table !== 'undefined') {
+        console.log('전역 league2Table:', league2Table.slice(0, 3));
+    }
+    if (typeof league3Table !== 'undefined') {
+        console.log('전역 league3Table:', league3Table.slice(0, 3));
+    }
+    
+    // 리그별 팀 분류 확인
+    const leagueTeams = {1: [], 2: [], 3: []};
+    
+    Object.keys(teams).forEach(teamKey => {
+        const team = teams[teamKey];
+        const league = team.league || (typeof allTeams !== 'undefined' && allTeams[teamKey] ? allTeams[teamKey].league : 1);
+        leagueTeams[league].push(teamKey);
+    });
+    
+    console.log('1부리그 팀들:', leagueTeams[1]);
+    console.log('2부리그 팀들:', leagueTeams[2]);
+    console.log('3부리그 팀들:', leagueTeams[3]);
+    
+    // 저장할 데이터 구성 (전역 리그 테이블도 포함)
     const saveData = {
         gameData: gameData,
         teams: teams,
-        snsData: snsManager.getSaveData(), // SNS 데이터 추가
-        growthData: playerGrowthSystem.getSaveData(), // 포텐셜(성장) 데이터 추가
+        allTeams: typeof allTeams !== 'undefined' ? allTeams : null,
+        // 전역 리그 테이블들도 저장
+        leagueTable: typeof leagueTable !== 'undefined' ? leagueTable : null,
+        league1Table: typeof league1Table !== 'undefined' ? league1Table : null,
+        league2Table: typeof league2Table !== 'undefined' ? league2Table : null,
+        league3Table: typeof league3Table !== 'undefined' ? league3Table : null,
+        snsData: snsManager.getSaveData(),
+        growthData: playerGrowthSystem.getSaveData(),
         timestamp: new Date().toISOString()
     };
     
+    console.log('=== 최종 저장 데이터 ===');
+    console.log('saveData:', saveData);
+    console.log('저장될 teams 크기:', Object.keys(saveData.teams).length);
+    console.log('저장될 allTeams 크기:', saveData.allTeams ? Object.keys(saveData.allTeams).length : 0);
+    
+    // JSON 파일로 저장
     const blob = new Blob([JSON.stringify(saveData, null, 2)], {type: 'application/json'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -2445,8 +2506,9 @@ function saveGame() {
     a.download = `${teamNames[gameData.selectedTeam]}_${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     URL.revokeObjectURL(url);
+    
+    console.log('게임 저장 완료');
 }
-
 function loadGame(event) {
     console.log('=== loadGame 함수 시작 ===');
     
