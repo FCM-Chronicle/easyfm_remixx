@@ -2429,7 +2429,7 @@ function calculateTeamStrengthDifference() {
     };
 }
 
-    function saveGame() {
+  function saveGame() {
     // 중복 실행 방지
     if (window.savingInProgress) {
         console.log('저장이 이미 진행 중입니다.');
@@ -2476,77 +2476,7 @@ function calculateTeamStrengthDifference() {
             }
         }
         
-        // 저장할 데이터 구성 (수정된 부분)
-        const saveData = {
-            gameData: gameData,
-            teams: teams,
-            allTeams: typeof allTeams !== 'undefined' ? allTeams : null,
-            // 리그 테이블 데이터 (개별적으로 저장)
-            league1Table: allLeagueData.league1Table,
-            league2Table: allLeagueData.league2Table,
-            league3Table: allLeagueData.league3Table,
-            // Records System 데이터 (별도 키로 저장)
-            recordsData: recordsData,
-            // SNS와 성장 데이터
-            snsData: snsManager.getSaveData(),
-            growthData: playerGrowthSystem.getSaveData(),
-            timestamp: new Date().toISOString()
-        };
-        
-        // JSON 파일로 저장
-        const blob = new Blob([JSON.stringify(saveData, null, 2)], {type: 'app
-    function loadGame(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-
-        function saveGame() {
-    // 중복 실행 방지
-    if (window.savingInProgress) {
-        console.log('저장이 이미 진행 중입니다.');
-        return;
-    }
-    window.savingInProgress = true;
-    
-    console.log('=== 저장 시작 ===');
-    
-    try {
-        // 모든 리그 테이블 데이터 수집
-        const allLeagueData = {};
-        
-        if (typeof league1Table !== 'undefined') {
-            allLeagueData.league1Table = league1Table;
-        }
-        if (typeof league2Table !== 'undefined') {
-            allLeagueData.league2Table = league2Table;
-        }
-        if (typeof league3Table !== 'undefined') {
-            allLeagueData.league3Table = league3Table;
-        }
-        
-        console.log('수집된 리그 데이터:', allLeagueData);
-        console.log('league2Table 내용:', league2Table);
-        
-        // Records System에서 모든 득점/도움 데이터 수집
-        const recordsData = {};
-        
-        if (typeof leagueBasedRecordsSystem !== 'undefined') {
-            recordsData.recordsSystemData = leagueBasedRecordsSystem.getSaveData();
-            
-            // 전체 득점왕/도움왕 순위도 저장
-            recordsData.topScorersAll = leagueBasedRecordsSystem.getTopScorers(20);
-            recordsData.topAssistersAll = leagueBasedRecordsSystem.getTopAssisters(20);
-            
-            // 리그별 득점왕/도움왕도 저장
-            recordsData.leagueTopScorers = {};
-            recordsData.leagueTopAssisters = {};
-            
-            for (let league = 1; league <= 3; league++) {
-                recordsData.leagueTopScorers[league] = leagueBasedRecordsSystem.getTopScorersByLeague(league, 10);
-                recordsData.leagueTopAssisters[league] = leagueBasedRecordsSystem.getTopAssistersByLeague(league, 10);
-            }
-        }
-        
-        // 저장할 데이터 구성 (수정된 부분)
+        // 저장할 데이터 구성
         const saveData = {
             gameData: gameData,
             teams: teams,
@@ -2584,8 +2514,8 @@ function calculateTeamStrengthDifference() {
         }, 2000);
     }
 }
-        
-       function loadGame(event) {
+
+function loadGame(event) {
     const file = event.target.files[0];
     if (!file) return;
     
@@ -2630,14 +2560,14 @@ function calculateTeamStrengthDifference() {
                 console.log('3부리그 테이블 복원 완료');
             }
             
-            // Records System 데이터 복원 (수정된 부분)
+            // Records System 데이터 복원
             if (saveData.recordsData && typeof leagueBasedRecordsSystem !== 'undefined') {
                 if (saveData.recordsData.recordsSystemData) {
                     leagueBasedRecordsSystem.loadSaveData(saveData.recordsData.recordsSystemData);
                     console.log('Records System 데이터 복원 완료');
                 }
             }
-            // 기존 형식 호환성 지원 (이전 저장 파일용)
+            // 기존 형식 호환성 지원
             else if (saveData.recordsSystemData && typeof leagueBasedRecordsSystem !== 'undefined') {
                 leagueBasedRecordsSystem.loadSaveData(saveData.recordsSystemData);
                 console.log('Records System 데이터 복원 완료 (기존 형식)');
@@ -2649,24 +2579,20 @@ function calculateTeamStrengthDifference() {
                 console.log('SNS 데이터 복원 완료');
             }
             
-            // 포텐셜 시스템 처리 (수정된 순서)
+            // 포텐셜 시스템 처리
             if (typeof playerGrowthSystem !== 'undefined') {
                 console.log('=== 포텐셜 시스템 처리 시작 ===');
                 
-                // 기존 데이터 완전 초기화
                 playerGrowthSystem.resetGrowthSystem();
                 console.log('기존 포텐셜 데이터 초기화 완료');
                 
-                // 저장된 데이터가 있으면 바로 로드 (새로 계산하지 않음)
                 if (saveData.growthData) {
                     playerGrowthSystem.loadSaveData(saveData.growthData);
                     console.log('저장된 포텐셜 데이터 로드 완료');
                     
-                    // 복원된 데이터 확인
                     const summary = playerGrowthSystem.getTeamGrowthSummary();
                     console.log('복원된 성장 중인 선수 수:', summary.length);
                 } else {
-                    // 저장된 데이터가 없을 때만 새로 초기화
                     playerGrowthSystem.initializePlayerGrowth();
                     console.log('새로운 포텐셜 시스템 초기화');
                 }
@@ -2701,7 +2627,6 @@ function calculateTeamStrengthDifference() {
             console.error('불러오기 에러:', error);
             alert('저장 파일을 불러오는 중 오류가 발생했습니다.');
         } finally {
-            // 중복 실행 방지 해제
             setTimeout(() => {
                 window.loadingInProgress = false;
             }, 1000);
@@ -2709,36 +2634,29 @@ function calculateTeamStrengthDifference() {
     };
     
     reader.readAsText(file);
-    
-    // input 값 초기화 (같은 파일 다시 선택 가능하게)
     event.target.value = '';
 }
 
-// 이벤트 리스너 중복 등록 방지 (개선된 버전)
+// 이벤트 리스너 설정
 function setupSaveLoadListeners() {
     const saveBtn = document.getElementById('saveGameBtn');
     const loadBtn = document.getElementById('loadGameBtn');
     const loadInput = document.getElementById('loadGameInput');
     
     if (saveBtn) {
-        // 기존 이벤트 리스너 완전 제거
         const newSaveBtn = saveBtn.cloneNode(true);
         saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
-        
-        // 새로운 이벤트 리스너 등록
         newSaveBtn.addEventListener('click', saveGame);
         console.log('저장 버튼 이벤트 리스너 설정 완료');
     }
     
     if (loadBtn && loadInput) {
-        // 기존 이벤트 리스너 완전 제거
         const newLoadBtn = loadBtn.cloneNode(true);
         loadBtn.parentNode.replaceChild(newLoadBtn, loadBtn);
         
         const newLoadInput = loadInput.cloneNode(true);
         loadInput.parentNode.replaceChild(newLoadInput, loadInput);
         
-        // 새로운 이벤트 리스너 등록
         newLoadBtn.addEventListener('click', function() {
             newLoadInput.click();
         });
@@ -2748,7 +2666,6 @@ function setupSaveLoadListeners() {
     }
 }
 
-// 페이지 로드 시 이벤트 리스너 설정
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(setupSaveLoadListeners, 1500);
 });
