@@ -2429,182 +2429,186 @@ function calculateTeamStrengthDifference() {
     };
 }
 
-function saveGame() {
-    // 중복 실행 방지
-    if (window.savingInProgress) {
-        console.log('저장이 이미 진행 중입니다.');
-        return;
-    }
-    window.savingInProgress = true;
-    
-    console.log('=== 저장 시작 ===');
-    
-    try {
-        // 모든 리그 테이블 데이터 수집
-        const allLeagueData = {};
-        
-        if (typeof league1Table !== 'undefined') {
-            allLeagueData.league1Table = league1Table;
+    function saveGame() {
+        // 중복 실행 방지
+        if (window.savingInProgress) {
+            console.log('저장이 이미 진행 중입니다.');
+            return;
         }
-        if (typeof league2Table !== 'undefined') {
-            allLeagueData.league2Table = league2Table;
-        }
-        if (typeof league3Table !== 'undefined') {
-            allLeagueData.league3Table = league3Table;
-        }
+        window.savingInProgress = true;
         
-        // Records System에서 모든 득점/도움 데이터 수집
-        const recordsData = {};
+        console.log('=== 저장 시작 ===');
         
-        if (typeof leagueBasedRecordsSystem !== 'undefined') {
-            recordsData.recordsSystemData = leagueBasedRecordsSystem.getSaveData();
-            
-            // 전체 득점왕/도움왕 순위도 저장
-            recordsData.topScorersAll = leagueBasedRecordsSystem.getTopScorers(20);
-            recordsData.topAssistersAll = leagueBasedRecordsSystem.getTopAssisters(20);
-            
-            // 리그별 득점왕/도움왕도 저장
-            recordsData.leagueTopScorers = {};
-            recordsData.leagueTopAssisters = {};
-            
-            for (let league = 1; league <= 3; league++) {
-                recordsData.leagueTopScorers[league] = leagueBasedRecordsSystem.getTopScorersByLeague(league, 10);
-                recordsData.leagueTopAssisters[league] = leagueBasedRecordsSystem.getTopAssistersByLeague(league, 10);
-            }
-        }
-        
-        // 저장할 데이터 구성
-        const saveData = {
-            gameData: gameData,
-            teams: teams,
-            allTeams: typeof allTeams !== 'undefined' ? allTeams : null,
-            // 모든 리그 테이블 데이터 포함
-            ...allLeagueData,
-            // Records System의 모든 득점/도움 데이터 포함
-            ...recordsData,
-            // SNS와 성장 데이터
-            snsData: snsManager.getSaveData(),
-            growthData: playerGrowthSystem.getSaveData(),
-            timestamp: new Date().toISOString()
-        };
-        
-        // JSON 파일로 저장
-        const blob = new Blob([JSON.stringify(saveData, null, 2)], {type: 'application/json'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${teamNames[gameData.selectedTeam]}_${new Date().toISOString().slice(0, 10)}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-        
-        console.log('게임 저장 완료');
-        
-    } catch (error) {
-        console.error('저장 중 오류:', error);
-        alert('저장 중 오류가 발생했습니다.');
-    } finally {
-        // 중복 실행 방지 해제 (2초 후)
-        setTimeout(() => {
-            window.savingInProgress = false;
-        }, 2000);
-    }
-}
-
-function loadGame(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    
-    // 중복 실행 방지
-    if (window.loadingInProgress) {
-        console.log('불러오기가 이미 진행 중입니다.');
-        return;
-    }
-    window.loadingInProgress = true;
-    
-    const reader = new FileReader();
-    reader.onload = function(e) {
         try {
-            console.log('=== 게임 불러오기 시작 ===');
-            const saveData = JSON.parse(e.target.result);
+            // 모든 리그 테이블 데이터 수집
+            const allLeagueData = {};
             
-            // 기본 게임 데이터 복원
-            gameData = saveData.gameData;
-            console.log('gameData 복원 완료');
-            
-            // 팀 데이터 복원
-            if (saveData.teams) {
-                Object.assign(teams, saveData.teams);
-                console.log('teams 데이터 복원 완료');
+            if (typeof league1Table !== 'undefined') {
+                allLeagueData.league1Table = league1Table;
             }
-            if (saveData.allTeams) {
-                Object.assign(allTeams, saveData.allTeams);
-                console.log('allTeams 데이터 복원 완료');
+            if (typeof league2Table !== 'undefined') {
+                allLeagueData.league2Table = league2Table;
+            }
+            if (typeof league3Table !== 'undefined') {
+                allLeagueData.league3Table = league3Table;
             }
             
-            // 리그 테이블 복원
-            if (saveData.league1Table) {
-                league1Table = saveData.league1Table;
-                console.log('1부리그 테이블 복원 완료');
-            }
-            if (saveData.league2Table) {
-                league2Table = saveData.league2Table;
-                console.log('2부리그 테이블 복원 완료');
-            }
-            if (saveData.league3Table) {
-                league3Table = saveData.league3Table;
-                console.log('3부리그 테이블 복원 완료');
-            }
+            // Records System에서 모든 득점/도움 데이터 수집
+            const recordsData = {};
+
+            // 리그 테이블 수집 직후에 추가
+console.log('수집된 리그 데이터:', allLeagueData);
+console.log('league2Table 내용:', league2Table);
             
-            // Records System 데이터 복원
-            if (saveData.recordsSystemData && typeof leagueBasedRecordsSystem !== 'undefined') {
-                leagueBasedRecordsSystem.loadSaveData(saveData.recordsSystemData);
-                console.log('Records System 데이터 복원 완료');
-            }
-            
-            // SNS 데이터 복원
-            if (saveData.snsData && typeof snsManager !== 'undefined') {
-                snsManager.loadSaveData(saveData.snsData);
-                console.log('SNS 데이터 복원 완료');
-            }
-            
-            // 포텐셜 시스템 처리 (수정된 순서)
-            if (typeof playerGrowthSystem !== 'undefined') {
-                console.log('=== 포텐셜 시스템 처리 시작 ===');
+            if (typeof leagueBasedRecordsSystem !== 'undefined') {
+                recordsData.recordsSystemData = leagueBasedRecordsSystem.getSaveData();
                 
-                // 기존 데이터 완전 초기화
-                playerGrowthSystem.resetGrowthSystem();
-                console.log('기존 포텐셜 데이터 초기화 완료');
+                // 전체 득점왕/도움왕 순위도 저장
+                recordsData.topScorersAll = leagueBasedRecordsSystem.getTopScorers(20);
+                recordsData.topAssistersAll = leagueBasedRecordsSystem.getTopAssisters(20);
                 
-                // 저장된 데이터가 있으면 바로 로드 (새로 계산하지 않음)
-                if (saveData.growthData) {
-                    playerGrowthSystem.loadSaveData(saveData.growthData);
-                    console.log('저장된 포텐셜 데이터 로드 완료');
-                    
-                    // 복원된 데이터 확인
-                    const summary = playerGrowthSystem.getTeamGrowthSummary();
-                    console.log('복원된 성장 중인 선수 수:', summary.length);
-                } else {
-                    // 저장된 데이터가 없을 때만 새로 초기화
-                    playerGrowthSystem.initializePlayerGrowth();
-                    console.log('새로운 포텐셜 시스템 초기화');
+                // 리그별 득점왕/도움왕도 저장
+                recordsData.leagueTopScorers = {};
+                recordsData.leagueTopAssisters = {};
+                
+                for (let league = 1; league <= 3; league++) {
+                    recordsData.leagueTopScorers[league] = leagueBasedRecordsSystem.getTopScorersByLeague(league, 10);
+                    recordsData.leagueTopAssisters[league] = leagueBasedRecordsSystem.getTopAssistersByLeague(league, 10);
+                }
+            }
+            
+            // 저장할 데이터 구성
+            const saveData = {
+                gameData: gameData,
+                teams: teams,
+                allTeams: typeof allTeams !== 'undefined' ? allTeams : null,
+                // 모든 리그 테이블 데이터 포함
+                ...allLeagueData,
+                // Records System의 모든 득점/도움 데이터 포함
+                ...recordsData,
+                // SNS와 성장 데이터
+                snsData: snsManager.getSaveData(),
+                growthData: playerGrowthSystem.getSaveData(),
+                timestamp: new Date().toISOString()
+            };
+            
+            // JSON 파일로 저장
+            const blob = new Blob([JSON.stringify(saveData, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${teamNames[gameData.selectedTeam]}_${new Date().toISOString().slice(0, 10)}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            console.log('게임 저장 완료');
+            
+        } catch (error) {
+            console.error('저장 중 오류:', error);
+            alert('저장 중 오류가 발생했습니다.');
+        } finally {
+            // 중복 실행 방지 해제 (2초 후)
+            setTimeout(() => {
+                window.savingInProgress = false;
+            }, 2000);
+        }
+    }
+    
+    function loadGame(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        // 중복 실행 방지
+        if (window.loadingInProgress) {
+            console.log('불러오기가 이미 진행 중입니다.');
+            return;
+        }
+        window.loadingInProgress = true;
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                console.log('=== 게임 불러오기 시작 ===');
+                const saveData = JSON.parse(e.target.result);
+                
+                // 기본 게임 데이터 복원
+                gameData = saveData.gameData;
+                console.log('gameData 복원 완료');
+                
+                // 팀 데이터 복원
+                if (saveData.teams) {
+                    Object.assign(teams, saveData.teams);
+                    console.log('teams 데이터 복원 완료');
+                }
+                if (saveData.allTeams) {
+                    Object.assign(allTeams, saveData.allTeams);
+                    console.log('allTeams 데이터 복원 완료');
                 }
                 
-                console.log('=== 포텐셜 시스템 처리 완료 ===');
-            }
-            
-            // 화면 업데이트
-            console.log('=== 화면 업데이트 시작 ===');
-            document.getElementById('teamName').textContent = teamNames[gameData.selectedTeam];
-            updateDisplay();
-            updateFormationDisplay();
-            displayTeamPlayers();
-            console.log('기본 화면 업데이트 완료');
-            
-            // SNS 피드 새로고침
-            if (typeof snsManager !== 'undefined' && document.getElementById('snsFeed')) {
-                snsManager.displayFeed('snsFeed', 15);
-                console.log('SNS 피드 새로고침 완료');
-            }
+                // 리그 테이블 복원
+                if (saveData.league1Table) {
+                    league1Table = saveData.league1Table;
+                    console.log('1부리그 테이블 복원 완료');
+                }
+                if (saveData.league2Table) {
+                    league2Table = saveData.league2Table;
+                    console.log('2부리그 테이블 복원 완료');
+                }
+                if (saveData.league3Table) {
+                    league3Table = saveData.league3Table;
+                    console.log('3부리그 테이블 복원 완료');
+                }
+                
+                // Records System 데이터 복원
+                if (saveData.recordsSystemData && typeof leagueBasedRecordsSystem !== 'undefined') {
+                    leagueBasedRecordsSystem.loadSaveData(saveData.recordsSystemData);
+                    console.log('Records System 데이터 복원 완료');
+                }
+                
+                // SNS 데이터 복원
+                if (saveData.snsData && typeof snsManager !== 'undefined') {
+                    snsManager.loadSaveData(saveData.snsData);
+                    console.log('SNS 데이터 복원 완료');
+                }
+                
+                // 포텐셜 시스템 처리 (수정된 순서)
+                if (typeof playerGrowthSystem !== 'undefined') {
+                    console.log('=== 포텐셜 시스템 처리 시작 ===');
+                    
+                    // 기존 데이터 완전 초기화
+                    playerGrowthSystem.resetGrowthSystem();
+                    console.log('기존 포텐셜 데이터 초기화 완료');
+                    
+                    // 저장된 데이터가 있으면 바로 로드 (새로 계산하지 않음)
+                    if (saveData.growthData) {
+                        playerGrowthSystem.loadSaveData(saveData.growthData);
+                        console.log('저장된 포텐셜 데이터 로드 완료');
+                        
+                        // 복원된 데이터 확인
+                        const summary = playerGrowthSystem.getTeamGrowthSummary();
+                        console.log('복원된 성장 중인 선수 수:', summary.length);
+                    } else {
+                        // 저장된 데이터가 없을 때만 새로 초기화
+                        playerGrowthSystem.initializePlayerGrowth();
+                        console.log('새로운 포텐셜 시스템 초기화');
+                    }
+                    
+                    console.log('=== 포텐셜 시스템 처리 완료 ===');
+                }
+                
+                // 화면 업데이트
+                console.log('=== 화면 업데이트 시작 ===');
+                document.getElementById('teamName').textContent = teamNames[gameData.selectedTeam];
+                updateDisplay();
+                updateFormationDisplay();
+                displayTeamPlayers();
+                console.log('기본 화면 업데이트 완료');
+                
+                // SNS 피드 새로고침
+                if (typeof snsManager !== 'undefined' && document.getElementById('snsFeed')) {
+                    snsManager.displayFeed('snsFeed', 15);
+                    console.log('SNS 피드 새로고침 완료');
+                }
             
             // Records 탭 업데이트
             if (typeof updateRecordsTab === 'function') {
