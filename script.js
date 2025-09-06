@@ -1538,7 +1538,7 @@ const sponsors = [
         description: "빠르고 역동적인 스포츠 브랜드",
         payPerWin: 15,
         payPerLoss: 3,
-        contractLength: 12,
+        contractLength: 28,
         signingBonus: 80,
         requirements: { minRating: 70 }
     },
@@ -1547,7 +1547,7 @@ const sponsors = [
         description: "세계적인 스포츠 브랜드",
         payPerWin: 20,
         payPerLoss: 5,
-        contractLength: 10,
+        contractLength: 28,
         signingBonus: 100,
         requirements: { minRating: 75 }
     },
@@ -1556,7 +1556,7 @@ const sponsors = [
         description: "전문성을 추구하는 스포츠 브랜드",
         payPerWin: 18,
         payPerLoss: 4,
-        contractLength: 15,
+        contractLength: 28,
         signingBonus: 120,
         requirements: { minRating: 78 }
     },
@@ -1565,7 +1565,7 @@ const sponsors = [
         description: "독일의 프리미엄 스포츠 브랜드",
         payPerWin: 25,
         payPerLoss: 8,
-        contractLength: 8,
+        contractLength: 28,
         signingBonus: 150,
         requirements: { minRating: 80 }
     },
@@ -1574,7 +1574,7 @@ const sponsors = [
         description: "한국의 타이어 브랜드",
         payPerWin: 30,
         payPerLoss: 10,
-        contractLength: 6,
+        contractLength: 28,
         signingBonus: 200,
         requirements: { minRating: 85 }
     },
@@ -1583,18 +1583,18 @@ const sponsors = [
         description: "세계 최고의 항공사 중 하나",
         payPerWin: 40,
         payPerLoss: 15,
-        contractLength: 5,
+        contractLength: 28,
         signingBonus: 300,
-        requirements: { minRating: 88 }
+        requirements: { minRating: 90 }
     },
     {
-        name: "FIFA 공식 파트너십",
-        description: "FIFA와의 독점 글로벌 파트너십",
+        name: "삼성",
+        description: "세계 최고의 전자제품 생산 기업",
         payPerWin: 50,
         payPerLoss: 20,
-        contractLength: 4,
-        signingBonus: 500,
-        requirements: { minRating: 90 }
+        contractLength: 28,
+        signingBonus: 300,
+        requirements: { minRating: 98 }
     }
 ];
 
