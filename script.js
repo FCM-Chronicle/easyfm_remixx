@@ -2498,6 +2498,92 @@ function calculateTeamStrengthDifference() {
     function loadGame(event) {
         const file = event.target.files[0];
         if (!file) return;
+
+        function saveGame() {
+    // 중복 실행 방지
+    if (window.savingInProgress) {
+        console.log('저장이 이미 진행 중입니다.');
+        return;
+    }
+    window.savingInProgress = true;
+    
+    console.log('=== 저장 시작 ===');
+    
+    try {
+        // 모든 리그 테이블 데이터 수집
+        const allLeagueData = {};
+        
+        if (typeof league1Table !== 'undefined') {
+            allLeagueData.league1Table = league1Table;
+        }
+        if (typeof league2Table !== 'undefined') {
+            allLeagueData.league2Table = league2Table;
+        }
+        if (typeof league3Table !== 'undefined') {
+            allLeagueData.league3Table = league3Table;
+        }
+        
+        console.log('수집된 리그 데이터:', allLeagueData);
+        console.log('league2Table 내용:', league2Table);
+        
+        // Records System에서 모든 득점/도움 데이터 수집
+        const recordsData = {};
+        
+        if (typeof leagueBasedRecordsSystem !== 'undefined') {
+            recordsData.recordsSystemData = leagueBasedRecordsSystem.getSaveData();
+            
+            // 전체 득점왕/도움왕 순위도 저장
+            recordsData.topScorersAll = leagueBasedRecordsSystem.getTopScorers(20);
+            recordsData.topAssistersAll = leagueBasedRecordsSystem.getTopAssisters(20);
+            
+            // 리그별 득점왕/도움왕도 저장
+            recordsData.leagueTopScorers = {};
+            recordsData.leagueTopAssisters = {};
+            
+            for (let league = 1; league <= 3; league++) {
+                recordsData.leagueTopScorers[league] = leagueBasedRecordsSystem.getTopScorersByLeague(league, 10);
+                recordsData.leagueTopAssisters[league] = leagueBasedRecordsSystem.getTopAssistersByLeague(league, 10);
+            }
+        }
+        
+        // 저장할 데이터 구성 (수정된 부분)
+        const saveData = {
+            gameData: gameData,
+            teams: teams,
+            allTeams: typeof allTeams !== 'undefined' ? allTeams : null,
+            // 리그 테이블 데이터 (개별적으로 저장)
+            league1Table: allLeagueData.league1Table,
+            league2Table: allLeagueData.league2Table,
+            league3Table: allLeagueData.league3Table,
+            // Records System 데이터 (별도 키로 저장)
+            recordsData: recordsData,
+            // SNS와 성장 데이터
+            snsData: snsManager.getSaveData(),
+            growthData: playerGrowthSystem.getSaveData(),
+            timestamp: new Date().toISOString()
+        };
+        
+        // JSON 파일로 저장
+        const blob = new Blob([JSON.stringify(saveData, null, 2)], {type: 'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${teamNames[gameData.selectedTeam]}_${new Date().toISOString().slice(0, 10)}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        
+        console.log('게임 저장 완료');
+        
+    } catch (error) {
+        console.error('저장 중 오류:', error);
+        alert('저장 중 오류가 발생했습니다.');
+    } finally {
+        // 중복 실행 방지 해제 (2초 후)
+        setTimeout(() => {
+            window.savingInProgress = false;
+        }, 2000);
+    }
+}
         
        function loadGame(event) {
     const file = event.target.files[0];
