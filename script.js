@@ -2277,6 +2277,7 @@ function displayLeagueTable() {
     leagueTable.innerHTML = tableHTML;
 }
 
+// 스폰서 계약 체결 시 (기존 displaySponsors 함수 수정)
 function displaySponsors() {
     const sponsorList = document.getElementById('sponsorList');
     sponsorList.innerHTML = '';
@@ -2298,6 +2299,13 @@ function displaySponsors() {
         }
         
         sponsorCard.className = cardClass;
+        
+        // 계약 중인 경우 남은 경기 수 표시
+        let contractInfo = '';
+        if (isContracted && gameData.sponsorRemainingMatches) {
+            contractInfo = `<div style="color: #f39c12; font-weight: bold; margin-top: 10px;">남은 계약: ${gameData.sponsorRemainingMatches}경기</div>`;
+        }
+        
         sponsorCard.innerHTML = `
             <h4>${sponsor.name}</h4>
             <p>${sponsor.description}</p>
@@ -2322,12 +2330,16 @@ function displaySponsors() {
                 </span>
             </div>
             ${isContracted ? '<div style="color: #2ecc71; font-weight: bold; margin-top: 10px;">✓ 계약 중</div>' : ''}
+            ${contractInfo}
         `;
         
         if (isAvailable && !gameData.currentSponsor) {
             sponsorCard.addEventListener('click', () => {
+                // 계약 체결
                 gameData.currentSponsor = sponsor;
+                gameData.sponsorRemainingMatches = sponsor.contractLength; // 남은 경기 수 설정
                 gameData.teamMoney += sponsor.signingBonus;
+                
                 updateDisplay();
                 displaySponsors();
                 alert(`${sponsor.name}와 계약을 체결했습니다! 계약금 ${sponsor.signingBonus}억을 받았습니다.`);
@@ -2336,6 +2348,109 @@ function displaySponsors() {
         
         sponsorList.appendChild(sponsorCard);
     });
+}
+
+// 경기 후 스폰서 관련 처리 함수
+function processSponsorAfterMatch(matchResult) {
+    if (!gameData.currentSponsor) return;
+    
+    const sponsor = gameData.currentSponsor;
+    let payment = 0;
+    
+    // 경기 결과에 따른 보너스 지급
+    if (matchResult === 'win') {
+        payment = sponsor.payPerWin;
+        gameData.teamMoney += payment;
+        console.log(`스폰서 승리 보너스: ${payment}억원`);
+    } else if (matchResult === 'loss') {
+        payment = sponsor.payPerLoss;
+        gameData.teamMoney += payment;
+        console.log(`스폰서 패배 보상: ${payment}억원`);
+    }
+    
+    // 계약 기간 감소
+    if (gameData.sponsorRemainingMatches > 0) {
+        gameData.sponsorRemainingMatches--;
+        console.log(`스폰서 계약 남은 경기: ${gameData.sponsorRemainingMatches}`);
+        
+        // 계약 만료 체크
+        if (gameData.sponsorRemainingMatches <= 0) {
+            expireSponsorContract();
+        } else if (gameData.sponsorRemainingMatches <= 3) {
+            // 계약 만료 임박 알림
+            alert(`스폰서 계약이 ${gameData.sponsorRemainingMatches}경기 후 만료됩니다.`);
+        }
+    }
+    
+    updateDisplay();
+}
+
+// 스폰서 계약 만료 처리
+function expireSponsorContract() {
+    const expiredSponsor = gameData.currentSponsor;
+    
+    // 계약 정보 초기화
+    gameData.currentSponsor = null;
+    gameData.sponsorRemainingMatches = 0;
+    
+    console.log(`${expiredSponsor.name} 계약 만료`);
+    alert(`${expiredSponsor.name}와의 계약이 만료되었습니다. 새로운 스폰서를 선택할 수 있습니다.`);
+    
+    // 스폰서 탭이 활성화되어 있다면 새로고침
+    if (document.getElementById('sponsor').classList.contains('active')) {
+        displaySponsors();
+    }
+    
+    updateDisplay();
+}
+
+// 기존 경기 종료 함수에 스폰서 처리 추가
+function endMatch(matchData) {
+    // 기존 경기 종료 로직...
+    
+    // 경기 결과 판단
+    let matchResult = 'draw';
+    if (matchData.homeTeam === gameData.selectedTeam) {
+        if (matchData.homeScore > matchData.awayScore) matchResult = 'win';
+        else if (matchData.homeScore < matchData.awayScore) matchResult = 'loss';
+    } else {
+        if (matchData.awayScore > matchData.homeScore) matchResult = 'win';
+        else if (matchData.awayScore < matchData.homeScore) matchResult = 'loss';
+    }
+    
+    // 스폰서 처리
+    processSponsorAfterMatch(matchResult);
+    
+    // 기존 경기 종료 로직 계속...
+}
+
+// 수동으로 계약 해지하는 함수 (필요시)
+function terminateSponsorContract() {
+    if (!gameData.currentSponsor) {
+        alert('현재 계약 중인 스폰서가 없습니다.');
+        return;
+    }
+    
+    const sponsor = gameData.currentSponsor;
+    const remainingMatches = gameData.sponsorRemainingMatches || 0;
+    
+    if (confirm(`${sponsor.name}와의 계약을 해지하시겠습니까? (남은 계약: ${remainingMatches}경기)`)) {
+        gameData.currentSponsor = null;
+        gameData.sponsorRemainingMatches = 0;
+        
+        alert(`${sponsor.name}와의 계약이 해지되었습니다.`);
+        displaySponsors();
+        updateDisplay();
+    }
+}
+
+// 저장/불러오기에 스폰서 데이터 포함 확인
+function checkSponsorDataInSave() {
+    // gameData에 다음이 포함되어야 함:
+    // - currentSponsor
+    // - sponsorRemainingMatches
+    console.log('현재 스폰서:', gameData.currentSponsor);
+    console.log('남은 계약 경기:', gameData.sponsorRemainingMatches);
 }
 
 function calculateTeamRating() {
