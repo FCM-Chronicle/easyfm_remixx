@@ -1103,6 +1103,12 @@ function endMatch(matchData) {
     };
     displayEvent(finalEvent, matchData);
     
+    // 스폰서 처리 (수정된 부분)
+    if (typeof window.processSponsorAfterMatch === 'function') {
+        const matchResult = result === '승리' ? 'win' : result === '패배' ? 'loss' : 'draw';
+        window.processSponsorAfterMatch(matchResult);
+    }
+    
     // 경기 종료 버튼 이벤트
     document.getElementById('endMatchBtn').onclick = () => {
         // 인터뷰 화면으로 이동
@@ -1118,13 +1124,12 @@ function endMatch(matchData) {
 
     // 개인기록 업데이트
     if (typeof updateRecordsAfterMatch === 'function') {
-    updateRecordsAfterMatch(matchData);
+        updateRecordsAfterMatch(matchData);
     }
     
     // AI 팀들 경기 시뮬레이션
     simulateOtherMatches();
 }
-
 function updateLeagueData(matchData, points) {
     // 현재 리그 확인
     const currentLeague = gameData.currentLeague;
