@@ -236,6 +236,10 @@ class RecordsSystem {
 
 // 리그 테이블 업데이트 메서드 (Records System 클래스에 추가)
 updateLeagueTableForAIMatch(team1Key, team2Key, score1, score2) {
+    // updateLeagueTableForAIMatch 함수 맨 첫 줄에 이것만 추가
+updateLeagueTableForAIMatch(team1Key, team2Key, score1, score2) {
+    console.log(`리그 테이블 업데이트 호출: ${team1Key} vs ${team2Key}`);
+}
     // 팀들의 리그 확인
     const team1League = allTeams[team1Key]?.league || 1;
     const team2League = allTeams[team2Key]?.league || 1;
