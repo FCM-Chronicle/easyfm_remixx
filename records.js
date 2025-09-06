@@ -160,76 +160,145 @@ class RecordsSystem {
         }
     }
 
-    simulateSingleAIMatch(team1Key, team2Key) {
-        const team1Rating = this.calculateAITeamRating(team1Key);
-        const team2Rating = this.calculateAITeamRating(team2Key);
-        const ratingDiff = team1Rating - team2Rating;
-        const upsetOccurs = Math.random() < 0.08;
-        let team1WinChance = 0.33;
-        let team2WinChance = 0.33;
-        let drawChance = 0.34;
+  simulateSingleAIMatch(team1Key, team2Key) {
+    const team1Rating = this.calculateAITeamRating(team1Key);
+    const team2Rating = this.calculateAITeamRating(team2Key);
+    const ratingDiff = team1Rating - team2Rating;
+    const upsetOccurs = Math.random() < 0.08;
+    let team1WinChance = 0.33;
+    let team2WinChance = 0.33;
+    let drawChance = 0.34;
 
-        if (ratingDiff > 0) {
-            const advantage = Math.min(0.3, ratingDiff / 150);
-            team1WinChance += advantage;
-            team2WinChance -= advantage * 0.7;
-            drawChance -= advantage * 0.3;
+    if (ratingDiff > 0) {
+        const advantage = Math.min(0.3, ratingDiff / 150);
+        team1WinChance += advantage;
+        team2WinChance -= advantage * 0.7;
+        drawChance -= advantage * 0.3;
 
-            if (upsetOccurs) {
-                const upsetBonus = 0.15 + (Math.random() * 0.15);
-                team2WinChance += upsetBonus;
-                team1WinChance -= upsetBonus * 0.6;
-                drawChance -= upsetBonus * 0.4;
-            }
-        } else if (ratingDiff < 0) {
-            const advantage = Math.min(0.3, Math.abs(ratingDiff) / 100);
-            team2WinChance += advantage;
-            team1WinChance -= advantage * 0.7;
-            drawChance -= advantage * 0.3;
-
-            if (upsetOccurs) {
-                const upsetBonus = 0.15 + (Math.random() * 0.15);
-                team1WinChance += upsetBonus;
-                team2WinChance -= upsetBonus * 0.6;
-                drawChance -= upsetBonus * 0.4;
-            }
+        if (upsetOccurs) {
+            const upsetBonus = 0.15 + (Math.random() * 0.15);
+            team2WinChance += upsetBonus;
+            team1WinChance -= upsetBonus * 0.6;
+            drawChance -= upsetBonus * 0.4;
         }
+    } else if (ratingDiff < 0) {
+        const advantage = Math.min(0.3, Math.abs(ratingDiff) / 100);
+        team2WinChance += advantage;
+        team1WinChance -= advantage * 0.7;
+        drawChance -= advantage * 0.3;
 
-        team1WinChance = Math.max(0.05, team1WinChance);
-        team2WinChance = Math.max(0.05, team2WinChance);
-        drawChance = Math.max(0.05, drawChance);
-        const total = team1WinChance + team2WinChance + drawChance;
-        team1WinChance /= total;
-        team2WinChance /= total;
-        drawChance /= total;
-        const resultRoll = Math.random();
-        let score1, score2;
-
-        if (resultRoll < team1WinChance) {
-            [score1, score2] = this.generateRealisticScore(true, upsetOccurs && ratingDiff < 0);
-        } else if (resultRoll < team1WinChance + team2WinChance) {
-            [score2, score1] = this.generateRealisticScore(true, upsetOccurs && ratingDiff > 0);
-        } else {
-            [score1, score2] = this.generateDrawScore();
+        if (upsetOccurs) {
+            const upsetBonus = 0.15 + (Math.random() * 0.15);
+            team1WinChance += upsetBonus;
+            team2WinChance -= upsetBonus * 0.6;
+            drawChance -= upsetBonus * 0.4;
         }
-
-        const goals = this.generateGoalEvents(team1Key, team2Key, score1, score2);
-        goals.forEach(goal => {
-            this.addGoal(goal.scorer, goal.assister, goal.team);
-        });
-
-        this.addMatchAppearancesForTeam(team1Key);
-        this.addMatchAppearancesForTeam(team2Key);
-
-        return {
-            team1: team1Key,
-            team2: team2Key,
-            score1: score1,
-            score2: score2,
-            goals: goals,
-            minute: 90
-        };
     }
+
+    team1WinChance = Math.max(0.05, team1WinChance);
+    team2WinChance = Math.max(0.05, team2WinChance);
+    drawChance = Math.max(0.05, drawChance);
+    const total = team1WinChance + team2WinChance + drawChance;
+    team1WinChance /= total;
+    team2WinChance /= total;
+    drawChance /= total;
+    const resultRoll = Math.random();
+    let score1, score2;
+
+    if (resultRoll < team1WinChance) {
+        [score1, score2] = this.generateRealisticScore(true, upsetOccurs && ratingDiff < 0);
+    } else if (resultRoll < team1WinChance + team2WinChance) {
+        [score2, score1] = this.generateRealisticScore(true, upsetOccurs && ratingDiff > 0);
+    } else {
+        [score1, score2] = this.generateDrawScore();
+    }
+
+    const goals = this.generateGoalEvents(team1Key, team2Key, score1, score2);
+    goals.forEach(goal => {
+        this.addGoal(goal.scorer, goal.assister, goal.team);
+    });
+
+    this.addMatchAppearancesForTeam(team1Key);
+    this.addMatchAppearancesForTeam(team2Key);
+
+    // 리그 테이블 업데이트 추가
+    this.updateLeagueTableForAIMatch(team1Key, team2Key, score1, score2);
+
+    return {
+        team1: team1Key,
+        team2: team2Key,
+        score1: score1,
+        score2: score2,
+        goals: goals,
+        minute: 90
+    };
+}
+
+// 리그 테이블 업데이트 메서드 (Records System 클래스에 추가)
+updateLeagueTableForAIMatch(team1Key, team2Key, score1, score2) {
+    // 팀들의 리그 확인
+    const team1League = allTeams[team1Key]?.league || 1;
+    const team2League = allTeams[team2Key]?.league || 1;
+    
+    if (team1League !== team2League) {
+        console.log(`리그가 다름: ${team1Key}(${team1League}부) vs ${team2Key}(${team2League}부)`);
+        return;
+    }
+    
+    // 해당 리그 테이블 가져오기
+    let leagueTable;
+    if (team1League === 1) {
+        if (typeof league1Table === 'undefined') window.league1Table = {};
+        leagueTable = league1Table;
+    } else if (team1League === 2) {
+        if (typeof league2Table === 'undefined') window.league2Table = {};
+        leagueTable = league2Table;
+    } else if (team1League === 3) {
+        if (typeof league3Table === 'undefined') window.league3Table = {};
+        leagueTable = league3Table;
+    }
+    
+    if (!leagueTable) {
+        console.log(`${team1League}부리그 테이블을 찾을 수 없음`);
+        return;
+    }
+    
+    // 팀 통계 업데이트
+    [team1Key, team2Key].forEach((teamKey, index) => {
+        const teamScore = index === 0 ? score1 : score2;
+        const opponentScore = index === 0 ? score2 : score1;
+        
+        // 팀 데이터 초기화
+        if (!leagueTable[teamKey]) {
+            leagueTable[teamKey] = {
+                matches: 0,
+                wins: 0,
+                draws: 0,
+                losses: 0,
+                points: 0,
+                goalsFor: 0,
+                goalsAgainst: 0
+            };
+        }
+        
+        const teamStats = leagueTable[teamKey];
+        teamStats.matches++;
+        teamStats.goalsFor += teamScore;
+        teamStats.goalsAgainst += opponentScore;
+        
+        if (teamScore > opponentScore) {
+            teamStats.wins++;
+            teamStats.points += 3;
+        } else if (teamScore === opponentScore) {
+            teamStats.draws++;
+            teamStats.points += 1;
+        } else {
+            teamStats.losses++;
+        }
+    });
+    
+    console.log(`${team1League}부리그 테이블 업데이트: ${team1Key} ${score1}-${score2} ${team2Key}`);
+}
 
     calculateAITeamRating(teamKey) {
         const teamPlayers = teams[teamKey];
