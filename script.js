@@ -2404,44 +2404,137 @@ function expireSponsorContract() {
     updateDisplay();
 }
 
-// 기존 경기 종료 함수에 스폰서 처리 추가
 function endMatch(matchData) {
-    // 기존 경기 종료 로직...
+    document.getElementById('endMatchBtn').style.display = 'block';
     
-    // 경기 결과 판단
-    let matchResult = 'draw';
-    if (matchData.homeTeam === gameData.selectedTeam) {
-        if (matchData.homeScore > matchData.awayScore) matchResult = 'win';
-        else if (matchData.homeScore < matchData.awayScore) matchResult = 'loss';
-    } else {
-        if (matchData.awayScore > matchData.homeScore) matchResult = 'win';
-        else if (matchData.awayScore < matchData.homeScore) matchResult = 'loss';
-    }
+    // 경기 결과 계산
+    const userScore = matchData.homeScore;
+    const opponentScore = matchData.awayScore;
+    let result = '';
+    let moraleChange = 0;
+    let points = 0;
     
-    // 스폰서 처리
-    processSponsorAfterMatch(matchResult);
+    // 전력 차이에 따른 결과 반영
+    const strengthDiff = matchData.strengthDiff;
+    const expectation = strengthDiff.userAdvantage ? '승리' : '패배';
+    const isUpset = (result === '승리' && !strengthDiff.userAdvantage) || 
+                   (result === '패배' && strengthDiff.userAdvantage);
     
-    // 기존 경기 종료 로직 계속...
-}
-
-// 수동으로 계약 해지하는 함수 (필요시)
-function terminateSponsorContract() {
-    if (!gameData.currentSponsor) {
-        alert('현재 계약 중인 스폰서가 없습니다.');
-        return;
-    }
-    
-    const sponsor = gameData.currentSponsor;
-    const remainingMatches = gameData.sponsorRemainingMatches || 0;
-    
-    if (confirm(`${sponsor.name}와의 계약을 해지하시겠습니까? (남은 계약: ${remainingMatches}경기)`)) {
-        gameData.currentSponsor = null;
-        gameData.sponsorRemainingMatches = 0;
+    if (userScore > opponentScore) {
+        result = '승리';
+        if (strengthDiff.userAdvantage) {
+            // 예상된 승리
+            moraleChange = Math.floor(Math.random() * 8) + 5; // 5-12
+        } else {
+            // 예상 밖 승리 (업셋)
+            moraleChange = Math.floor(Math.random() * 15) + 10; // 10-24
+        }
+        points = 3;
         
-        alert(`${sponsor.name}와의 계약이 해지되었습니다.`);
-        displaySponsors();
-        updateDisplay();
+        // 기본 경기 수익
+        gameData.teamMoney += 50; // 승리 시 50억
+        
+        // 스폰서 보너스
+        if (gameData.currentSponsor) {
+            gameData.teamMoney += gameData.currentSponsor.payPerWin;
+        }
+    } else if (userScore < opponentScore) {
+        result = '패배';
+        if (!strengthDiff.userAdvantage) {
+            // 예상된 패배
+            moraleChange = -(Math.floor(Math.random() * 8) + 3); // -3 to -10
+        } else {
+            // 예상 밖 패배 (충격적 패배)
+            moraleChange = -(Math.floor(Math.random() * 15) + 10); // -10 to -24
+        }
+        points = 0;
+        
+        // 기본 경기 수익
+        gameData.teamMoney += 10; // 패배 시 10억
+        
+        // 스폰서 보너스
+        if (gameData.currentSponsor) {
+            gameData.teamMoney += gameData.currentSponsor.payPerLoss;
+        }
+    } else {
+        result = '무승부';
+        if (strengthDiff.strengthGap < 5) {
+            // 비슷한 전력 간 무승부
+            moraleChange = Math.floor(Math.random() * 3) - 1; // -1 to 1
+        } else if (strengthDiff.userAdvantage) {
+            // 강한 팀이 무승부 (실망)
+            moraleChange = -(Math.floor(Math.random() * 5) + 2); // -2 to -6
+        } else {
+            // 약한 팀이 무승부 (선전)
+            moraleChange = Math.floor(Math.random() * 8) + 3; // 3-10
+        }
+        points = 1;
+        
+        // 기본 경기 수익
+        gameData.teamMoney += 15; // 무승부 시 15억
+        
+        // 스폰서 보너스 (승리의 절반)
+        if (gameData.currentSponsor) {
+            gameData.teamMoney += Math.floor(gameData.currentSponsor.payPerWin / 2);
+        }
     }
+    
+    // 리그 데이터 업데이트
+    updateLeagueData(matchData, points);
+    
+    // 사기 업데이트
+    gameData.teamMorale = Math.max(0, Math.min(100, gameData.teamMorale + moraleChange));
+    
+    // 경기 수 증가
+    gameData.matchesPlayed++;
+    
+    // 경기 종료 메시지 (이변 여부 반영)
+    let finalMessage = `경기 종료! ${result} (${userScore}-${opponentScore})`;
+    
+    if (isUpset) {
+        if (result === '승리') {
+            finalMessage += `\n🎉 대이변! 전력상 불리했던 경기에서 승리!`;
+        } else if (result === '패배') {
+            finalMessage += `\n😱 충격! 전력상 유리했던 경기에서 패배...`;
+        }
+    }
+    
+    finalMessage += `\n${strengthDiff.userAdvantage ? '전력상 유리했던' : '전력상 불리했던'} 경기에서 ${result}`;
+    finalMessage += `\n사기 변화: ${moraleChange > 0 ? '+' : ''}${moraleChange}`;
+    
+    const finalEvent = {
+        minute: 90,
+        type: 'final',
+        description: finalMessage
+    };
+    displayEvent(finalEvent, matchData);
+    
+    // 스폰서 처리 (수정된 부분)
+    if (typeof window.processSponsorAfterMatch === 'function') {
+        const matchResult = result === '승리' ? 'win' : result === '패배' ? 'loss' : 'draw';
+        window.processSponsorAfterMatch(matchResult);
+    }
+    
+    // 경기 종료 버튼 이벤트
+    document.getElementById('endMatchBtn').onclick = () => {
+        // 인터뷰 화면으로 이동
+        startInterview(result, userScore, opponentScore, strengthDiff);
+    };
+    
+    // 선수 성장 처리
+    if (typeof processPostMatchGrowth === 'function') {
+        setTimeout(() => {
+            processPostMatchGrowth();
+        }, 2000);
+    }
+
+    // 개인기록 업데이트
+    if (typeof updateRecordsAfterMatch === 'function') {
+        updateRecordsAfterMatch(matchData);
+    }
+    
+    // AI 팀들 경기 시뮬레이션
+    simulateOtherMatches();
 }
 
 // 저장/불러오기에 스폰서 데이터 포함 확인
